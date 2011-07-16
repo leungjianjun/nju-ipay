@@ -13,7 +13,7 @@
 使用名称的缩写代替你的真实名字（如ljj或ljj@nju）或者你的邮箱
 --------------------------------------------------------
 	ljj(TM)	leungjianjun#gmail.com
-	tym		yimingnju@gmail.com
+	tym	yimingnju@gmail.com
 	qcx             chenxiongqian@gmail.com
 ========================================================
 	SVN使用规则
@@ -63,6 +63,20 @@ jee eclipse安装m2eclipse和subclipse等插件
 				spring ：spring配置文件
 				views ：html、jsp文件类型的
 				web.xml ：服务器配置文件
+---------------------------------------------------------
+	服务器构建步骤
+---------------------------------------------------------
+1.安装jdk，tortoisesvn或者rabbitsvn
+2.安装Mysql，建议windows下直接安装wamp，ubuntu下安装xampp，
+数据库用户名admin，密码为空，新建两个数据库命名为ipay_bank和ipay_market
+3.下载一个绿色版的tomcat
+4.安装STS和subclipse（在STS的dashboard的extention有）或者
+  eclipse javaEE+subclipse+m2eclipse+springide
+  下载地址：STS：http://www.springsource.com/downloads/sts
+            springide update site：http://springide.org/updatesite
+5.导入类库，把握硬盘里的.m2文件夹拷贝到你的.m2文件夹
+6.直接import项目 svn里的server文件夹
+7.对项目进行svn操作时，就右击项目的某个文件夹或文件，选择Team，进行update，commit等操作
 ---------------------------------------------------------
 	服务器框架
 ---------------------------------------------------------
