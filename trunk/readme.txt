@@ -14,7 +14,7 @@
 --------------------------------------------------------
 	ljj(TM)	leungjianjun#gmail.com
 	tym	yimingnju@gmail.com
-	qcx             chenxiongqian@gmail.com
+	qcx     chenxiongqian@gmail.com
 ========================================================
 	SVN使用规则
 --------------------------------------------------------
