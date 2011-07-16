@@ -16,6 +16,7 @@
 	tym	yimingnju@gmail.com
 	qcx     chenxiongqian@gmail.com
 	qc		CChain0615@gmail.com
+	ltm	lutianming1005@gmail.com
 ========================================================
 	SVN使用规则
 --------------------------------------------------------
