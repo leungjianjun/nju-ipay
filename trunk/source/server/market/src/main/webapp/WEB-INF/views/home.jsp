@@ -2,13 +2,17 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>iPay Server Management</title>
+	<link rel="stylesheet" type="text/css" href="../resources/css/home_style.css" />
+	<script type="text/javascript" src="../resources/js/home.js"></script>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
+<div id="topbar" class="topbar_class">
+	<img src="../resources/image/Logo.png" />
+	
+</div>
 
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
+
