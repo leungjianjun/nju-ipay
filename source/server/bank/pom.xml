@@ -116,6 +116,12 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<!-- Jackson JSON Mapper -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.6.4</version>
+        </dependency>
 	
 		<!-- Test -->
 		<dependency>
