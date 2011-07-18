@@ -15,7 +15,7 @@
 	ljj(TM)	leungjianjun#gmail.com
 	tym	yimingnju@gmail.com
 	qcx     chenxiongqian@gmail.com
-	qc		CChain0615@gmail.com
+	qc	CChain0615@gmail.com
 	ltm	lutianming1005@gmail.com
 ========================================================
 	SVN使用规则
@@ -52,7 +52,7 @@ source：存放源码
 5.文档评审不要在原文档上直接修改或者把字体标为红色，应该使用
 office里的审阅，新建批注！
 ========================================================
-	构建服务器代码说明commit
+	构建服务器代码说明
 --------------------------------------------------------
 1.服务器使用Maven构建项目，同样强烈推荐客户端也使用maven构建
 2.服务器推荐IDE是STS（spring tool suite）+subclipse或者自行在
