@@ -1,5 +1,7 @@
 package com.ipay.client.barcode;
 
-public class CaptureActivityHandler {
+import android.os.Handler;
+
+public class CaptureActivityHandler extends Handler{
 
 }
