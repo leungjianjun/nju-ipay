@@ -8,7 +8,17 @@ public class Session {
 	private String username;
 	private String passwordMD5;
 	private HashMap<Product, Integer> shoppingCart;
-	
+	public Session(){
+		username = null;
+		passwordMD5 = null;
+		shoppingCart = new HashMap<Product, Integer>();
+	}
+	public Session(String username, String passwordMD5) {
+		this.username = username;
+		this.passwordMD5 = passwordMD5;
+		shoppingCart = new HashMap<Product, Integer>();
+	}
+
 	//if the product is in the shopping cart already,
 	//then just change the amount
 	public void put(Product product, int amount){
