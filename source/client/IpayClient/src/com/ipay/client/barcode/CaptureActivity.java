@@ -58,7 +58,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 	}
-	
+	 
 	@Override
 	protected void onResume(){
 		super.onResume();
