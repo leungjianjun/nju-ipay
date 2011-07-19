@@ -1,4 +1,4 @@
-package com.ipay.server;
+package com.ipay.server.web;
 
 import java.text.DateFormat;
 import java.util.Date;
