@@ -1,5 +1,7 @@
 package com.ipay.client.communication;
 
+import com.ipay.client.model.Session;
+
 /**
  * @author tianming
  *	all communication with the server is done by this class
@@ -26,7 +28,9 @@ public class CommunicationManager {
 	 * for security reason, find out the MD5 of password first
 	 * then send the username and md5 value to the server for authentication
 	 */
-	public boolean login(String username, String password){
+	public boolean login(Session session,String username, String password){
+		session.setUsername(username);
+		
 		return false;
 	}
 	
