@@ -14,5 +14,13 @@
   		android:layout_width="fill_parent"
   		android:layout_height="fill_parent"
   		android:background="@color/transparent"/>
-  		 
+  
+  <TextView android:id="@+id/status_view"
+  			android:layout_width="wrap_content"
+  			android:layout_height="wrap_content"
+  			android:layout_gravity="center_horizontal|bottom"
+  			android:background="@color/transparent"
+  			android:text="@string/msg_default_status"
+  			android:textColor="@color/status_text"
+  			android:textSize="14sp"/>
 </FrameLayout>
