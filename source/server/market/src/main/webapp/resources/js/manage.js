@@ -98,17 +98,14 @@ window.onload= function() {
 			$("c"+i).style.display="none";
 		}
 	}
-
 }
 function showhide1() {
 	if(document.getElementById("leftMenu").style.display=="block") {
 		document.getElementById("leftMenu").style.display="none";
-		
-		
+				
 		
 	} else {
-		document.getElementById("leftMenu").style.display="block";
-		
+		document.getElementById("leftMenu").style.display="block";		
 		
 	}
 }
@@ -152,10 +149,10 @@ function changelan(val)
 	{
 		//设置为英文页面
 		var sysmanage=document.getElementById("sys");
-		sysmanage.innerHTML="<img id=\"leftMenuPic_img\" src=\"image/icon02.gif\" width=\"11\" height=\"6\" />System Management";
+		sysmanage.innerHTML="<img id=\"leftMenuPic_img\" src=\"../resources/image/icon02.gif\" width=\"11\" height=\"6\" />System Management";
 		
 		var link=document.getElementById("sys2");
-		link.innerHTML="<img src=\"image/icon01.gif\" width=\"11\" height=\"6\" />More Sites";
+		link.innerHTML="<img src=\"../resources/image/icon01.gif\" width=\"11\" height=\"6\" />More Sites";
 		
 		var tag_1=document.getElementById("c0");
 		var tag_2=document.getElementById("c1");
@@ -167,3 +164,5 @@ function changelan(val)
 		
 	}
 }
+
+
