@@ -12,8 +12,10 @@ import com.ipay.client.barcode.camera.CameraManager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.os.Bundle;
 import android.os.Handler;
+import com.ipay.client.barcode.result.*;
 
 public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 
@@ -99,6 +102,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 		super.onDestroy();
 	}
 	
+	
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
@@ -120,7 +124,17 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 	
 	//由CaptureActivityandler调用
 	public void handleDecode(Result rawResult,Bitmap barcode){
-		
+		inactivityTimer.onActivity();
+		lastResult = rawResult;
+		ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this,rawResult);
+		String resultContent = resultHandler.getDisplayContents();
+		//返回结果
+		Intent intent = getIntent();
+		Bundle bundle = new Bundle();
+		bundle.putString("BARCODE_RESULT", resultContent);
+		intent.putExtras(bundle);
+		setResult(RESULT_OK,intent);
+		finish();
 	}
 	
 	//重新设置状态视图
