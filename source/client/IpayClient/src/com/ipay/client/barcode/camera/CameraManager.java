@@ -126,9 +126,9 @@ public class CameraManager {
 			previewCallback.setHandler(handler, message);
 			
 			if(useOneShotPreviewCallback)
-				camera.setOneShotPreviewCallback(null);
-			else
 				camera.setOneShotPreviewCallback(previewCallback);
+			else
+				camera.setPreviewCallback(previewCallback);
 		}
 	}
 	
