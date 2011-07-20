@@ -171,5 +171,9 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 		builder.setOnCancelListener(new FinishListener(this));
 		builder.show();
 	}
+	
+	public void drawViewfinder(){
+		viewfinderView.drawViewfinder();
+	}
 
 }
