@@ -13,6 +13,7 @@
 	type="text/css" />
 </head>
 <body>
+	<div id="whole_body">
 	<div id="top">
 		<div id="logo">
 			<img src="../resources/image/Logo.png" width="145" height="30" alt="" />
@@ -107,6 +108,7 @@
 			<div id="c5" class="content">系统管理</div>
 			<div id="c6" class="content">帮助信息</div>			
 		</div>
+	</div>
 	</div>
 </body>
 </html>
