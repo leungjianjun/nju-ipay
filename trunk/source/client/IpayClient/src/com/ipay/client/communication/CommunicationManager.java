@@ -12,10 +12,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ipay.client.model.Order;
+import com.ipay.client.model.Product;
 import com.ipay.client.model.Session;
 
 /**
- * @author tianming all communication with the server is done by this class
+ * all communication with the server is done by this class
+ * 
+ * @author tianming
  * 
  */
 
@@ -47,8 +51,8 @@ public class CommunicationManager {
 		String md5 = Md5Crypto.encrypt(password);
 		JSONObject param = new JSONObject();
 		HttpPost post = new HttpPost(URL);
-		
-		//封装post实体
+
+		// 封装post实体
 		try {
 			param.put("username", username);
 			param.put("password", password);
@@ -61,8 +65,8 @@ public class CommunicationManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//提交post并等待回应
+
+		// 提交post并等待回应
 		String token;
 		try {
 			HttpResponse httpResponse = new DefaultHttpClient().execute(post);
@@ -80,27 +84,42 @@ public class CommunicationManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		boolean logged = false;
-		//检查回应，根据回应决定是否登陆成功
-		// TODO 
-		if(logged){
+		// 检查回应，根据回应决定是否登陆成功
+		// TODO
+		if (logged) {
 			session.setUsername(username);
 			session.setPasswordMD5(md5);
 		}
 		return logged;
 	}
-
-	// parameters are not defined yet
-	public boolean pay() {
-
-		return false;
+	
+	
+	/**
+	 * return the order of shopping cart if the payment is success
+	 * @param session
+	 * @return
+	 */
+	public Order pay(Session session) {
+		boolean success = false;
+		//
+		//TODO pay
+		//
+		if(success){
+			Order order = new Order(session.getShoppingCart());
+			return order;
+		}else{
+			return null;
+		}
+		
+		
+		
 	}
 
 	// parameters and return value are not defined yet
-	public void findInfo() {
-
+	public Product findInfo(String barcode) {
+		return null;
 	}
 
 }
