@@ -8,6 +8,9 @@ public class Session {
 	private String username;
 	private String passwordMD5;
 	private HashMap<Product, Integer> shoppingCart;
+	public HashMap<Product, Integer> getShoppingCart() {
+		return shoppingCart;
+	}
 	public Session(){
 		username = null;
 		passwordMD5 = null;
