@@ -48,4 +48,11 @@
 		<nature>com.springsource.sts.roo.core.nature</nature>
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>docs/API.js</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/API.js</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
