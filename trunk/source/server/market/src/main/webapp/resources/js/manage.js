@@ -56,7 +56,7 @@ window.onload= function() {
 			this.parentNode.parentNode.removeChild(tagMenu);//删除当前标签
 			var color=tagMenu.style.backgroundColor;
 			//设置如果关闭一个标签时，让最后一个标签得到焦点
-			if(color=="#ffff00"||color=="yellow") {//区别浏览器对颜色解释
+			
 				if(tags.length-1>=0) {
 					clearStyle();
 					tags[tags.length-1].style.background='url(../resources/image/tabbg1.gif)';
@@ -70,7 +70,7 @@ window.onload= function() {
 					clearMenu();
 					$("welcome").style.display="block"
 				}
-			}
+			
 		}
 		menu.appendChild(tagMenu);
 	}
