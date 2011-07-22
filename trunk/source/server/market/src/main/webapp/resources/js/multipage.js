@@ -95,10 +95,8 @@ Page.prototype.addItem=function(){
 	var currentrow=document.getElementById("group_one");
 	//currentrow.innerHTML+="<tr><td>1</td><td>&nbsp;</td><td>2</td><td>&nbsp;</td></tr>";
 	//this.__dataRows__ +="<tr><td>1</td><td>&nbsp;</td><td>2</td><td>&nbsp;</td></tr>";
-	var newtr=document.createElement("tr");
-	newtr
+	var newtr=document.createElement("tr");	
 	this.__dataRows__+=","+newtr;
-	alert(this.__dataRows__);
 	//page=new Page(4,'table1','group_one');
 	
 }
