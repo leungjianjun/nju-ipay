@@ -6,9 +6,6 @@
 * @param iAbsolute 每页显示记录数
 * @param sTableId 分页表格属性ID值，为String
 * @param sTBodyId 分页表格TBODY的属性ID值,为String,此项为要分页的主体内容
-* @Version 1.0.0
-* var __variable__; private
-* function __method__(){};private
 */
 function Page(iAbsolute,sTableId,sTBodyId)
 {
