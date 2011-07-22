@@ -5,7 +5,7 @@ window.onload= function() {
 	function $(id) {
 		return document.getElementById(id)
 	}
-
+		
 	var menu=$("topTags").getElementsByTagName("ul")[0];//顶部菜单容器
 	var tags=menu.getElementsByTagName("li");//顶部菜单
 	var ck=$("leftMenu").getElementsByTagName("ul")[0].getElementsByTagName("li");//左侧菜单
@@ -98,6 +98,9 @@ window.onload= function() {
 			$("c"+i).style.display="none";
 		}
 	}
+	
+	//表格分页功能,每10条数据一页
+	page=new Page(10,'','');
 }
 function showhide1() {
 	if(document.getElementById("leftMenu").style.display=="block") {
