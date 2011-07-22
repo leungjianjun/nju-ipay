@@ -9,8 +9,8 @@
 <script type="text/javascript" src="../resources/js/manage.js"></script>
 <script type="text/javascript" src="../resources/js/eventhandle.js"></script>
 <script type="text/javascript" src="../resources/js/jquery-1.6.js"></script>
-<link rel="stylesheet" href="../resources/css/home_style.css"
-	type="text/css" />
+<script type="text/javascript" src="../resources/js/multipage.js"></script>
+<link rel="stylesheet" href="../resources/css/home_style.css" type="text/css" />
 </head>
 <body>
 	<div id="whole_body">
@@ -38,6 +38,7 @@
 	</div>
 	<!---->
 	<div id="zhong">
+							
 		<div id="zb">
 			<div id="shb">
 				<ul>
@@ -87,9 +88,10 @@
 				</ul>
 			</div>
 		</div>
-		<div id="content">
+		
+<div id="content">
 			<div id="sm">
-				你好，××× <span>点击更多 </span>
+				你好，××× <span><a href="#">点击注销</a> </span>
 			</div>
 			<div id="welcome" class="content" style="display: block;">
 				<div align="center1">
@@ -102,12 +104,26 @@
 			</div>
 			<div id="c0" class="content">购物资料</div>
 			<div id="c1" class="content">购物管理</div>
-			<div id="c2" class="content">记录管理</div>
+			<div id="c2" class="content">
+				<table id="record_tab">
+					<thead>
+						<tr>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="record_tab_tbody">
+						
+					</tbody>
+				</table>
+			</div>
 			<div id="c3" class="content">交易管理</div>
 			<div id="c4" class="content">商品管理</div>
 			<div id="c5" class="content">系统管理</div>
-			<div id="c6" class="content">帮助信息</div>			
+			<div id="c6" class="content">
+				
+			</div>			
 		</div>
+			
 	</div>
 	</div>
 </body>

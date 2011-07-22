@@ -141,6 +141,15 @@
 				width:1200px;
 				height:600px;
 			}
+			#zhong #zb{
+				float:left;
+				width:200px;
+				height:500px;
+			}
+			#zhong #content{
+				width:790px;
+				height:600px;
+			}
 			#zhong #zb #sys {
 			background-image: url(../image/sysbg_01.gif);
 			background-repeat: repeat-x;
@@ -233,12 +242,14 @@
 			padding-left: 10px;
 			}
 			#zhong #content #sm {
-			height: 60px;
+			height: 60px;			
+			top:0px;
 			font-size: 14px;
 			font-weight: bold;
 			color: #124313;
 			padding-top: 14px;
 			padding-left: 10px;
+			float:left;
 			}
 			#zhong #content #sm span {
 			font-size: 12px;
@@ -247,12 +258,12 @@
 			}
 			#zhong .content{
 			width:700px;
-			height:100%;
+			height:500px;
 			display:none;
 			padding:5px;
 			overflow-y:auto;
 			line-height:30px;
-			background-color: #FFFFFF;
+			
 			}
 			#zhong .content1 {
 			width:500px;
@@ -284,6 +295,10 @@
 			
 			#c0{
 				
+			}
+			#c6
+			{
+				background-color:#1100EE;
 			}
 			/**/
 			-->
