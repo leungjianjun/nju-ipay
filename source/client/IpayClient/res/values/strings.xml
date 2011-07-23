@@ -15,7 +15,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="app_name">Barcode Scanner</string>
+  <string name="app_name">iPay</string>
   <string name="app_picker_name">Applications</string>
   <string name="bookmark_picker_name">Bookmarks</string>
   <string name="button_add_calendar">Add to calendar</string>
@@ -142,7 +142,10 @@
   <string name="hello">hello ipay</string>
   
   <!-- 资源在每块分类的尾部添加 命名规范为:activity名+类型+具体名字. e.g.  login_label_username -->
+  <!-- common -->
+  
   <!-- 登录(login)部分 -->
+ 
   <string name="login_label_username">Account</string>
   <string name="login_label_password">Password</string>
   <string name="login_button_login">Login</string>
