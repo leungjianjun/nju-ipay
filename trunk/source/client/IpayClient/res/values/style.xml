@@ -2,4 +2,17 @@
 <!-- 样式资源 -->
 <resources>
 	<!-- 资源在此后添加 -->
+
+	<!-- simple button -->
+
+	<!-- blue button -->
+	<style name="blue_button">
+		<item name="android:background">@drawable/blue_button_selector</item>
+		<item name="android:textColor">@color/simple_button_color</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<!-- navigation bar button -->
+
+	<!-- menu bar button -->
 </resources>

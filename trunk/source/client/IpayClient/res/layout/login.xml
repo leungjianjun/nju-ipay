@@ -9,10 +9,19 @@
   <!-- Logo部分 -->
 	<RelativeLayout 
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="0">
-      
-      
+      android:layout_height="wrap_content">
+		<TextView 
+ 			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:paddingTop="15dp"
+			android:text="@string/app_name"
+			android:textColor="@color/simple_button_color"
+			android:textSize="60sp"
+			android:shadowColor="#E6E6FA"
+			android:shadowDx="1"
+			android:shadowDy="1"
+			android:shadowRadius="0.5"/>
 	</RelativeLayout>
   <!-- 登录输入框布局 -->
   <RelativeLayout 
@@ -70,6 +79,7 @@
 		android:layout_alignRight="@id/login_password_edit"
 		android:layout_marginTop="10dp"        
 		android:text="@string/login_button_login"
+		style="@style/blue_button"
         />
         
 		<!-- 提示栏 -->
@@ -84,7 +94,8 @@
 		android:textColor="#888"
 		android:autoLink="web"
 		android:clickable="true"
-		/>  
+		/>
+		
   </RelativeLayout>
   
     <TextView  
