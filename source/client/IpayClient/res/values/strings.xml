@@ -15,7 +15,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="app_name">iPay</string>
+ 
   <string name="app_picker_name">Applications</string>
   <string name="bookmark_picker_name">Bookmarks</string>
   <string name="button_add_calendar">Add to calendar</string>
@@ -143,12 +143,14 @@
   
   <!-- 资源在每块分类的尾部添加 命名规范为:activity名+类型+具体名字. e.g.  login_label_username -->
   <!-- common -->
+  <string name="app_name">iPay</string>
   
   <!-- 登录(login)部分 -->
  
   <string name="login_label_username">Account</string>
   <string name="login_label_password">Password</string>
   <string name="login_button_login">Login</string>
+  <string name="login_label_learn_more">Learn more...</string>
   
   <!-- 购物车（shopping cart）部分 -->
   
@@ -169,5 +171,10 @@
   <!-- options menu -->
   
   <!-- menu bar -->
+  <string name="menu_bar_item_home">Home</string>
+  <string name="menu_bar_item_scanner">Scanner</string>
+  <string name="menu_bar_item_cart">Cart</string>
+  <string name="menu_bar_item_account">Account</string>
+  <string name="menu_bar_item_more">More</string>
   
 </resources>
