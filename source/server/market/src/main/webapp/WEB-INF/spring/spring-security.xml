@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:s="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+
+	<description>SpringSecurity安全配置</description>
+	
+	<!-- http安全配置 -->
+	<s:http auto-config="true" use-expressions="true">
+		<s:intercept-url pattern="/resources/**" filters="none" />
+		<s:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/login.action?error=true" />
+		<s:logout logout-success-url="/login" />
+	</s:http>
+	
+	<!-- 认证配置, 使用userDetailsService提供的用户信息 -->
+	<s:authentication-manager alias="authenticationManager">
+		<s:authentication-provider user-service-ref="userDetailsService">
+			<s:password-encoder hash="sha">
+    			<s:salt-source user-property="username"/>
+  			</s:password-encoder>
+		</s:authentication-provider>
+	</s:authentication-manager>
+
+	<!-- 项目实现的用户查询服务 -->
+	<bean id="userDetailsService" class="com.ipay.server.service.impl.UserDetailsServiceImpl" />
+	<!--  
+	<context:component-scan base-package="com.ipay.server" />-->
+</beans>
