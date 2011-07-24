@@ -29,7 +29,7 @@ public class InitDatabase {
 	
 	@SuppressWarnings("unchecked")
 	public InitDatabase(){
-		String[] contexts = new String[] {"classpath:spring/root-context.xml","classpath:spring/appServlet/servlet-context.xml","classpath:spring/appServlet/controllers.xml"};  
+		String[] contexts = new String[] {"classpath:spring/root-context.xml","classpath:spring/appServlet/servlet-context.xml"};  
 		XmlWebApplicationContext context = new XmlWebApplicationContext();  
         context.setConfigLocations(contexts);
         MockServletContext msc = new MockServletContext();  
