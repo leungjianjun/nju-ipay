@@ -47,8 +47,16 @@ public class InitDatabase {
 	 * 初始化所有的表单
 	 */
 	public void init(){
+		initUser();
 		initProduct();
 		initClient();
+	}
+
+	/**
+	 * 初始化权限
+	 */
+	private void initUser() {
+		
 	}
 
 	/**
