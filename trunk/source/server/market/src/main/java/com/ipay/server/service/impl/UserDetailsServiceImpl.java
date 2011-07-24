@@ -27,9 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
 		User user = dao.findUniqueBy("from User as user where user.account=?", username);
-		System.out.println(user.getAccount()+"  "+user.getPassword()+"========");
 		if (user == null) {
-			throw new UsernameNotFoundException("用户" + username + " 不存在");
+			throw new UsernameNotFoundException("用户" + username + "不存在");
 		}
 
 		//-- miniweb示例中无以下属性, 暂时全部设为true. --//
