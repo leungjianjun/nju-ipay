@@ -8,15 +8,32 @@ import javax.persistence.OneToMany;
 
 import com.google.common.collect.Sets;
 
+/**
+ * 该实体包含独立于商场的商品信息,是所有商店共用的商品信息,如条形码,产地,介绍等
+ * @author ljj
+ *
+ */
 @Entity
 public class ProductInfo extends BaseEntity {
 	
+	/**
+	 * 品牌,出版社
+	 */
 	private String banner;
 	
+	/**
+	 * 条形码
+	 */
 	private String barcode;
 	
+	/**
+	 * 商品名称
+	 */
 	private String name;
 	
+	/**
+	 * 商品属性,不要包括上面已经列出的上行啊
+	 */
 	@OneToMany
 	@JoinColumn
 	private Set<Attribute> atttributes = Sets.newHashSet();

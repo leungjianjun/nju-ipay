@@ -6,13 +6,27 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * 该实体包含顾客的详细信息
+ * @author ljj
+ *
+ */
 @Entity
 public class ClientInfo extends BaseEntity {
 	
+	/**
+	 * 手机号
+	 */
 	private String phonenum;
 	
+	/**
+	 * 真实姓名,实名制
+	 */
 	private String realname;
 	
+	/**
+	 * 注册时间
+	 */
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createDate;
 

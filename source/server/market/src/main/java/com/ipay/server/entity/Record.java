@@ -13,23 +13,44 @@ import javax.persistence.TemporalType;
 
 import com.google.common.collect.Sets;
 
+/**
+ * 该实体包含一次购买记录的信息
+ * @author ljj
+ *
+ */
 @Entity
 public class Record extends BaseEntity {
 	
+	/**
+	 * 客户
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	private Client client;
 	
+	/**
+	 * 购买时间
+	 */
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createDate;
 	
+	/**
+	 * 商场
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	private Market market;
 	
+	/**
+	 * 购买的订单
+	 */
 	@OneToMany(mappedBy="record",fetch = FetchType.LAZY)
 	private Set<Order> orders = Sets.newHashSet();
 	
+	/**
+	 * 总费用
+	 * =order.cost的总和-优惠
+	 */
 	private double total;
 
 	public Client getClient() {
