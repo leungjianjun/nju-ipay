@@ -3,6 +3,11 @@ package com.ipay.server.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+/**
+ * 该实体包含一个权限的信息
+ * @author ljj
+ *
+ */
 @Entity
 public class Authority extends BaseEntity {
 	/**
@@ -10,6 +15,9 @@ public class Authority extends BaseEntity {
 	 */
 	public static final String AUTHORITY_PREFIX = "ROLE_";
 
+	/**
+	 * 权限名
+	 */
 	@Column(nullable = false, unique = true)
 	private String name;
 

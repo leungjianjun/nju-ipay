@@ -5,17 +5,34 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * 该实体包含与商店有关的商品信息,包括价格,数量等
+ * @author ljj
+ *
+ */
 @Entity
 public class Product extends BaseEntity {
 	
+	/**
+	 * 所属商店
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	private Market market;
 	
+	/**
+	 * 价格
+	 */
 	private double price;
 	
+	/**
+	 * 数量
+	 */
 	private int quantity;
 	
+	/**
+	 * 所指向的的商品信息
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	private ProductInfo productInfo;

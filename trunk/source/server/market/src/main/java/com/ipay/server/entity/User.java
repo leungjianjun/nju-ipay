@@ -16,14 +16,26 @@ import org.hibernate.annotations.FetchMode;
 
 import com.google.common.collect.Lists;
 
+/**
+ * 该实体类用于记录每个用户的基本信息和权限管理
+ * @author ljj
+ *
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED )
 public class User extends BaseEntity {
 	
+	/**
+	 * 密码,注意密码是采用MD5+salt加密,也就是说
+	 * 密码=MD5(原密码,帐号)
+	 */
 	@NotNull
 	@Size(min = 2, max = 25)
 	private String password;
 	
+	/**
+	 * 帐号
+	 */
 	@NotNull
 	@Size(min = 2, max = 25)
 	@Column(nullable = false, unique = true)

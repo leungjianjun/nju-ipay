@@ -20,14 +20,14 @@ import com.ipay.server.entity.User;
 @Service("userDetailsService")
 @Transactional(readOnly=true)
 public class UserDetailsServiceImpl implements UserDetailsService{
+	
 	@Autowired
 	private IDao<User> dao;
 
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
-		System.out.println(username +" " + dao);
-		User user = dao.findUniqueBy("from User as user where user.loginName=?", username);
-		
+		User user = dao.findUniqueBy("from User as user where user.account=?", username);
+		System.out.println(user.getAccount()+"  "+user.getPassword()+"========");
 		if (user == null) {
 			throw new UsernameNotFoundException("用户" + username + " 不存在");
 		}

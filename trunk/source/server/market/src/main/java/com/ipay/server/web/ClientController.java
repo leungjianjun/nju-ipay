@@ -7,6 +7,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +32,15 @@ public class ClientController {
 		this.clientService = clientService;
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		Client client = new Client();
+		client.setAccount("admin2");
+		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
+		client.setPassword(md5.encodePassword("admin2", "admin2"));
+		clientService.create(client);
 		logger.info("client login "+ locale.toString());
-	
-		
-		return "home";
+		return "login_test";
 	}
 
 }
