@@ -34,11 +34,6 @@ public class ClientController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		Client client = new Client();
-		client.setAccount("admin2");
-		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
-		client.setPassword(md5.encodePassword("admin2", "admin2"));
-		clientService.create(client);
 		logger.info("client login "+ locale.toString());
 		return "login_test";
 	}
