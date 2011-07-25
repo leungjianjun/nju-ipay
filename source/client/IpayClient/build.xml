@@ -187,9 +187,7 @@ limitations under the License.
         <pathelement path="${main-out-classes}"/>
       </classpath>
     </javac>
-
-    <unzip src="../lib/core.jar" dest="${out-classes}" overwrite="true"/>
-
+  	
     <antcall target="optimize"/>
   </target>
 
