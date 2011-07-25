@@ -3,6 +3,7 @@ package com.ipay.server.entity;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -53,7 +54,7 @@ public class MarketInfo extends BaseEntity {
 	/**
 	 * 特价商品列表
 	 */
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<SpecialProduct> specialProducts = Sets.newHashSet();
 
 	public String getComplainPhone() {
