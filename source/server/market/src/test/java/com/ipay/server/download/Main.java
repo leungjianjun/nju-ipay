@@ -33,7 +33,7 @@ public class Main {
 		System.out.println(title);
 		int startindex=0;
 		int length=0;String price=null;
-		Attribute attr=new Attribute();
+		Attribute attr=new Attribute("","");
 		Element startIndex_div=html.getElementById("atfResults");
 		
 		Element startIndex_div2=startIndex_div.getElementsByAttribute("name").get(0);
