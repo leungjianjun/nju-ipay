@@ -98,7 +98,7 @@ limitations under the License.
   <property name="source-location" value="${basedir}/${source-folder}" />
 
   <!-- folder for the 3rd party java libraries -->
-  <!--<property name="external-libs-folder" value="../core" />-->
+  <!--<property name="external-libs-folder" value="../lib" />-->
 
   <!-- Output directories -->
   <property name="gen-folder" value="gen" />
@@ -187,7 +187,7 @@ limitations under the License.
       </classpath>
     </javac>
 
-    <unzip src="../core/core.jar" dest="${out-classes}" overwrite="true"/>
+    <unzip src="../lib/core.jar" dest="${out-classes}" overwrite="true"/>
 
     <antcall target="optimize"/>
   </target>
