@@ -5,9 +5,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * 一次消费产生的清单
+ * @author tianming
+ *
+ */
 public class Order {
 	private String dateStr;
 	private HashMap<Product, Integer> products;
+	private double sum;
 	public Order(HashMap<Product, Integer> products){
 		this.products = products;
 		Calendar calendar = Calendar.getInstance();

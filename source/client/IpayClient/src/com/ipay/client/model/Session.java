@@ -2,6 +2,11 @@ package com.ipay.client.model;
 
 import java.util.HashMap;
 
+/**
+ * 维护用户名，密码以及购物车心信息
+ * @author tianming
+ *
+ */
 public class Session {
 	private String username;
 	private String passwordMD5;
