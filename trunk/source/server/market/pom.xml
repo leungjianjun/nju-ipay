@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ipay</groupId>
 	<artifactId>server</artifactId>
-	<name>abc</name>
 	<packaging>war</packaging>
+	<name>ipay_server</name>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
