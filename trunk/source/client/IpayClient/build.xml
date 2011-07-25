@@ -20,7 +20,7 @@ limitations under the License.
   to find the SDK location, I've removed it and pointed us at the global ZXing build.properties. -->
   <property file="../build.properties"/>
   <!-- Parts of the Android build system insist on the name 'sdk-location', so alias it. -->
-  <property name="sdk.dir" value="${android-home}"/>
+  <property name="sdk.dir" value="/usr/local/android-sdk"/>
 
   <!-- The build.properties file can be created by you and is never touched
   by the 'android' tool. This is the place to change some of the default property values
@@ -48,6 +48,8 @@ limitations under the License.
   This file is an integral part of the build system for your application and
   should be checked in in Version Control Systems. -->
   <property file="default.properties"/>
+
+  <property file="local.properties"></property>
 
   <!-- Custom Android task to deal with the project target, and import the proper rules.
   This requires ant 1.6.0 or above. -->
