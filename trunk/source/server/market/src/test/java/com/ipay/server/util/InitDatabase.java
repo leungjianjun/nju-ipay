@@ -94,13 +94,13 @@ public class InitDatabase {
 		//电脑产品
 		//Document base=Jsoup.connect("http://www.amazon.cn/s/ref=amb_link_28946932_1?ie=UTF8&rh=n%3A888483051&page=1&pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=center-banner&pf_rd_r=0C9528G07S1VK1M35PAT&pf_rd_t=101&pf_rd_p=61173952&pf_rd_i=888465051").get();
 		//经济类图书
-		//Document base=Jsoup.connect("http://www.amazon.cn/s?ie=UTF8&rh=n%3A77817071&page=1").get();
+		Document base=Jsoup.connect("http://www.amazon.cn/s?ie=UTF8&rh=n%3A77817071&page=1").get();
 		//运动类服装
 		//Document base=Jsoup.connect("http://www.amazon.cn/s/ref=amb_link_29737092_13?ie=UTF8&rh=n%3A42786071%2Cp_n_target_audience_browse-bin%3A2039852051&pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=left-2&pf_rd_r=018KJJQY2JEZT2CK5B67&pf_rd_t=101&pf_rd_p=60743632&pf_rd_i=42786071").get();
 		//食品类
-		Document base=Jsoup.connect("http://www.amazon.cn/gp/search/ref=sr_ex_n_1?rh=n%3A2127215051%2Cn%3A!2127216051%2Cn%3A2134651051&bbn=2134651051&ie=UTF8&qid=1311492586").get();
+		//Document base=Jsoup.connect("http://www.amazon.cn/gp/search/ref=sr_ex_n_1?rh=n%3A2127215051%2Cn%3A!2127216051%2Cn%3A2134651051&bbn=2134651051&ie=UTF8&qid=1311492586").get();
 		String baseurl=base.baseUri().substring(0,base.baseUri().toString().length()-1);
-		String flag="food";
+		String flag="book";
 		//String flag="book";
 		if(flag=="food")
 		{

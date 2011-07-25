@@ -35,6 +35,14 @@ public class UserServiceImpl<T extends User> extends ServiceImpl<T> implements I
 	public void setAuthorityDao(IDao<Authority> authorityDao) {
 		this.authorityDao = authorityDao;
 	}
+
+	public void createAuthority(Authority authority) {
+		authorityDao.persist(authority);
+	}
+
+	public Authority getAuthority(String name) {
+		return authorityDao.findUniqueBy("from Authority as authority where authority.name =?", name);
+	}
 	
 	
 

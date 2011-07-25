@@ -2,9 +2,13 @@ package com.ipay.server.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.google.common.collect.Sets;
 
@@ -24,6 +28,8 @@ public class ProductInfo extends BaseEntity {
 	/**
 	 * 条形码
 	 */
+	@NotNull
+	@Column(nullable = false, unique = true)
 	private String barcode;
 	
 	/**
@@ -34,9 +40,11 @@ public class ProductInfo extends BaseEntity {
 	/**
 	 * 商品属性,不要包括上面已经列出的上行啊
 	 */
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn
 	private Set<Attribute> atttributes = Sets.newHashSet();
+	
+	private String imgUrl;
 
 	public String getBanner() {
 		return banner;
@@ -68,6 +76,14 @@ public class ProductInfo extends BaseEntity {
 
 	public void setAtttributes(Set<Attribute> atttributes) {
 		this.atttributes = atttributes;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 
