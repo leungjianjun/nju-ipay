@@ -238,8 +238,8 @@ limitations under the License.
   <target name="debug" depends="dex, package-resources">
     <apkbuilder
         outfolder="${out-folder}"
-        resourcefile="BarcodeScanner"
-        apkfilepath="${out-folder}/BarcodeScanner-debug.apk"
+        resourcefile="IpayClient"
+        apkfilepath="${out-folder}/IpayClient-debug.apk"
         debugpackaging="true"
         debugsigning="true"
         verbose="false">
@@ -247,13 +247,13 @@ limitations under the License.
       <sourcefolder path="${source-folder}" />
       <jarfolder path="${external-libs-folder}" />
     </apkbuilder>
-    <copy file="${out-folder}/BarcodeScanner-debug.apk" tofile="${out-folder}/temp.apk" overwrite="true"/>
+    <copy file="${out-folder}/IpayClient-debug.apk" tofile="${out-folder}/temp.apk" overwrite="true"/>
     <exec executable="${android-tools}/zipalign">
       <arg value="-f"/>
       <arg value="-v"/>
       <arg value="4"/>
       <arg value="${out-folder}/temp.apk"/>
-      <arg value="${out-folder}/BarcodeScanner-debug.apk"/>
+      <arg value="${out-folder}/IpayClient-debug.apk"/>
     </exec>
   </target>
 
@@ -262,8 +262,8 @@ limitations under the License.
   <target name="release" depends="dex, package-resources">
     <apkbuilder
         outfolder="${out-folder}"
-        resourcefile="BarcodeScanner"
-        apkfilepath="${out-folder}/BarcodeScanner-unsigned.apk"
+        resourcefile="IpayClient"
+        apkfilepath="${out-folder}/IpayClient-unsigned.apk"
         debugpackaging="false"
         debugsigning="false"
         verbose="false">
@@ -272,7 +272,7 @@ limitations under the License.
       <jarfolder path="${external-libs-folder}" />
     </apkbuilder>
     <echo>All generated packages need to be signed with jarsigner before they are published.</echo>
-    <echo>Also run zipalign -f -v 4 BarcodeScanner.apk BarcodeScanner-aligned.apk after signing</echo>
+    <echo>Also run zipalign -f -v 4 IpayClient.apk IpayClient-aligned.apk after signing</echo>
   </target>
 
   <!-- Install (or reinstall) the package on the default emulator -->
