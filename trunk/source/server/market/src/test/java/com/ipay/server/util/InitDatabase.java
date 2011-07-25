@@ -180,9 +180,15 @@ public class InitDatabase {
 		String market_ip=null;
 		String account=null;
 		String password=null;
+		String introduction=" ";
 		
 		
 		//初始化商场1信息
+		//marketinfo.setComplainPhone("025-23893278");
+		//marketinfo.setCreateDate(new Date());
+		//marketinfo.setLocation("");
+	    marketinfo.setIntroduction(introduction);
+        marketinfo.setName("Market_1");
 		
 		market.setCardnum("TM2011001");
 		market.setIp(market_ip);
