@@ -179,6 +179,7 @@ limitations under the License.
            includeantruntime="false">
       <src path="${source-folder}" />
       <src path="${gen-folder}" />
+      <compilerarg line="-encoding UTF-8 "/> 
       <classpath>
         <fileset dir="${external-libs-folder}" includes="*.jar"/>
         <!-- yeah, want to not use this mechanism above -->
