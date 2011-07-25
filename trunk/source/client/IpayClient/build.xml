@@ -182,7 +182,7 @@ limitations under the License.
       <classpath>
         <fileset dir="${external-libs-folder}" includes="*.jar"/>
         <!-- yeah, want to not use this mechanism above -->
-        <pathelement path="../core/core.jar"/>
+        <pathelement path="../lib/core.jar"/>
         <pathelement path="${main-out-classes}"/>
       </classpath>
     </javac>
