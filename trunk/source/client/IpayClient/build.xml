@@ -188,31 +188,6 @@ limitations under the License.
       </classpath>
     </javac>
   	
-    <antcall target="optimize"/>
-  </target>
-
-  <target name="optimize" unless="no-optimize">
-    <mkdir dir="optimized"/>
-    <property name="libraryjars.path" refid="android.target.classpath"/>
-    <java jar="${proguard-jar}" fork="true" failonerror="true">
-      <jvmarg value="-Dmaximum.inlined.code.length=48"/>
-      <arg value="-injars ${out-classes}"/>
-      <arg value="-outjars optimized"/>
-      <arg value="-libraryjars ${libraryjars.path}"/>
-      <arg value="-keep class com.google.zxing.client.android.*Activity"/>
-      <arg value="-keep class com.google.zxing.client.android.ViewfinderView { public * ; }"/>
-      <arg value="-keep class com.google.zxing.client.android.book.SearchBookContents* { public * ; }"/>
-      <arg value="-target 5"/>
-      <arg value="-optimizationpasses 5"/>
-      <arg value="-optimizations !field/*,!class/merging/*"/> <!-- works around dex VerifyError -->
-      <arg value="-dontshrink"/>
-      <arg value="-dontobfuscate"/>
-      <arg value="-dontskipnonpubliclibraryclasses"/>
-      <arg value="-verbose"/>
-      <arg value="-dump proguard-dump.txt"/>
-    </java>
-    <delete dir="${out-classes}"/>
-    <move file="optimized" tofile="${out-classes}"/>
   </target>
 
   <!-- Convert this project's .class files into .dex files. -->
