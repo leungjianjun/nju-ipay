@@ -52,10 +52,13 @@ public class InitDatabase {
 	 * @throws IOException
 	 */
 	public void init() throws IOException{
+		System.out.println("Start");
 		initUser();
-		initProduct();
+		System.out.println("Middle");
 		initClient();
-		initMarket();
+		System.out.println("End");
+		
+		//initMarket();
 	}
 
 	/**
@@ -65,11 +68,16 @@ public class InitDatabase {
 		User user=new User();
 		
 		Authority auth=new Authority();
-		String name="";
-		auth.setName(name);
+		auth.setName("admin");
+		userService.createAuthority(auth);
 		
-		user.getAuthorityList().add(auth);
+		Authority auth2=new Authority();
+		auth2.setName("market");
+		userService.createAuthority(auth2);
 		
+		Authority auth3=new Authority();
+		auth3.setName("client");		
+		userService.createAuthority(auth3);		
 	}
 
 	/**
@@ -88,7 +96,7 @@ public class InitDatabase {
 	 * @throws IOException 
 	 */
 	private void initProduct() throws IOException{
-		Product product=new Product();		
+		Product product=new Product();	
 		ProductInfo productinfo=new ProductInfo();
 		Main main=new Main();
 		//电脑产品
@@ -100,7 +108,10 @@ public class InitDatabase {
 		//食品类
 		//Document base=Jsoup.connect("http://www.amazon.cn/gp/search/ref=sr_ex_n_1?rh=n%3A2127215051%2Cn%3A!2127216051%2Cn%3A2134651051&bbn=2134651051&ie=UTF8&qid=1311492586").get();
 		String baseurl=base.baseUri().substring(0,base.baseUri().toString().length()-1);
-		String flag="book";
+
+		//String flag="book";
+		String flag="food";
+
 		//String flag="book";
 		if(flag=="food")
 		{
@@ -109,14 +120,16 @@ public class InitDatabase {
 				//main.Download(baseurl, i,3,product,productinfo,"book");	//经济类图书
 				//main.Download(baseurl, i, 2);	//电脑类产品
 				//main.Download(baseurl, i, 2);	//运动类服装
-				productService.create(main.Download(baseurl,i,2,product,productinfo,"food"));	//食品类
+				//productService.create(main.Download(baseurl,i,2,product,productinfo,"food"));	//食品类
+				main.Download(baseurl,i,2,product,productinfo,"food");
 			}
 		}
 		if(flag=="book")
 		{
 			for(int i=1;i<50;i++)
 			{
-				productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
+				main.Download(baseurl, i, 3, product, productinfo, flag);
+				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
 			}
 		}
 	}
@@ -134,32 +147,22 @@ public class InitDatabase {
 		order.setCost(1000.0);
 		order.setQuantity(1);		
 		
-		Client client = new Client();
-		client.setAccount("admin");
-		client.setPassword(md5.encodePassword("admin", "admin"));
-		client.setCardnum("adhfhd24328988");
-		client.setPaypass("paypass");
+		Client client = new Client();		
 		
 		ClientInfo clientInfo = new ClientInfo();
-		clientInfo.setCreateDate(new Date());
-		clientInfo.setPhonenum("15996292433");
-		clientInfo.setRealname("张大勇");
 		
-		client.setClientInfo(clientInfo );
-		client.getRecords().add(record);
-		
-		clientService.create(client);
 		
 		for(int i=0;i<100;i++)
 		{
 			client.setAccount("Client"+i);
-			client.setAccount(md5.encodePassword("Client"+i, "Client"+i));
+			client.setPassword(md5.encodePassword("Client"+i, "Client"+i));
 			client.setCardnum("asdfa12"+i%10+"34"+i/10+"67");
 			client.setPaypass("paypass"+i);
+			client.getAuthorityList().add(userService.getAuthority("client"));			
 			
 			clientInfo.setCreateDate(new Date());
 			clientInfo.setPhonenum("15996294"+i/10+"67"+i%10);
-			clientInfo.setRealname("张三");
+			clientInfo.setRealname("张三"+i);
 			
 			client.setClientInfo(clientInfo);
 			
