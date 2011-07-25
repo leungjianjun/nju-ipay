@@ -6,14 +6,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>系统登入</title>
-		<script language="javascript" src="js/zsedu.js"></script>
+		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=7" />
 		<title>iPay商场服务管理系统</title>
 		<style type="text/css" title="">
 			<!--
 			*{margin:0;padding:0;}
-			body{ background:url(../resources/image/login_bg.jpg) no-repeat center top #04305d;}
+			body{ background:url('<c:url "/resources/image/login_bg.jpg"/>') no-repeat center top #04305d;}
 
 			.login {width:350px; height:192px; margin:168px auto 0 auto; padding:29px 20px 10px 20px; text-align:center;}
 
@@ -147,7 +147,7 @@
 					<tr>
 						<td align="right"></td>
 						<td align="left">
-						<img src="../resources/image/btn_login.jpg" width="93" height="30" onclick="login()" style="cursor:pointer"/>
+						<img src='<c:url "/resources/image/btn_login.jpg"/>' width="93" height="30" onclick="login()" style="cursor:pointer"/>
 						&nbsp;
 						</td>
 					</tr>
