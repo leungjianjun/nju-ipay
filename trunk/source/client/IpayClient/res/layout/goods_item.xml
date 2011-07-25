@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:padding="5dp">
+  
+	<!-- 如果商品有图片，则这部分负责显示图片；否则，删除这个布局 
+  	图片大小为48*48，可以根据需求调整。
+  
+  	-->
+  	<FrameLayout 
+  		android:layout_width="48dp"
+  		android:layout_height="48dp"
+  		android:layout_marginTop="2dp"
+		android:layout_marginLeft="2dp"
+		android:layout_marginBottom="2dp"
+		android:layout_marginRight="10dp">
+		
+	  	<!-- 商品图片 -->
+	  	<ImageView 
+	  		android:id="@+id/goods_image"
+	  		android:layout_width="fill_parent"
+	  		android:layout_height="fill_parent"
+	  		android:src="@drawable/goods_image_example"/>
+	  	<!-- 图片圆角边框 -->
+	  	<ImageView 
+	  		android:background="@drawable/images_border_radius"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"/>
+	        
+	</FrameLayout>
+	  
+	<!-- 存储商品名称和信息的容器 -->
+	<RelativeLayout 
+		android:orientation="vertical"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content" 
+	  	android:layout_marginTop="2dp"
+	>
+  
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+		>
+
+			<!-- 显示商品名称的TextView TODO：用自定义的TextView -->
+			<!-- 测试 -->
+			<TextView 
+				android:id="@+id/goods_item_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="@style/LinkText.Bold.Big"
+				android:text="Goods NO.1"
+			/>
+			<!-- 显示商品简要信息的TextView TODO：用自定义的TextView -->
+  			<!-- 测试 -->
+			<TextView 
+  				android:id="@+id/goods_item_meta"
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  				android:layout_marginTop="2dp"
+				android:textColor="@color/goods_item_meta_text"
+				android:text="Goods meta"
+  			/>
+  		</LinearLayout>
+		<!-- NOTE: 不能使用Button, 否则ListView的点击事件会失效 -->
+		<!-- 测试 -->
+		<TextView
+			android:id="@+id/goods_item_add_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:gravity="center"
+			android:clickable="true"
+			style="@style/white_button"
+			android:textSize="14sp"
+			android:layout_marginTop="5dip"
+			android:layout_marginRight="5dip"
+			android:text="Add"
+		/>
+  </RelativeLayout>
+     
+</LinearLayout>
