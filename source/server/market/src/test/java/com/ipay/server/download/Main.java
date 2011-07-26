@@ -8,22 +8,31 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.mock.web.MockServletContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import com.ipay.server.entity.Attribute;
+import com.ipay.server.entity.Client;
+import com.ipay.server.entity.Market;
 import com.ipay.server.entity.Product;
 import com.ipay.server.entity.ProductInfo;
+import com.ipay.server.entity.Record;
+import com.ipay.server.entity.User;
 
 import com.ipay.server.download.Main;
 import com.ipay.server.entity.*;
 import com.ipay.server.service.*;
 
 public class Main {
+	
+	
 	public Main()
-	{		
+	{				
 	}
 	
 	
-	public Product Download(String baseurl,int i,int index,Product product,ProductInfo productinfo,String flag) throws IOException
+	public Product Download(IMarketService<Market> marketService,IProductService<Product> productService,String baseurl,int i,int index,Product product,ProductInfo productinfo,String flag) throws IOException
 	{		
 		Document html=Jsoup.connect(baseurl+i).get();
 		System.out.println(html.getElementById("resultCount").text());
@@ -64,20 +73,29 @@ public class Main {
 				
 				//System.out.println(temp_span.text());
 				String author=temp_span.text().split(" ")[0];
-				String printer=temp_span.text().split(" ")[1];
-				attr.setKey("作者");attr.setValue(author);
-				productinfo.getAtttributes().add(attr);
-				attr.setKey("出版社");attr.setValue(printer);
-				productinfo.getAtttributes().add(attr);
-				
-				getDetail(detail,attr,productinfo,flag);
+				String printer=temp_span.text().split(" ")[1];				
+				productinfo.getAtttributes().add(new Attribute("作者",author));				
+				productinfo.getAtttributes().add(new Attribute("出版社",printer));
+				productinfo.setBanner(printer);
+				productinfo.setVersion(1);
+				String banner=getDetail(detail,attr,product,productinfo,flag);
 			
-			productinfo.getAtttributes().add(attr);
-			product.setProductInfo(productinfo);
 			product.setPrice(Double.parseDouble(bookprice));
-			
-			
+			product.setProductInfo(productService.getProductInfo(banner));
+			product.setVersion(1);
+			product.setQuantity(100);
 		  }
+		 if(i<10)
+		 {product.setMarket(marketService.find(Market.class, 1));}
+		 if(i>=10&& i<15)
+		 {product.setMarket(marketService.find(Market.class, 2));}
+		 if(i>=15)
+		 {product.setMarket(marketService.find(Market.class, 3));}
+		 
+		 
+		  productService.createProductInfo(productinfo);
+		  productService.create(product);
+		  System.out.println("insert");
 		}
 		
 		if(flag=="food")
@@ -94,29 +112,36 @@ public class Main {
 				String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
 				Elements temp_span=temp_div2.getElementsByTag("span");			
 					System.out.println(bookname+" Price:"+price);				
-					//String author=temp_span.text().split(" ")[0];
-					//String printer=temp_span.text().split(" ")[1];
-					//System.out.println(price);
-					System.out.println("详细信息:");
-					getDetail(detail,attr,productinfo,flag);
-				System.out.println("\n");
+					
+					
+					String banner=getDetail(detail,attr,product,productinfo,flag);
 				
-				productinfo.getAtttributes().add(attr);
-				//product.setPrice(Double.parseDouble(price));
-				product.setProductInfo(productinfo);
-				
-				
+				product.setProductInfo(productService.getProductInfo(banner));	
+				product.setPrice(Double.parseDouble(price));
+				product.setVersion(1);
+				product.setQuantity(100);
 			}
+			
+			if(i<10)
+			 {product.setMarket(marketService.find(Market.class, 1));}
+			 if(i>=10&& i<15)
+			 {product.setMarket(marketService.find(Market.class, 2));}
+			 if(i>=15)
+			 {product.setMarket(marketService.find(Market.class, 3));}
+			 
+			productService.createProductInfo(productinfo);
+			productService.create(product);
 		}
 		
 		return product;
 	}
 
-	public static void getDetail(String url,Attribute attr,ProductInfo productinfo,String flag) throws IOException
+	public static String getDetail(String url,Attribute attr,Product product,ProductInfo productinfo,String flag) throws IOException
 	{
 		Document detailHtml=Jsoup.connect(url).get();
 		//System.out.println(detailHtml);
 		Elements details=detailHtml.getElementsByTag("h2");
+		String banner=null;
 		//Element detail=details.get(17);
 		//System.out.println(detail.text());
 		Element temp_element;
@@ -134,16 +159,14 @@ public class Main {
 						String []temp_array=new String[2];
 						temp_array=lis.get(m).text().split(" ",2);
 						if(temp_array[0].equals("ISBN:"))
-							{attr.setKey("ISBN");attr.setValue(temp_array[1]);
-							productinfo.getAtttributes().add(attr);}
+							{productinfo.getAtttributes().add(new Attribute("ISBN",temp_array[1]));}
 						if(temp_array[0].equals("条形码:"))
-							productinfo.setBarcode(temp_array[1]);
+							{productinfo.setBarcode(temp_array[1]);
+							banner=temp_array[1];}
 						if(temp_array[0].equals("平装:"))
-							{attr.setKey("规格");attr.setValue(temp_array[0]);
-							productinfo.getAtttributes().add(attr);
-							 attr.setKey("页数");attr.setValue(temp_array[1]);
-							 productinfo.getAtttributes().add(attr);}					
-					}
+							{productinfo.getAtttributes().add(new Attribute("规格",temp_array[0]));							 
+							 productinfo.getAtttributes().add(new Attribute("页数",temp_array[1]));}					
+					}					
 				}
 				if(flag=="food")
 				{
@@ -153,22 +176,20 @@ public class Main {
 					{
 						temp_array=lis.get(k).text().split(" ",2);
 						if(temp_array[0].equals("产品尺寸及重量:"))
-							{attr.setKey("产品尺寸及重量:");attr.setValue(temp_array[1]);
-							 productinfo.getAtttributes().add(attr);
-							 System.out.println(temp_array[0]+" "+temp_array[1]);}
+							{productinfo.getAtttributes().add(new Attribute("产品尺寸及重量",temp_array[1]));
+							 }
 						if(temp_array[0].equals("ASIN:"))
-							{attr.setKey("ASIN");attr.setValue(temp_array[1]);
-							 productinfo.getAtttributes().add(attr);
-							 System.out.println(temp_array[0]+" "+temp_array[1]);}
+							{productinfo.getAtttributes().add(new Attribute("ASIN",temp_array[1]));
+							productinfo.setBanner(temp_array[1]);banner=temp_array[1];}
+							 //System.out.println(temp_array[0]+" "+temp_array[1]);}
 						if(temp_array[0].equals("产地:"))
-							{attr.setKey("产地");attr.setValue(temp_array[1]);
-							 productinfo.getAtttributes().add(attr);
-							 System.out.println(temp_array[0]+" "+temp_array[1]);}
+							{productinfo.getAtttributes().add(new Attribute("产地",temp_array[1]));
+							 }
 					}
 				}
 			}
 		}
-		
+		return banner;
 	}
 }
 
