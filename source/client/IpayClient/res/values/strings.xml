@@ -146,13 +146,14 @@
   <string name="app_name">iPay</string>
   
   <!-- 登录(login)部分 -->
- 
   <string name="login_label_username">Account</string>
   <string name="login_label_password">Password</string>
   <string name="login_button_login">Login</string>
   <string name="login_label_learn_more">Learn more...</string>
   
   <!-- 购物车（shopping cart）部分 -->
+  
+  
   
   <!-- 商品信息（goods info）部分 -->
   
@@ -162,13 +163,19 @@
   
   <!-- 提示部分 -->
   
+  
  
   
   <!-- context menu -->
   <string name="cmenu_add_to_cart">Add to cart</string>
+  <string name="cmenu_detail">Detail</string>
   <string name="cmenu_delete">Delete</string>
   
   <!-- options menu -->
+  <string name="omenu_quit">Quit</string>
+  <string name="omenu_logout">Logout</string>
+  <string name="omenu_setting">Setting</string>
+  <string name="omenu_about">About</string>
   
   <!-- menu bar -->
   <string name="menu_bar_item_home">Home</string>
