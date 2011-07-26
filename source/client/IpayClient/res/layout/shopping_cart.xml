@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/body_background"
+>
     
+    <!-- 顶部栏 -->
+    <include layout="@layout/navi_bar"/>
+    
+    <!--  -->
+    <!-- Main content area. 
+    <ListView
+    android:id="@+id/goods_list"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:cacheColorHint="#00000000"
+    android:fadeScrollbars="true"
+    android:divider="@drawable/dashed_line"
+    android:dividerHeight="1dip"
+    android:fastScrollEnabled="true"
+    />  
+    -->
+    
+    <TextView 
+    
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:text="这是列表"
+    
+    />
+    
+    <include layout="@layout/menu_bar"/>
+
 </LinearLayout>
