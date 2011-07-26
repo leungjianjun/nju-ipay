@@ -23,7 +23,7 @@ import com.ipay.client.model.Product;
 import com.ipay.client.model.Session;
 
 /**
- * all communication with the server is done by this class
+ * 所有与服务器的通信由此类完成
  * 
  * @author tianming
  * 
@@ -67,15 +67,16 @@ public class CommunicationManager {
     /** Service Unavailable: The Weibo servers are up, but overloaded with requests. Try again later. The search and trend methods use this to indicate when you are being rate limited. */
     public static final int SERVICE_UNAVAILABLE = 503;
 
+	
+	
 	/**
 	 * 
+	 * @param session 若为null，创建新session对象并返回，否则仅修改session的username和password属性
 	 * @param username
 	 * @param password
-	 * @return boolean for security reason, find out the MD5 of password first
-	 *         then send the user name and md5 value to the server for
-	 *         authentication
+	 * @return	失败返回null
 	 */
-	public boolean login(Session session, String username, String password) {
+	public Session login(Session session, String username, String password) {
 		String md5 = Md5Crypto.encrypt(password);
 		JSONObject personalInfo = new JSONObject();
 
@@ -117,14 +118,15 @@ public class CommunicationManager {
 			session.setUsername(username);
 			session.setPasswordMD5(md5);
 		}
-		return logged;
+		return null;
 	}
 	
 	
 	/**
-	 * return the order of shopping cart if the payment is success
+	 * 
 	 * @param session
-	 * @return
+	 * @param payPassword 支付密码
+	 * @return 支付失败返回null
 	 */
 	public Order pay(Session session, String payPassword) {
 		boolean success = false;
@@ -171,7 +173,11 @@ public class CommunicationManager {
 		
 	}
 
-	// parameters and return value are not defined yet
+	
+	/**
+	 * @param barcode
+	 * @return 查找失败返回null
+	 */
 	public Product findInfo(String barcode) {
 		HttpGet get = new HttpGet(PRODUCT_URL + barcode);
 		HttpClient client = new DefaultHttpClient();
