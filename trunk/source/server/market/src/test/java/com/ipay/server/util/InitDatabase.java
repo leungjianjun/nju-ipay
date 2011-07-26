@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.web.context.WebApplicationContext;
@@ -52,12 +54,14 @@ public class InitDatabase {
 	 * @throws IOException
 	 */
 	public void init() throws IOException{
-		System.out.println("Start");
+		System.out.println("Init User");
 		initUser();
-		System.out.println("Middle");
+		//System.out.println("InitClient");
 		initClient();
-		System.out.println("End");
-		
+		System.out.println("InitMarket");
+		initMarket();
+		System.out.println("InitProduct");
+		initProduct();
 		//initMarket();
 	}
 
@@ -85,9 +89,9 @@ public class InitDatabase {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		System.out.println("s");
+		
 		InitDatabase initDatabase = new InitDatabase();
-		System.out.println("Program Start");
+		
 		initDatabase.init();
 	}
 	
@@ -98,42 +102,226 @@ public class InitDatabase {
 	 * @throws IOException 
 	 */
 	private void initProduct() throws IOException{
-		Product product=new Product();	
-		ProductInfo productinfo=new ProductInfo();
+		
 		Main main=new Main();
 		//电脑产品
 		//Document base=Jsoup.connect("http://www.amazon.cn/s/ref=amb_link_28946932_1?ie=UTF8&rh=n%3A888483051&page=1&pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=center-banner&pf_rd_r=0C9528G07S1VK1M35PAT&pf_rd_t=101&pf_rd_p=61173952&pf_rd_i=888465051").get();
 		//经济类图书
-		Document base=Jsoup.connect("http://www.amazon.cn/s?ie=UTF8&rh=n%3A77817071&page=1").get();
+		//Document base=Jsoup.connect("http://www.amazon.cn/s?ie=UTF8&rh=n%3A77817071&page=1").get();
 		//运动类服装
 		//Document base=Jsoup.connect("http://www.amazon.cn/s/ref=amb_link_29737092_13?ie=UTF8&rh=n%3A42786071%2Cp_n_target_audience_browse-bin%3A2039852051&pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=left-2&pf_rd_r=018KJJQY2JEZT2CK5B67&pf_rd_t=101&pf_rd_p=60743632&pf_rd_i=42786071").get();
 		//食品类
-		//Document base=Jsoup.connect("http://www.amazon.cn/gp/search/ref=sr_ex_n_1?rh=n%3A2127215051%2Cn%3A!2127216051%2Cn%3A2134651051&bbn=2134651051&ie=UTF8&qid=1311492586").get();
+		Document base=Jsoup.connect("http://www.amazon.cn/gp/search/ref=sr_ex_n_1?rh=n%3A2127215051%2Cn%3A!2127216051%2Cn%3A2134651051&bbn=2134651051&ie=UTF8&qid=1311492586").get();
 		String baseurl=base.baseUri().substring(0,base.baseUri().toString().length()-1);
 
 		//String flag="book";
-		String flag="food";
-
 		//String flag="book";
+
+		String flag="food";
 		if(flag=="food")
 		{
 			for(int i=1;i<25;i++)
 			{
-				//main.Download(baseurl, i,3,product,productinfo,"book");	//经济类图书
-				//main.Download(baseurl, i, 2);	//电脑类产品
-				//main.Download(baseurl, i, 2);	//运动类服装
-				//productService.create(main.Download(baseurl,i,2,product,productinfo,"food"));	//食品类
-				main.Download(baseurl,i,2,product,productinfo,"food");
+				Document html=Jsoup.connect(baseurl+i).get();
+				System.out.println(html.getElementById("resultCount").text());
+				System.out.println("第"+i+"页：");
+						
+				String title=html.title();
+				System.out.println(title);
+				int startindex=0;
+				int length=0;String price=null;
+				Attribute attr=new Attribute("","");
+				Element startIndex_div=html.getElementById("atfResults");
+				
+				Element startIndex_div2=startIndex_div.getElementsByAttribute("name").get(0);
+				String startIndex_str=startIndex_div2.attr("id");
+				
+				startIndex_str=startIndex_str.substring(7);
+				//System.out.println(startIndex_str);
+				startindex=Integer.parseInt(startIndex_str);
+				
+				Element length_div=html.getElementById("btfResults");
+				length=length_div.getElementsByAttributeValue("class","result product").size()+4;
+				
+				//flag判断所属种类，并进入对应的处理程序			
+								
+					String banner=null;
+					for(int k=startindex;k<length;k++)
+					{
+						Product product=new Product();	
+						ProductInfo productinfo=new ProductInfo();
+						Element temp_div=html.getElementById("result_"+k);			
+						
+						Element temp_div2=temp_div.getElementsByTag("div").get(2);			
+						String bookname=temp_div2.getElementsByTag("a").get(0).text();
+						
+						price=temp_div2.parent().getElementsByTag("span").first().text().substring(1);					
+						
+						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
+						Elements temp_span=temp_div2.getElementsByTag("span");			
+							System.out.println(bookname+" Price:"+price);				
+							productinfo.setVersion(1);
+							productinfo.setBanner("Produce_1");
+							productinfo.setName(bookname);
+							banner=getDetail(detail,attr,product,productinfo,flag);
+						
+							
+						product.setPrice(Double.parseDouble(price));
+						product.setVersion(1);
+						product.setQuantity(100);
+						
+						productService.createProductInfo(productinfo);
+						product.setProductInfo(productService.getProductInfo(banner));
+						if(i<10)
+						 {product.setMarket(marketService.find(Market.class, 1));}
+						 if(i>=10&& i<15)
+						 {product.setMarket(marketService.find(Market.class, 2));}
+						 if(i>=15)
+						 {product.setMarket(marketService.find(Market.class, 3));}
+						 
+						
+						productService.create(product);
+					}
+					
+					
 			}
 		}
+
+		base=Jsoup.connect("http://www.amazon.cn/s?ie=UTF8&rh=n%3A77817071&page=1").get();
+		baseurl=base.baseUri().substring(0,base.baseUri().toString().length()-1);
+		flag="book";
 		if(flag=="book")
 		{
 			for(int i=1;i<50;i++)
 			{
-				main.Download(baseurl, i, 3, product, productinfo, flag);
+				//main.Download(marketService,productService,baseurl, i, 3, product, productinfo, flag);
 				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
+				Document html=Jsoup.connect(baseurl+i).get();
+				System.out.println(html.getElementById("resultCount").text());
+				System.out.println("第"+i+"页：");
+						
+				String title=html.title();
+				System.out.println(title);
+				int startindex=0;
+				int length=0;String price=null;
+				Attribute attr=new Attribute("","");
+				Element startIndex_div=html.getElementById("atfResults");
+				
+				Element startIndex_div2=startIndex_div.getElementsByAttribute("name").get(0);
+				String startIndex_str=startIndex_div2.attr("id");
+				
+				startIndex_str=startIndex_str.substring(7);
+				//System.out.println(startIndex_str);
+				startindex=Integer.parseInt(startIndex_str);
+				
+				Element length_div=html.getElementById("btfResults");
+				length=length_div.getElementsByAttributeValue("class","result product").size()+4;
+				
+				String banner=null;
+				 for(int k=startindex;k<length;k++)
+				  {
+					Product product=new Product();	
+					ProductInfo productinfo=new ProductInfo();
+					
+					Element temp_div=html.getElementById("result_"+k);			
+					
+					Element temp_div2=temp_div.getElementsByTag("div").get(3);
+					
+					String bookname=temp_div2.getElementsByTag("a").get(0).text();
+					
+					String bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];
+					String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
+					Elements temp_span=temp_div2.getElementsByTag("span");			
+						System.out.println(bookname+" Price:"+bookprice);
+						productinfo.setName(bookname);
+						
+						//System.out.println(temp_span.text());
+						String author=temp_span.text().split(" ")[0];
+						String printer=temp_span.text().split(" ")[1];				
+						productinfo.getAtttributes().add(new Attribute("作者",author));				
+						productinfo.getAtttributes().add(new Attribute("出版社",printer));
+						System.out.println(author+" "+printer);
+						productinfo.setBanner(printer);
+						productinfo.setVersion(1);
+						banner=getDetail(detail,attr,product,productinfo,flag);
+					
+					product.setPrice(Double.parseDouble(bookprice));					
+					product.setVersion(1);
+					product.setQuantity(100);
+					
+					productService.createProductInfo(productinfo);
+					
+					 if(i<10)
+					 {product.setMarket(marketService.find(Market.class, 1));}
+					 if(i>=10&& i<15)
+					 {product.setMarket(marketService.find(Market.class, 2));}
+					 if(i>=15)
+					 {product.setMarket(marketService.find(Market.class, 3));}
+					 
+					 product.setProductInfo(productService.getProductInfo(banner));
+					  
+					  productService.create(product);
+					  System.out.println("insert");
+				  }				 
+								
 			}
 		}
+	}
+	
+	public static String getDetail(String url,Attribute attr,Product product,ProductInfo productinfo,String flag) throws IOException
+	{
+		Document detailHtml=Jsoup.connect(url).get();
+		//System.out.println(detailHtml);
+		Elements details=detailHtml.getElementsByTag("h2");
+		String banner=null;
+		//Element detail=details.get(17);
+		//System.out.println(detail.text());
+		Element temp_element;
+		for(int i=0;i<details.size();i++)
+		{			
+			if(details.get(i).text().equals("基本信息"))
+			{
+				Element ul=details.get(i).parent().getElementsByTag("ul").first();
+				Elements lis=ul.getElementsByTag("li");
+				
+				if(flag=="book")
+				{
+					for(int m=0;m<lis.size();m++)
+					{
+						String []temp_array=new String[2];
+						temp_array=lis.get(m).text().split(" ",2);
+						if(temp_array[0].equals("ISBN:"))
+							{productinfo.getAtttributes().add(new Attribute("ISBN",temp_array[1]));}
+						if(temp_array[0].equals("条形码:"))
+							{productinfo.setBarcode(temp_array[1]);
+							banner=temp_array[1];}
+						if(temp_array[0].equals("平装:"))
+							{productinfo.getAtttributes().add(new Attribute("规格",temp_array[0]));							 
+							 productinfo.getAtttributes().add(new Attribute("页数",temp_array[1]));}					
+					}					
+				}
+				if(flag=="food")
+				{
+					String []temp_array=new String[2];
+					
+					for(int k=0;k<lis.size();k++)
+					{
+						temp_array=lis.get(k).text().split(" ",2);
+						if(temp_array[0].equals("产品尺寸及重量:"))
+							{productinfo.getAtttributes().add(new Attribute("产品尺寸及重量",temp_array[1]));
+							 }
+						if(temp_array[0].equals("ASIN:"))
+							{productinfo.getAtttributes().add(new Attribute("ASIN",temp_array[1]));
+							productinfo.setBarcode(temp_array[1]);banner=temp_array[1];}
+							 //System.out.println(temp_array[0]+" "+temp_array[1]);}
+						if(temp_array[0].equals("产地:"))
+							{productinfo.getAtttributes().add(new Attribute("产地",temp_array[1]));
+							 }
+					}
+				}
+			}
+		}
+		return banner;
 	}
 	
 	/**
@@ -152,7 +340,7 @@ public class InitDatabase {
 		
 		
 		
-		for(int i=0;i<100;i++)
+		for(int i=0;i<20;i++)
 		{
 			Client client = new Client();			
 			ClientInfo clientInfo = new ClientInfo();
@@ -161,11 +349,13 @@ public class InitDatabase {
 			client.setPassword(md5.encodePassword("Client"+i, "Client"+i));
 			client.setCardnum("asdfa12"+i%10+"34"+i/10+"67");
 			client.setPaypass("paypass"+i);
+			client.setVersion(1);
 			client.getAuthorityList().add(userService.getAuthority("client"));			
 			
 			clientInfo.setCreateDate(new Date());
 			clientInfo.setPhonenum("15996294"+i/10+"67"+i%10);
 			clientInfo.setRealname("张三"+i);
+			clientInfo.setVersion(1);
 			
 			client.setClientInfo(clientInfo);
 			
@@ -179,50 +369,80 @@ public class InitDatabase {
 	 * 包括Marlet和Marketinfo
 	 */
 	private void initMarket(){
-		Market market=new Market();
-		MarketInfo marketinfo=new MarketInfo();
-		
-		
-		String cardnum=null;
-		String market_ip=null;
-		String account=null;
-		String password=null;
-		String introduction=" ";
-		
-		
+			
 		//初始化商场1信息
 		//marketinfo.setComplainPhone("025-23893278");
 		//marketinfo.setCreateDate(new Date());
 		//marketinfo.setLocation("");
+		Market market=new Market();
+		MarketInfo marketinfo=new MarketInfo();	
+		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
+ 
+		String introduction="苏果超市在仙林地区的分店，便于学生购物";
+		
 	    marketinfo.setIntroduction(introduction);
-        marketinfo.setName("Market_1");
+        marketinfo.setName("苏果超市仙林店");
+        marketinfo.setComplainPhone("025-84860400");
+        marketinfo.setLocation("南京市栖霞区亚东新区");
+        marketinfo.setServicePhone("025-84860400");
+        marketinfo.setVersion(1);
 		
 		market.setCardnum("TM2011001");
-		market.setIp(market_ip);
+		market.setIp("114.123.43.12");
 		market.setMarketInfo(marketinfo);
 		market.setAccount("market_1");
 		market.setPassword("123");
+		market.setVersion(1);
+		market.getAuthorityList().add(userService.getAuthority("market"));
 				
 		
 		marketService.create(market);
 		
 		//初始化商场2信息
-		market.setCardnum("TM2011002");
-		market.setAccount("market_2");
-		market.setIp(market_ip);
-		market.setMarketInfo(marketinfo);
-		market.setPassword("123");
+		Market market2=new Market();
+		MarketInfo marketinfo2=new MarketInfo();
+		String introduction2="南京金润发鼓楼分店，价格比较便宜，规模一般";
 		
-		marketService.create(market);
+		marketinfo2.setIntroduction(introduction2);
+        marketinfo2.setName("金润发鼓楼店");
+        marketinfo2.setComplainPhone("025-84862376");
+        marketinfo2.setLocation("江苏省南京市玄武区丹凤街39号");
+        marketinfo2.setServicePhone("025-84869282");
+        marketinfo2.setVersion(1);
+				
+		market2.setCardnum("TM2011002");
+		market2.setAccount("market_2");
+		market2.setIp("143.43.38.56");
+		market2.setMarketInfo(marketinfo2);
+		market2.setPassword("123");
+		market2.setVersion(1);
+		market2.getAuthorityList().add(userService.getAuthority("market"));
+		
+		marketService.create(market2);
 		
 		//初始化商场3信息
-		market.setCardnum("TM2011003");
-		market.setIp(market_ip);
-		market.setMarketInfo(marketinfo);
-		market.setAccount("market_3");
-		market.setPassword("123");
+		Market market3=new Market();
+		MarketInfo marketinfo3=new MarketInfo();
+		String introduction3="南京沃尔玛新街口店，规模较大，市中心繁华区，品种齐全";
 		
-		marketService.create(market);
+		marketinfo3.setIntroduction(introduction3);
+        marketinfo3.setName("南京沃尔玛新街口店");
+        marketinfo3.setComplainPhone("025-84782888");
+        marketinfo3.setLocation("南京市白下区洪武路88号万达购物广场2-3楼");
+        marketinfo3.setServicePhone("025-84782888");
+        marketinfo3.setVersion(1);
+		
+		market3.setCardnum("TM2011003");
+		market3.setIp("213.21.23.221");
+		market3.setMarketInfo(marketinfo3);
+		market3.setAccount("market_3");
+		market3.setPassword("123");
+		market3.setVersion(1);
+		market3.getAuthorityList().add(userService.getAuthority("market"));
+				
+		marketService.create(market3);
+		
+		System.out.println("Market Over");
 	}
 	
 	
