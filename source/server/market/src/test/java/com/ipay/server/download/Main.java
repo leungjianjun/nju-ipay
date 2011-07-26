@@ -89,7 +89,7 @@ public class Main {
 				Element temp_div2=temp_div.getElementsByTag("div").get(index);			
 				String bookname=temp_div2.getElementsByTag("a").get(0).text();
 				
-				price=temp_div2.parent().getElementsByTag("span").first().text().split(" ")[1];					
+				price=temp_div2.parent().getElementsByTag("span").first().text().substring(1);					
 				
 				String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
 				Elements temp_span=temp_div2.getElementsByTag("span");			
@@ -102,7 +102,7 @@ public class Main {
 				System.out.println("\n");
 				
 				productinfo.getAtttributes().add(attr);
-				product.setPrice(Double.parseDouble(price));
+				//product.setPrice(Double.parseDouble(price));
 				product.setProductInfo(productinfo);
 				
 				

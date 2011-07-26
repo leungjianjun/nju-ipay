@@ -85,7 +85,9 @@ public class InitDatabase {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
+		System.out.println("s");
 		InitDatabase initDatabase = new InitDatabase();
+		System.out.println("Program Start");
 		initDatabase.init();
 	}
 	
@@ -147,13 +149,14 @@ public class InitDatabase {
 		order.setCost(1000.0);
 		order.setQuantity(1);		
 		
-		Client client = new Client();		
 		
-		ClientInfo clientInfo = new ClientInfo();
 		
 		
 		for(int i=0;i<100;i++)
 		{
+			Client client = new Client();			
+			ClientInfo clientInfo = new ClientInfo();
+			
 			client.setAccount("Client"+i);
 			client.setPassword(md5.encodePassword("Client"+i, "Client"+i));
 			client.setCardnum("asdfa12"+i%10+"34"+i/10+"67");
@@ -167,6 +170,7 @@ public class InitDatabase {
 			client.setClientInfo(clientInfo);
 			
 			clientService.create(client);
+			System.out.println(i+" has Inserted");
 		}
 	}
 	
