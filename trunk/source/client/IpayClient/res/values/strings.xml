@@ -152,6 +152,9 @@
   <string name="login_label_learn_more">Learn more...</string>
   
   <!-- 购物车（shopping cart）部分 -->
+  <string name="shopping_cart_pay" >Pay</string>
+  <string name="shopping_cart_money">Money</string>
+  <string name="shopping_cart_quantity">There are ? goods in cart</string>
   
   
   

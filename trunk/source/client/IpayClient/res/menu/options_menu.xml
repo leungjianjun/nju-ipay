@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  
+   	<item 
+   		android:id="@+id/omenu_setting"
+   		android:title="@string/omenu_setting"
+   		android:icon="@android:drawable/ic_menu_preferences"
+   	/>
+   	
+   	<item 
+   		android:id="@+id/omenu_logout"
+   		android:title="@string/omenu_logout"
+   		android:icon="@android:drawable/ic_menu_revert"
+   	/>
+   	
+   	<item 
+   		android:id="@+id/omenu_about"
+   		android:title="@string/omenu_about"
+   		android:icon="@android:drawable/ic_menu_info_details"
+   	/>
+   	
+   	<item 
+		android:id="@+id/omenu_quit"
+   		android:title="@string/omenu_quit"
+   		android:icon="@android:drawable/ic_menu_close_clear_cancel"
+   	/>
+  
+  
+    
+</menu>
