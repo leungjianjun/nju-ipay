@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.ipay.server.entity.Market;
@@ -43,7 +44,12 @@ public class MarketServiceTest {
 	
 	@Test
 	public void testCreate(){
+
+		//Md5PasswordEncoder md5 = new Md5PasswordEncoder();
 		ShaPasswordEncoder sha = new ShaPasswordEncoder();
+		
+
+		//ShaPasswordEncoder sha = new ShaPasswordEncoder();
 		Market market = new Market();
 		market.setAccount("jycs");
 		market.getAuthorityList().add(userService.getAuthority("market"));
