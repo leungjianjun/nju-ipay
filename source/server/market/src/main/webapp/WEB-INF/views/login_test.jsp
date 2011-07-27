@@ -1,5 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
+<script src="/IpayServerMarket/resources/js/jquery-1.6.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$.ajax({
+	    url: "/IpayServerMarket/j_spring_security_check",
+	    type: "POST",
+	    data: {"j_username":"ljj","j_password":"123456"},
+	    contentType:"application/json",
+	    dataType:"json",
+	    success: function(result) {
+	        alert(result)
+	    }
+	});
+})
+
+</script>
 <head>
 	<title>Home</title>
 </head>
@@ -26,5 +42,6 @@
 
 				</div>
 </form>
+
 </body>
 </html>
