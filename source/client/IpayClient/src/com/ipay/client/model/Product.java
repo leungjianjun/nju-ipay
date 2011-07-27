@@ -8,6 +8,10 @@ public class Product {
 	private String banner;//生产商
 	
 	
+	public Product(){
+		
+	}
+	
 	public Product(double price, String description, long barcode, String name,
 			String banner) {
 		super();
