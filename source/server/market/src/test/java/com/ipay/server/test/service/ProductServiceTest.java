@@ -9,6 +9,7 @@ import com.ipay.server.entity.Attribute;
 import com.ipay.server.entity.Market;
 import com.ipay.server.entity.Product;
 import com.ipay.server.entity.ProductInfo;
+import com.ipay.server.entity.SpecialProduct;
 import com.ipay.server.service.IMarketService;
 import com.ipay.server.service.IProductService;
 import com.ipay.server.util.SpringJUnit45ClassRunner;
@@ -55,6 +56,25 @@ public class ProductServiceTest {
 		product.setQuantity(10);
 		product.setProductInfo(productService.getProductInfo("738374833"));
 		productService.create(product);
+		
+		ProductInfo productInfo2 = new ProductInfo();
+		productInfo2.setBanner("上海绅门服饰有限公司");
+		productInfo2.setBarcode("838374833");
+		productInfo2.setImgUrl("product/image/124.gif");//url格式另外定义
+		productInfo2.setName("绅门男士柔棉弹力背心");
+		productInfo2.getAtttributes().add(new Attribute("颜色","黑色、白色、灰色"));
+		productService.createProductInfo(productInfo2);
+		Product product2 = new Product();
+		product2.setMarket(marketService.find(Market.class, 2));//find方法是按marketid找market的，所以一定要预先知道market_id,market_id不一定从1开始
+		product2.setPrice(12.9);
+		product2.setQuantity(100);
+		product2.setProductInfo(productService.getProductInfo("838374833"));
+		productService.create(product2);
+		SpecialProduct specialProduct = new SpecialProduct();
+		specialProduct.setIntroduction("仅售12.9元！原价39.9元的绅门男士柔棉弹力背心（黑色、白色、灰色，3种颜色随机发送）一件！");
+		specialProduct.setOldprice(39.9);
+		specialProduct.setProduct(product);
+		marketService.addSpecialProduct(specialProduct);
 	}
 	
 
