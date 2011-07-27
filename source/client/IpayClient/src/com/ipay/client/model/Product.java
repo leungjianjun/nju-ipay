@@ -3,7 +3,7 @@ package com.ipay.client.model;
 public class Product {
 	private double price;
 	private String description;
-	private long barcode;
+	private String barcode;
 	private String name;//商品名称
 	private String banner;//生产商
 	
@@ -12,7 +12,7 @@ public class Product {
 		
 	}
 	
-	public Product(double price, String description, long barcode, String name,
+	public Product(double price, String description, String barcode, String name,
 			String banner) {
 		super();
 		this.price = price;
@@ -33,10 +33,10 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public long getBarcode() {
+	public String getBarcode() {
 		return barcode;
 	}
-	public void setBarcode(long barcode) {
+	public void setBarcode(String barcode) {
 		this.barcode = barcode;
 	}
 	public String getName() {
