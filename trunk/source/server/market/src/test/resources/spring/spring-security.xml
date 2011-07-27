@@ -10,10 +10,14 @@
 	<description>SpringSecurity安全配置</description>
 	
 	<!-- http安全配置 -->
-	<s:http auto-config="true" use-expressions="true">
+	<s:http auto-config="false" use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+		<s:custom-filter position="FORM_LOGIN_FILTER" ref="authenticationFilter" />
 		<s:intercept-url pattern="/login" requires-channel="https"/>
+		<s:intercept-url pattern="/j_spring_security_check" requires-channel="https"/>
+		<s:intercept-url pattern="/client/**" access="hasAnyRole('ROLE_client')"/>
+		<s:intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_admin')"/>
+		<s:intercept-url pattern="/market/**" access="hasAnyRole('ROLE_market')"/>
 		<s:intercept-url pattern="/resources/**" filters="none" />
-		<s:form-login login-page="/login" default-target-url="/" authentication-failure-url="/login.action?error=true" />
 		<s:logout logout-success-url="/login" />
 	</s:http>
 	
@@ -27,7 +31,27 @@
 	</s:authentication-manager>
 
 	<!-- 项目实现的用户查询服务 -->
-	<bean id="userDetailsService" class="com.ipay.server.service.impl.UserDetailsServiceImpl" />
-	<!--  -->
+	<bean id="userDetailsService" class="com.ipay.server.security.UserDetailsServiceImpl" />
+	
+	<!-- 自定义ajax和form双向登录支持 -->
+	<bean id="authenticationProcessingFilterEntryPoint"
+           class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    	<property name="loginFormUrl" value="/login" />
+    	<property name="forceHttps" value="false" />
+	</bean>
+
+	<bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+    	<property name="authenticationManager" ref="authenticationManager"/>
+    	<property name="filterProcessesUrl" value="/j_spring_security_check"/>
+    	<property name="authenticationFailureHandler" ref="failureHandler"/>
+    	<property name="authenticationSuccessHandler" ref="successHandler"/>
+	</bean>
+
+	<bean id="successHandler" class="com.ipay.server.security.AjaxAuthenticationSuccessHandler">
+    	<property name="defaultTargetUrl" value="/"/>
+	</bean>
+	<bean id="failureHandler" class="com.ipay.server.security.AjaxAuthenticationFailureHandler" />
+
 	<context:component-scan base-package="com.ipay.server.dao" />
+	
 </beans>
