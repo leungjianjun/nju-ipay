@@ -39,7 +39,7 @@ public class ProductServiceImpl<T extends Product> extends ServiceImpl<T> implem
 		this.productInfoDao = productInfoDap;
 	}
 
-	public ProductInfo getProductInfo(String barcode) {
+	public ProductInfo getProductInfoByCode(String barcode) {
 		return productInfoDao.findUniqueBy("from ProductInfo as pi where pi.barcode =?", barcode);
 		
 	}
