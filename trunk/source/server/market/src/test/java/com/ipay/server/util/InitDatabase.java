@@ -122,10 +122,13 @@ public class InitDatabase {
 		//String flag="book";
 		//String flag="book";
 
-		String flag="food";
+		String flag="book";
 		if(flag=="food")
 		{
-			for(int i=1;i<16;i++)
+			Market market1=marketService.find(Market.class, 101);
+			Market market2=marketService.find(Market.class, 102);
+			Market market3=marketService.find(Market.class, 103);
+			for(int i=7;i<16;i++)
 			{
 				Jsoup.connect(baseurl+i).timeout(200000);
 				Document html=Jsoup.connect(baseurl+i).get();
@@ -203,15 +206,25 @@ public class InitDatabase {
 						product.setPrice(Double.parseDouble(price));
 						
 						if(i<7)
-						 {product.setMarket(marketService.find(Market.class, 101));}
+						 {product.setMarket(market1);}
 						 if(i>=7&& i<9)
-						 {product.setMarket(marketService.find(Market.class, 102));}
+						 {product.setMarket(market2);}
 						 if(i>=9)
-						 {product.setMarket(marketService.find(Market.class, 103));}
+						 {product.setMarket(market3);}
 						 
 						
 						productService.create(product);
+						if(i==1||i==8||i==9)
+						{
+							String intr="原价"+(Double.parseDouble(price))*1.1+"，现价"+Double.parseDouble(price)+",有木有!!!快来抢购";
+							SpecialProduct special=new SpecialProduct();
+							special.setIntroduction(intr);
+							special.setOldprice(Double.parseDouble(price)*1.1);
+							special.setProduct(product);
+							marketService.addSpecialProduct(special);
+						}
 					}
+					
 					
 			}
 		}
@@ -221,7 +234,8 @@ public class InitDatabase {
 		flag="book";
 		if(flag=="book")
 		{
-			for(int i=1;i<12;i++)
+			int i=1;
+			for(i=3;i<12;i++)
 			{
 				//main.Download(marketService,productService,baseurl, i, 3, product, productinfo, flag);
 				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
@@ -258,6 +272,7 @@ public class InitDatabase {
 					Element temp_div2=temp_div.getElementsByTag("div").get(3);
 					
 					String bookname=temp_div2.getElementsByTag("a").get(0).text();
+					String imgUrl=temp_div.getElementsByTag("img").first().attr("src");
 					
 					try{String bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
 					catch(Exception e){String bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
@@ -274,22 +289,11 @@ public class InitDatabase {
 						System.out.println(author+" "+printer);
 						productinfo.setBanner(printer);
 						productinfo.setVersion(1);
-						productinfo.setImgUrl("lkas/img");
+						productinfo.setImgUrl(imgUrl);
 						barcode=getDetail(detail,productinfo,flag);					
 						productinfo.setBarcode(barcode);
-					productService.createProductInfo(productinfo);
-					temp_productinfo[k]=productinfo;
-					/* if(i<10)
-					 {product.setMarket(marketService.find(Market.class, 1));}
-					 if(i>=10&& i<15)
-					 {product.setMarket(marketService.find(Market.class, 2));}
-					 if(i>=15)
-					 {product.setMarket(marketService.find(Market.class, 3));}
-					 
-					 product.setProductInfo(productService.getProductInfo(banner));
-					  
-					  productService.create(product);
-					  System.out.println("insert");*/
+											productService.createProductInfo(productinfo);
+					temp_productinfo[k]=productinfo;					 
 				  }	
 				 for(int m=startindex;m<length;m++)
 					{
@@ -302,7 +306,7 @@ public class InitDatabase {
 						String bookprice=null;
 						try{bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
 						catch(Exception e){bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
-						finally{bookprice="0.00";}
+						
 						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
 						Elements temp_span=temp_div2.getElementsByTag("span");			
 						System.out.println(bookname+" Price:"+bookprice);												
@@ -324,7 +328,7 @@ public class InitDatabase {
 								
 			}
 			
-			for(int i=14;i<30;i++)
+			for(i=15;i<40;i++)
 			{
 				//main.Download(marketService,productService,baseurl, i, 3, product, productinfo, flag);
 				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
@@ -361,7 +365,7 @@ public class InitDatabase {
 					Element temp_div2=temp_div.getElementsByTag("div").get(3);
 					
 					String bookname=temp_div2.getElementsByTag("a").get(0).text();
-					
+					String imgUrl=temp_div.getElementsByTag("img").first().attr("src");
 					
 					String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
 					Elements temp_span=temp_div2.getElementsByTag("span");			
@@ -376,7 +380,7 @@ public class InitDatabase {
 						System.out.println(author+" "+printer);
 						productinfo.setBanner(printer);
 						productinfo.setVersion(1);
-						productinfo.setImgUrl("lkas/img");
+						productinfo.setImgUrl(imgUrl);
 						barcode=getDetail(detail,productinfo,flag);					
 						productinfo.setBarcode(barcode);
 					productService.createProductInfo(productinfo);
