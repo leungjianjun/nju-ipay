@@ -81,7 +81,7 @@ public class Main {
 				String banner=getDetail(detail,attr,product,productinfo,flag);
 			
 			product.setPrice(Double.parseDouble(bookprice));
-			product.setProductInfo(productService.getProductInfo(banner));
+			product.setProductInfo(productService.getProductInfoByCode(banner));
 			product.setVersion(1);
 			product.setQuantity(100);
 		  }
@@ -116,7 +116,7 @@ public class Main {
 					
 					String banner=getDetail(detail,attr,product,productinfo,flag);
 				
-				product.setProductInfo(productService.getProductInfo(banner));	
+				product.setProductInfo(productService.getProductInfoByCode(banner));	
 				product.setPrice(Double.parseDouble(price));
 				product.setVersion(1);
 				product.setQuantity(100);

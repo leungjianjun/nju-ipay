@@ -7,6 +7,6 @@ public interface IProductService<T extends Product> extends IService<T> {
 	
 	public void createProductInfo(ProductInfo productInfo);
 	
-	public ProductInfo getProductInfo(String barcode);
+	public ProductInfo getProductInfoByCode(String barcode);
 
 }
