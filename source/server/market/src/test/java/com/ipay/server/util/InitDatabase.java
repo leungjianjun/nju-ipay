@@ -13,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
@@ -58,13 +59,13 @@ public class InitDatabase {
 	 * @throws IOException
 	 */
 	public void init() throws IOException{
-		System.out.println("Init User");
-		initUser();
+		//System.out.println("Init User");
+		//initUser();
 		//System.out.println("InitClient");
-		initClient();
-		System.out.println("InitMarket");
-		initMarket();
-		System.out.println("InitProduct");
+		//initClient();
+		//System.out.println("InitMarket");
+		//initMarket();
+		//System.out.println("InitProduct");
 		initProduct();
 		//initMarket();
 	}
@@ -195,15 +196,18 @@ public class InitDatabase {
 						price=temp_div2.parent().getElementsByTag("span").first().text().substring(1);					
 						
 						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
-						Elements temp_span=temp_div2.getElementsByTag("span");		
+						Elements temp_span=temp_div2.getElementsByTag("span");	
+						
 						
 						product.setProductInfo(temp_productinfo[m]);
-						if(i<10)
-						 {product.setMarket(marketService.find(Market.class, 1));}
-						 if(i>=10&& i<15)
-						 {product.setMarket(marketService.find(Market.class, 2));}
-						 if(i>=15)
-						 {product.setMarket(marketService.find(Market.class, 3));}
+						product.setPrice(Double.parseDouble(price));
+						
+						if(i<7)
+						 {product.setMarket(marketService.find(Market.class, 101));}
+						 if(i>=7&& i<9)
+						 {product.setMarket(marketService.find(Market.class, 102));}
+						 if(i>=9)
+						 {product.setMarket(marketService.find(Market.class, 103));}
 						 
 						
 						productService.create(product);
@@ -358,8 +362,7 @@ public class InitDatabase {
 					
 					String bookname=temp_div2.getElementsByTag("a").get(0).text();
 					
-					try{String bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
-					catch(Exception e){String bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
+					
 					String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
 					Elements temp_span=temp_div2.getElementsByTag("span");			
 						
@@ -401,7 +404,7 @@ public class InitDatabase {
 						String bookprice=null;
 						try{bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
 						catch(Exception e){bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
-						finally{bookprice="0.00";}
+						
 						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
 						Elements temp_span=temp_div2.getElementsByTag("span");			
 						System.out.println(bookname+" Price:"+bookprice);												
@@ -496,10 +499,8 @@ public class InitDatabase {
 		}
 		nameset=str.split(" ");
 		
-		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
-		Order order=new Order();
-		Record record=new Record();
-		Product product=new Product();		
+		ShaPasswordEncoder sha=new ShaPasswordEncoder();
+		Order order=new Order();				
 		
 		order.setCost(1000.0);
 		order.setQuantity(1);		
@@ -515,16 +516,16 @@ public class InitDatabase {
 			
 			
 			client.setAccount("Client"+i);
-			client.setPassword(md5.encodePassword("Client"+i, "Client"+i));
+			client.setPassword(sha.encodePassword("Client"+i, "Client"+i));
 			client.setCardnum("622848 208149873"+(4000+i));
 			client.setPaypass("paypass"+i);
-			client.setVersion(1);
+			
 			client.getAuthorityList().add(auth);			
 			
 			clientInfo.setCreateDate(new Date());
 			clientInfo.setPhonenum("15996294"+i/10+"67"+i%10);
 			clientInfo.setRealname(nameset[i]);
-			clientInfo.setVersion(1);
+			
 			
 			client.setClientInfo(clientInfo);
 			
@@ -545,7 +546,7 @@ public class InitDatabase {
 		//marketinfo.setLocation("");
 		Market market=new Market();
 		MarketInfo marketinfo=new MarketInfo();	
-		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
+		ShaPasswordEncoder sha=new ShaPasswordEncoder();
  
 		String introduction="苏果超市在仙林地区的分店，便于学生购物";
 		
@@ -554,14 +555,15 @@ public class InitDatabase {
         marketinfo.setComplainPhone("025-84860400");
         marketinfo.setLocation("南京市栖霞区亚东新区");
         marketinfo.setServicePhone("025-84860400");
-        marketinfo.setVersion(1);
+        marketinfo.setCreateDate(new Date());
+        
 		
 		market.setCardnum("TM2011001");
 		market.setIp("114.123.43.12");
 		market.setMarketInfo(marketinfo);
 		market.setAccount("market_1");
-		market.setPassword("123");
-		market.setVersion(1);
+		market.setPassword(sha.encodePassword("market_1", "market_1"));
+		
 		market.getAuthorityList().add(userService.getAuthority("market"));
 				
 		
@@ -577,14 +579,15 @@ public class InitDatabase {
         marketinfo2.setComplainPhone("025-84862376");
         marketinfo2.setLocation("江苏省南京市玄武区丹凤街39号");
         marketinfo2.setServicePhone("025-84869282");
-        marketinfo2.setVersion(1);
+        marketinfo2.setCreateDate(new Date());
+        
 				
 		market2.setCardnum("TM2011002");
 		market2.setAccount("market_2");
 		market2.setIp("143.43.38.56");
 		market2.setMarketInfo(marketinfo2);
-		market2.setPassword("123");
-		market2.setVersion(1);
+		market2.setPassword(sha.encodePassword("market_2", "market_2"));
+		
 		market2.getAuthorityList().add(userService.getAuthority("market"));
 		
 		marketService.create(market2);
@@ -599,14 +602,15 @@ public class InitDatabase {
         marketinfo3.setComplainPhone("025-84782888");
         marketinfo3.setLocation("南京市白下区洪武路88号万达购物广场2-3楼");
         marketinfo3.setServicePhone("025-84782888");
-        marketinfo3.setVersion(1);
+        marketinfo3.setCreateDate(new Date());
+        
 		
 		market3.setCardnum("TM2011003");
 		market3.setIp("213.21.23.221");
 		market3.setMarketInfo(marketinfo3);
 		market3.setAccount("market_3");
-		market3.setPassword("123");
-		market3.setVersion(1);
+		market3.setPassword(sha.encodePassword("market_3", "market_3"));
+		
 		market3.getAuthorityList().add(userService.getAuthority("market"));
 				
 		marketService.create(market3);
