@@ -1,6 +1,10 @@
 package com.ipay.server.util;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Date;
 
 import org.jsoup.Jsoup;
@@ -120,8 +124,9 @@ public class InitDatabase {
 		String flag="food";
 		if(flag=="food")
 		{
-			for(int i=1;i<25;i++)
+			for(int i=1;i<16;i++)
 			{
+				Jsoup.connect(baseurl+i).timeout(200000);
 				Document html=Jsoup.connect(baseurl+i).get();
 				System.out.println(html.getElementById("resultCount").text());
 				System.out.println("第"+i+"页：");
@@ -146,11 +151,43 @@ public class InitDatabase {
 				//flag判断所属种类，并进入对应的处理程序			
 								
 					String banner=null;
+						
+					
+					ProductInfo [] temp_productinfo=new ProductInfo[50];
+					
 					for(int k=startindex;k<length;k++)
 					{
-						Product product=new Product();	
 						ProductInfo productinfo=new ProductInfo();
 						Element temp_div=html.getElementById("result_"+k);			
+						
+						Element temp_div2=temp_div.getElementsByTag("div").get(2);
+						
+						
+						String bookname=temp_div2.getElementsByTag("a").get(0).text();
+						
+						price=temp_div2.parent().getElementsByTag("span").first().text().substring(1);					
+						String imgUrl=temp_div.getElementsByTag("img").first().attr("src");
+						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
+						Elements temp_span=temp_div2.getElementsByTag("span");			
+							System.out.println(bookname+" Price:"+price);				
+							productinfo.setVersion(1);
+							productinfo.setBanner("Produce_1");
+							productinfo.setName(bookname);
+							productinfo.setImgUrl(imgUrl);
+							banner=getDetail(detail,productinfo,flag);
+						
+						
+						
+						productService.createProductInfo(productinfo);
+						temp_productinfo[k]=productinfo;
+						
+						
+						
+					}
+					for(int m=startindex;m<length;m++)
+					{
+						Product product=new Product();
+						Element temp_div=html.getElementById("result_"+m);			
 						
 						Element temp_div2=temp_div.getElementsByTag("div").get(2);			
 						String bookname=temp_div2.getElementsByTag("a").get(0).text();
@@ -158,20 +195,9 @@ public class InitDatabase {
 						price=temp_div2.parent().getElementsByTag("span").first().text().substring(1);					
 						
 						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
-						Elements temp_span=temp_div2.getElementsByTag("span");			
-							System.out.println(bookname+" Price:"+price);				
-							productinfo.setVersion(1);
-							productinfo.setBanner("Produce_1");
-							productinfo.setName(bookname);
-							banner=getDetail(detail,attr,product,productinfo,flag);
+						Elements temp_span=temp_div2.getElementsByTag("span");		
 						
-							
-						product.setPrice(Double.parseDouble(price));
-						product.setVersion(1);
-						product.setQuantity(100);
-						
-						productService.createProductInfo(productinfo);
-						product.setProductInfo(productService.getProductInfo(banner));
+						product.setProductInfo(temp_productinfo[m]);
 						if(i<10)
 						 {product.setMarket(marketService.find(Market.class, 1));}
 						 if(i>=10&& i<15)
@@ -183,7 +209,6 @@ public class InitDatabase {
 						productService.create(product);
 					}
 					
-					
 			}
 		}
 
@@ -192,10 +217,11 @@ public class InitDatabase {
 		flag="book";
 		if(flag=="book")
 		{
-			for(int i=1;i<50;i++)
+			for(int i=1;i<12;i++)
 			{
 				//main.Download(marketService,productService,baseurl, i, 3, product, productinfo, flag);
 				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
+				Jsoup.connect(baseurl+i).timeout(200000);
 				Document html=Jsoup.connect(baseurl+i).get();
 				System.out.println(html.getElementById("resultCount").text());
 				System.out.println("第"+i+"页：");
@@ -203,8 +229,7 @@ public class InitDatabase {
 				String title=html.title();
 				System.out.println(title);
 				int startindex=0;
-				int length=0;String price=null;
-				Attribute attr=new Attribute("","");
+				int length=0;String price=null;				
 				Element startIndex_div=html.getElementById("atfResults");
 				
 				Element startIndex_div2=startIndex_div.getElementsByAttribute("name").get(0);
@@ -217,22 +242,24 @@ public class InitDatabase {
 				Element length_div=html.getElementById("btfResults");
 				length=length_div.getElementsByAttributeValue("class","result product").size()+4;
 				
-				String banner=null;
-				 for(int k=startindex;k<length;k++)
-				  {
-					Product product=new Product();	
-					ProductInfo productinfo=new ProductInfo();
+				String barcode=null;
 					
+				
+				ProductInfo [] temp_productinfo=new ProductInfo[50];
+				 for(int k=startindex;k<length;k++)
+				  {	
+					 ProductInfo productinfo=new ProductInfo();
 					Element temp_div=html.getElementById("result_"+k);			
 					
 					Element temp_div2=temp_div.getElementsByTag("div").get(3);
 					
 					String bookname=temp_div2.getElementsByTag("a").get(0).text();
 					
-					String bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];
+					try{String bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
+					catch(Exception e){String bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
 					String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
 					Elements temp_span=temp_div2.getElementsByTag("span");			
-						System.out.println(bookname+" Price:"+bookprice);
+						
 						productinfo.setName(bookname);
 						
 						//System.out.println(temp_span.text());
@@ -243,15 +270,12 @@ public class InitDatabase {
 						System.out.println(author+" "+printer);
 						productinfo.setBanner(printer);
 						productinfo.setVersion(1);
-						banner=getDetail(detail,attr,product,productinfo,flag);
-					
-					product.setPrice(Double.parseDouble(bookprice));					
-					product.setVersion(1);
-					product.setQuantity(100);
-					
+						productinfo.setImgUrl("lkas/img");
+						barcode=getDetail(detail,productinfo,flag);					
+						productinfo.setBarcode(barcode);
 					productService.createProductInfo(productinfo);
-					
-					 if(i<10)
+					temp_productinfo[k]=productinfo;
+					/* if(i<10)
 					 {product.setMarket(marketService.find(Market.class, 1));}
 					 if(i>=10&& i<15)
 					 {product.setMarket(marketService.find(Market.class, 2));}
@@ -261,16 +285,150 @@ public class InitDatabase {
 					 product.setProductInfo(productService.getProductInfo(banner));
 					  
 					  productService.create(product);
-					  System.out.println("insert");
-				  }				 
+					  System.out.println("insert");*/
+				  }	
+				 for(int m=startindex;m<length;m++)
+					{
+					 Product product=new Product();
+					 Element temp_div=html.getElementById("result_"+m);			
+						
+						Element temp_div2=temp_div.getElementsByTag("div").get(3);
+						
+						String bookname=temp_div2.getElementsByTag("a").get(0).text();
+						String bookprice=null;
+						try{bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
+						catch(Exception e){bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
+						finally{bookprice="0.00";}
+						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
+						Elements temp_span=temp_div2.getElementsByTag("span");			
+						System.out.println(bookname+" Price:"+bookprice);												
+						
+						product.setPrice(Double.parseDouble(bookprice));					
+						product.setVersion(1);
+						product.setQuantity(100);
+						product.setProductInfo(temp_productinfo[m]);
+						if(i<10)
+						 {product.setMarket(marketService.find(Market.class, 1));}
+						 if(i>=10&& i<15)
+						 {product.setMarket(marketService.find(Market.class, 2));}
+						 if(i>=15)
+						 {product.setMarket(marketService.find(Market.class, 3));}
+						 
+						
+						productService.create(product);
+					}
 								
+			}
+			
+			for(int i=14;i<30;i++)
+			{
+				//main.Download(marketService,productService,baseurl, i, 3, product, productinfo, flag);
+				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
+				Jsoup.connect(baseurl+i).timeout(200000);
+				Document html=Jsoup.connect(baseurl+i).get();
+				System.out.println(html.getElementById("resultCount").text());
+				System.out.println("第"+i+"页：");
+						
+				String title=html.title();
+				System.out.println(title);
+				int startindex=0;
+				int length=0;String price=null;				
+				Element startIndex_div=html.getElementById("atfResults");
+				
+				Element startIndex_div2=startIndex_div.getElementsByAttribute("name").get(0);
+				String startIndex_str=startIndex_div2.attr("id");
+				
+				startIndex_str=startIndex_str.substring(7);
+				//System.out.println(startIndex_str);
+				startindex=Integer.parseInt(startIndex_str);
+				
+				Element length_div=html.getElementById("btfResults");
+				length=length_div.getElementsByAttributeValue("class","result product").size()+4;
+				
+				String barcode=null;
+					
+				
+				ProductInfo [] temp_productinfo=new ProductInfo[50];
+				 for(int k=startindex;k<length;k++)
+				  {	
+					 ProductInfo productinfo=new ProductInfo();
+					Element temp_div=html.getElementById("result_"+k);			
+					
+					Element temp_div2=temp_div.getElementsByTag("div").get(3);
+					
+					String bookname=temp_div2.getElementsByTag("a").get(0).text();
+					
+					try{String bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
+					catch(Exception e){String bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
+					String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
+					Elements temp_span=temp_div2.getElementsByTag("span");			
+						
+						productinfo.setName(bookname);
+						
+						//System.out.println(temp_span.text());
+						String author=temp_span.text().split(" ")[0];
+						String printer=temp_span.text().split(" ")[1];				
+						productinfo.getAtttributes().add(new Attribute("作者",author));				
+						productinfo.getAtttributes().add(new Attribute("出版社",printer));
+						System.out.println(author+" "+printer);
+						productinfo.setBanner(printer);
+						productinfo.setVersion(1);
+						productinfo.setImgUrl("lkas/img");
+						barcode=getDetail(detail,productinfo,flag);					
+						productinfo.setBarcode(barcode);
+					productService.createProductInfo(productinfo);
+					temp_productinfo[k]=productinfo;
+					/* if(i<10)
+					 {product.setMarket(marketService.find(Market.class, 1));}
+					 if(i>=10&& i<15)
+					 {product.setMarket(marketService.find(Market.class, 2));}
+					 if(i>=15)
+					 {product.setMarket(marketService.find(Market.class, 3));}
+					 
+					 product.setProductInfo(productService.getProductInfo(banner));
+					  
+					  productService.create(product);
+					  System.out.println("insert");*/
+				  }	
+				 for(int m=startindex;m<length;m++)
+					{
+					 Product product=new Product();
+					 Element temp_div=html.getElementById("result_"+m);			
+						
+						Element temp_div2=temp_div.getElementsByTag("div").get(3);
+						
+						String bookname=temp_div2.getElementsByTag("a").get(0).text();
+						String bookprice=null;
+						try{bookprice=temp_div2.getElementsByTag("span").get(3).text().split(" ")[1];}
+						catch(Exception e){bookprice=temp_div2.getElementsByTag("span").get(2).text().split(" ")[1];}
+						finally{bookprice="0.00";}
+						String detail=temp_div2.getElementsByTag("a").get(0).attr("href");
+						Elements temp_span=temp_div2.getElementsByTag("span");			
+						System.out.println(bookname+" Price:"+bookprice);												
+						
+						product.setPrice(Double.parseDouble(bookprice));					
+						product.setVersion(1);
+						product.setQuantity(100);
+						product.setProductInfo(temp_productinfo[m]);
+						if(i<10)
+						 {product.setMarket(marketService.find(Market.class, 1));}
+						 if(i>=10&& i<15)
+						 {product.setMarket(marketService.find(Market.class, 2));}
+						 if(i>=15)
+						 {product.setMarket(marketService.find(Market.class, 3));}
+						 
+						
+						productService.create(product);
+					}
 			}
 		}
 	}
 	
-	public static String getDetail(String url,Attribute attr,Product product,ProductInfo productinfo,String flag) throws IOException
+	public static String getDetail(String url,ProductInfo productinfo,String flag) throws IOException
 	{
+		Jsoup.connect(url).timeout(200000);
 		Document detailHtml=Jsoup.connect(url).get();
+		//Jsoup.connect(url).timeout(100000);
 		//System.out.println(detailHtml);
 		Elements details=detailHtml.getElementsByTag("h2");
 		String banner=null;
@@ -327,8 +485,17 @@ public class InitDatabase {
 	/**
 	 * 初始化与客户有关的表单
 	 * 创建100条数据
+	 * @throws IOException 
 	 */
-	private void initClient(){
+	private void initClient() throws IOException{
+		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream("O:\\Workspace\\Eclipse\\iPay_Download\\name.txt")));
+		String [] nameset=new String[120];String str="";String data=null;
+		while((data=br.readLine())!=null)
+		{
+			str+=data;
+		}
+		nameset=str.split(" ");
+		
 		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
 		Order order=new Order();
 		Record record=new Record();
@@ -336,25 +503,27 @@ public class InitDatabase {
 		
 		order.setCost(1000.0);
 		order.setQuantity(1);		
+		Authority auth=new Authority();
+		auth=userService.getAuthority("client");
 		
 		
-		
-		
-		for(int i=0;i<20;i++)
+		for(int i=0;i<100;i++)
 		{
 			Client client = new Client();			
 			ClientInfo clientInfo = new ClientInfo();
 			
+			
+			
 			client.setAccount("Client"+i);
 			client.setPassword(md5.encodePassword("Client"+i, "Client"+i));
-			client.setCardnum("asdfa12"+i%10+"34"+i/10+"67");
+			client.setCardnum("622848 208149873"+(4000+i));
 			client.setPaypass("paypass"+i);
 			client.setVersion(1);
-			client.getAuthorityList().add(userService.getAuthority("client"));			
+			client.getAuthorityList().add(auth);			
 			
 			clientInfo.setCreateDate(new Date());
 			clientInfo.setPhonenum("15996294"+i/10+"67"+i%10);
-			clientInfo.setRealname("张三"+i);
+			clientInfo.setRealname(nameset[i]);
 			clientInfo.setVersion(1);
 			
 			client.setClientInfo(clientInfo);
