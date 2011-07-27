@@ -5,7 +5,7 @@ import java.util.Date;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.ipay.server.entity.Client;
@@ -44,12 +44,12 @@ public class ClientServiceTest {
 	@Test
 	public void testCreate(){
 		Client client = new Client();
-		Md5PasswordEncoder md5 = new Md5PasswordEncoder();
+		ShaPasswordEncoder sha = new ShaPasswordEncoder();
 		client.setAccount("ljj");
 		client.setCardnum("638409233433434");
-		client.setPassword(md5.encodePassword("123456", client.getAccount()));
+		client.setPassword(sha.encodePassword("123456", client.getAccount()));
 		client.getAuthorityList().add(userService.getAuthority("client"));
-		client.setPaypass(md5.encodePassword("payapss", client.getAccount()));
+		client.setPaypass(sha.encodePassword("payapss", client.getAccount()));
 		client.getClientInfo().setCreateDate(new Date());//这里不要都是一个时间的
 		client.getClientInfo().setPhonenum("1599623223");
 		client.getClientInfo().setRealname("杨建军");
