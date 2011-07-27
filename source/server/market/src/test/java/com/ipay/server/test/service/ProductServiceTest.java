@@ -50,7 +50,7 @@ public class ProductServiceTest {
 		productService.createProductInfo(productInfo);
 		
 		Product product = new Product();
-		product.setMarket(marketService.find(Market.class, 1));
+		product.setMarket(marketService.find(Market.class, 2));//find方法是按marketid找market的，所以一定要预先知道market_id,market_id不一定从1开始
 		product.setPrice(7.5);
 		product.setQuantity(10);
 		product.setProductInfo(productService.getProductInfo("738374833"));
