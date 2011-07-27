@@ -40,6 +40,7 @@ public class UserServiceImpl<T extends User> extends ServiceImpl<T> implements I
 		authorityDao.persist(authority);
 	}
 
+	@Transactional(readOnly = true)
 	public Authority getAuthority(String name) {
 		return authorityDao.findUniqueBy("from Authority as authority where authority.name =?", name);
 	}
