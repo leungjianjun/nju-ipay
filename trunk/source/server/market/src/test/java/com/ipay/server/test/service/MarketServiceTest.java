@@ -1,5 +1,7 @@
 package com.ipay.server.test.service;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,7 @@ public class MarketServiceTest {
 		marketInfo.setLocation("仙林教学楼");
 		marketInfo.setName("南京大学仙林校区教育超市");
 		marketInfo.setServicePhone("854091232");
+		marketInfo.setCreateDate(new Date());
 		market.setMarketInfo(marketInfo);
 		marketService.create(market);
 	}
