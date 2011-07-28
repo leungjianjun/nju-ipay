@@ -60,6 +60,17 @@
  *  /admin/**	只有管理员才能访问
  */
 //=================================================================
+// 错误统一处理风格
+/*
+ * 凡是请求错误的不管是客户端发送数据错误,服务器内部错误,网络问题的错误
+ * 统一使用http的错误机制,这时客户端接收到的status code将不会是200(200
+ * 是状态正常码),而是其他的数字,所以可以通过检查状态码决定错误类型.
+ * 
+ * 服务器出现任何的错误,只要能返回链接的,都会以json风格,在error里说明错
+ * 误发生的具体原因.当然,如果你的错误是无法连接网络,服务器怎么能返回错误
+ * 说"你的网络存在问题"呢,所以有些错误必定只能有客户端来说明
+ */
+//=================================================================
 /**
  * 登录
  * 
@@ -77,8 +88,10 @@ var result_client_login = {
 		status:true
 }
 
-var result_client_login = {
-		status:false
+//400 Bad request错误
+var error_client_login = {//查看上面统一的错误处理风格
+		status:false,
+		error:"用户名或密码错误"
 }
 
 /**
@@ -212,15 +225,44 @@ var result_get_productInfo_by_barcode = {
 
 /**
  * 根据条形码获取商品ID
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/ProductIdByCode?mid={market id}&code={barcode}
+ * 方法 get
+ * 说明：1.可通过组合各种api来定制你要得功能，如组合get_productId_by_barcode和get_productInfo_by_id
+ *        得到和get_productInfo_by_barcode一样的功能
  */
 var get_productId_by_barcode = {}
 
 var result_get_productId_by_barcode = {
-	id:123	
+	id:123
 }
 
-var get_productInfo_by_
+/**
+ * 获取商品详细信息
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/ProductInfoById?pid={product id}
+ * 方法 get
+ * 说明：1.可用于在购物车中的商品要查看详细信息
+ */
+var get_productInfo_by_id = {}
 
+var result_get_productInfo_by_id = {
+		name:"",
+		banner:"",
+		barcode:"",
+		imgUrl:"",
+		price:12.4,
+		quantity:50,
+		attributes:[{key:"",value:""},
+		            {},
+		            {}
+		            //...
+		            ]			
+}
+
+var error_get_product = {
+	
+}
 //=================================================================
 
 
