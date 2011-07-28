@@ -1,6 +1,7 @@
 package com.ipay.client.communication;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map.Entry;
 
 import org.apache.http.HttpEntity;
@@ -18,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.zxing.common.StringUtils;
 import com.ipay.client.model.Order;
 import com.ipay.client.model.Product;
 import com.ipay.client.model.Session;
@@ -43,7 +45,8 @@ public class CommunicationManager {
 		return manager;
 	}
 
-	public static final String LOGIN_URL = "";
+	public static final String LOGIN_URL = "https://192.168.0.1:8443/j_security_check";
+	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
 	public static final String PRODUCT_URL = "";
 	public static final String PAY_URL = "";
 	 /** OK: Success! */
@@ -77,29 +80,25 @@ public class CommunicationManager {
 	 * @return	失败返回null
 	 */
 	public Session login(Session session, String username, String password) {
-		String md5 = Md5Crypto.encrypt(password);
-		JSONObject personalInfo = new JSONObject();
-
-		// 封装post实体
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost post = new HttpPost(LOGIN_URL);
 		try {
-			personalInfo.put("username", username);
-			personalInfo.put("password", password);
-		} catch (JSONException e) {
+			StringEntity entity = new StringEntity("j_username="+username+"&j_password="+password);
+			post .setEntity(entity);
+		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// 提交post并等待回应
-		String token;
+		
+		boolean status = false;
+		JSONObject result;
 		try {
-			HttpResponse httpResponse = doPost(LOGIN_URL, personalInfo);
-			// 得到应答的字符串，这也是一个 JSON 格式保存的数据
-			if(httpResponse.getStatusLine().getStatusCode() == OK){
-				String retSrc = EntityUtils.toString(httpResponse.getEntity());
-			JSONObject result = new JSONObject(retSrc);
-			token = (String) result.get("token");
+			HttpResponse response = httpClient.execute(post);
+			if(response.getStatusLine().getStatusCode() == OK){
+				String retSrc = EntityUtils.toString(response.getEntity());
+				result = new JSONObject(retSrc);
+				status = result.getBoolean("status");
 			}
-			
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,15 +109,22 @@ public class CommunicationManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		boolean logged = false;
-		// 检查回应，根据回应决定是否登陆成功
-		// TODO
-		if (logged) {
-			session.setUsername(username);
-			session.setPasswordMD5(md5);
+		
+		//登陆成功
+		if(status == true){
+			if(session == null){
+				return new Session(username, password);
+			}else{
+				session.setUsername(username);
+				session.setPassword(password);
+				return session;
+			}
 		}
-		return null;
+		//登陆失败
+		else{
+			return null;
+		}
+		
 	}
 	
 	
@@ -206,6 +212,29 @@ public class CommunicationManager {
 	    HttpResponse response;
 	    response = httpclient.execute(request);
 	    return response;
+	}
+	public boolean logout(){
+		HttpGet get = new HttpGet(LOGOUT_URL);
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		boolean status = false;
+		try {
+			HttpResponse response = httpClient.execute(get);
+			String retSrc = EntityUtils.toString(response.getEntity());
+			JSONObject result = new JSONObject(retSrc);
+			status = result.getBoolean("status");
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return status;
+		
 	}
 
 }

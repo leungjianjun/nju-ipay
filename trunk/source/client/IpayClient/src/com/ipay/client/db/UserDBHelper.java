@@ -63,7 +63,7 @@ public class UserDBHelper{
 	public int SaveUser(Session session) throws DBException{
 		ContentValues values = new ContentValues();
 		values.put(USER_NAME,session.getUsername());
-		values.put(USER_PASSWORD, session.getPasswordMD5());
+		values.put(USER_PASSWORD, session.getPassword());
 		
 		int uid = (int) db.insert(USER_TABLE_NAME, USER_ID, values);
 		Log.d(TAG, "SaveUser"+uid);
