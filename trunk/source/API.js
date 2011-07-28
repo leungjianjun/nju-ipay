@@ -213,11 +213,13 @@ var result_get_productInfo_by_barcode = {
 /**
  * 根据条形码获取商品ID
  */
-var get_productInfo_by_id = {}
+var get_productId_by_barcode = {}
 
-var result_get_productInfo_by_id = {
+var result_get_productId_by_barcode = {
 	id:123	
 }
+
+var get_productInfo_by_
 
 //=================================================================
 
