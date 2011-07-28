@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- NOTE:已废弃 -->
 <!-- 底部菜单栏 -->
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
@@ -7,6 +9,8 @@
   android:layout_height="50dp"
   android:background="@drawable/menu_bar_bg"
   >
+  
+  <!--  -->
   <TextView 
   	android:id="@+id/toobar_btn_home"
   	android:layout_width="fill_parent"
