@@ -132,7 +132,7 @@ var find_market_by_ip = {}
 /**
  * 商店详情
  * 
- * url http://xxx.xxx.xxx.xxx:8080/client/MarketInfo?id={market id}
+ * url http://xxx.xxx.xxx.xxx:8080/client/MarketInfo?mid={market id}
  * 方法：get
  * 说明
  */
@@ -151,34 +151,73 @@ var result_get_marketInfo = {
 /**
  * 特价商品
  * 
- * url http://xxx.xxx.xxx.xxx:8080/client/MarketSpecialProducs?id={market id}&page={pageNum}
+ * url http://xxx.xxx.xxx.xxx:8080/client/MarketSpecialProducs?mid={market id}&page={pageNum}
  * 方法：get
- * 说明：1.特价商品是商场放在门口的那些商品，往往要帮某个品牌推销，或者清仓的那种 2 每页10个
+ * 说明：1.特价商品是商场放在门口的那些商品，往往要帮某个品牌推销，或者清仓的那种 2 每页10个 
+ *       3.商品图像url用相对地址
  */
 var get_market_specialProducts = {}
 
 var result_get_market_specialProducts = {
-		specialsProducts:[{name:"",oldPrice:12.5,nowPrice:8.5,adWords:"",pid:123},
-		                  {},//分别是：商品名，原价，现价，广告语，商品id（不是特价商品id）
+		specialsProducts:[{name:"",oldPrice:12.5,nowPrice:8.5,adWords:"",pid:123,imgUrl:""},
+		                  {},//分别是：商品名，原价，现价，广告语，商品id（不是特价商品id），图像地址
 		                  {}]
 }
 
 /**
  * 热门商品
  * 
- * url http://xxx.xxx.xxx.xxx:8080/client/MarketHotProducts?id={market id}&page={pageNum}
+ * url http://xxx.xxx.xxx.xxx:8080/client/MarketHotProducts?mid={market id}&page={pageNum}
  * 方法 get
- * 说明：1.热门商品就是卖的最多的商品
+ * 说明：1.热门商品就是卖的最多的商品 2.每页10个
  */
 var get_market_hotProducts = {}
 
 var result_get_market_hotProducts = {
-		hotProducts:[{},
+		hotProducts:[{id:123,name:"",price:12.5,imgUrl:""},//可以根据客户端需要的信息改动
 		             {},
 		             {}]
 }
 
 //=================================================================
+//扫描商品
+//
+//只有在进入商店的时候才能查看购物车，才能扫描，购买商品等。
+//所以进入商场前，顶部栏等操作按钮是暗的，在进入商场后，顶部栏才能亮起来
+//
+
+/**
+ * 根据条形码获取商品信息
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/ProductInfoByCode?mid={market id}&code={barcode}
+ * 方法 get
+ * 说明：1.统一商品在不同商场的id是不同的，所以放入购物车时只要把商品id放进去进行了
+ */
+var get_productInfo_by_barcode ={}
+
+var result_get_productInfo_by_barcode = {
+		id:123,
+		name:"",
+		banner:"",
+		barcode:"",
+		imgUrl:"",
+		price:12.4,
+		quantity:50,
+		attributes:[{key:"",value:""},
+		            {},
+		            {}
+		            //...
+		            ]
+}
+
+/**
+ * 根据条形码获取商品ID
+ */
+var get_productInfo_by_id = {}
+
+var result_get_productInfo_by_id = {
+	id:123	
+}
 
 //=================================================================
 
