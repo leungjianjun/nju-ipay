@@ -50,8 +50,131 @@
 //    ...
 //6.银行的安全交互不包括在此内
 //7.更新比较频繁,请经常update这个文件或者访问在线地址
+//  http://code.google.com/p/nju-ipay/source/browse/trunk/source/API.js
+//=================================================================
+// url控制访问说明
+/*
+ *  /user/**	只要是用户就能访问
+ *  /client/**	只有客户才能访问
+ *  /market/**	只有商场才能访问
+ *  /admin/**	只有管理员才能访问
+ */
+//=================================================================
+/**
+ * 登录
+ * 
+ * url https://xxx.xxx.xxx.xxx:8443/j_spring_security_check
+ * 方法：post
+ * data j_username={account}&j_password={password}
+ * 
+ * 说明：1.登录使用ssl。2.密码不需要在客户端加密。3.json里面不需要任何数据
+ * 服务器原理：登录时有spring security处理安全问题，用户的权限，登录状态都由其控制，所以登录的时候会怪怪的
+ * 
+ */
+var client_login = {}
+
+var result_client_login = {
+		status:true
+}
+
+var result_client_login = {
+		status:false
+}
+
+/**
+ * 登出
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/logout
+ * 方法:get
+ * 说明:1.如无特别说明,任何http连接都可以使用https连接,你可以设置客户端在任何时候都使用https连接
+ *      2.登出就是删除session,如果session失效,你看到的应该是session失效的页面
+ * 
+ */
+var client_logout = {}
+
+var result_client_logout = {
+		status:true
+}
+
+//================================================================
+//进入商店
+
+/**
+ * 搜索商店
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/searchMarket?name={name}&page={pageNum}
+ * 方法 get
+ * 说明:1.不用打全名就能出现提示,实时提示商场名 2.每页显示10个,pageNum从1开始,搜索结果有可能小于10个
+ */
+var search_market = {}
+
+var result_search_market = {
+		markets:[{id:123,name:"苏果超市",location:"南京仙林大道。。。"},
+		         {},
+		         {},
+		         //...
+		         ]
+}
+
+/**
+ * (extention)
+ * 说明:通过连入商场的网络从而使用商场ip访问服务器,根据服务器记录的ip返回商场id
+ */
+var find_market_by_ip = {}
+
+/*
+ * 在搜索商店完毕后，用户点击某个商店就会进入商场详细信息的页面，
+ * 这时就意味着用户已经确认在这个商场购物，要把商场id要用于整个
+ * 购买过程。如果用户点返回，可以重新选择进入哪个商店。但是一旦
+ * 购物车里有商品的时候要确认才能退出
+ */
+
+/**
+ * 商店详情
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/MarketInfo?id={market id}
+ * 方法：get
+ * 说明
+ */
+
+var get_marketInfo = {}
+
+var result_get_marketInfo = {
+	name:"",
+	location:"",
+	introduction:"",
+	servicePhone:"",
+	complainPhone:"",
+	createDate:""//是商场的注册时间，不是创建时间
+}
+
+/**
+ * 特价商品
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/MarketSpecialProducs?id={market id}&page={pageNum}
+ * 方法：get
+ * 说明：1.特价商品是商场放在门口的那些商品，往往要帮某个品牌推销，或者清仓的那种
+ */
+var get_market_specialProducts = {}
+
+var result_get_market_specialProducts = {
+		specialsProducts:[{name:"",oldPrice:12.5,nowPrice:8.5,adWords:"",pid:123},
+		                  {},//分别是：商品名，原价，现价，广告语，商品id（不是特价商品id）
+		                  {}]
+}
+
 //=================================================================
 
 //=================================================================
+
+
+
+
+
+
+
+
+
+
 
 //=================================================================
