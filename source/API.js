@@ -260,8 +260,10 @@ var result_get_productInfo_by_id = {
 		            ]			
 }
 
-var error_get_product = {
-	
+//400 BadRequest
+var error_get_product = {//查看上面统一的错误处理风格
+	statu:false,
+	error:"你搜索的商品不存在"
 }
 //=================================================================
 
