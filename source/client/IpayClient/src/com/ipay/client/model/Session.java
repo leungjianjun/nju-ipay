@@ -9,19 +9,19 @@ import java.util.HashMap;
  */
 public class Session {
 	private String username;
-	private String passwordMD5;
+	private String password;
 	private HashMap<Product, Integer> shoppingCart;
 	public HashMap<Product, Integer> getShoppingCart() {
 		return shoppingCart;
 	}
 	public Session(){
 		username = null;
-		passwordMD5 = null;
+		password = null;
 		shoppingCart = new HashMap<Product, Integer>();
 	}
-	public Session(String username, String passwordMD5) {
+	public Session(String username, String password) {
 		this.username = username;
-		this.passwordMD5 = passwordMD5;
+		this.password = password;
 		shoppingCart = new HashMap<Product, Integer>();
 	}
 
@@ -43,12 +43,12 @@ public class Session {
 		this.username = username;
 	}
 
-	public String getPasswordMD5() {
-		return passwordMD5;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswordMD5(String passwordMD5) {
-		this.passwordMD5 = passwordMD5;
+	public void setPassword(String passwordMD5) {
+		this.password = passwordMD5;
 	}
 	
 }
