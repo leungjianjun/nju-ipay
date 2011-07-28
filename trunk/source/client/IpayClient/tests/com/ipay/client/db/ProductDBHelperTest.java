@@ -2,6 +2,7 @@ package com.ipay.client.db;
 
 import java.util.ArrayList;
 
+import com.ipay.client.db.ProductDBHelper;
 import com.ipay.client.model.Product;
 
 import android.test.AndroidTestCase;
@@ -9,7 +10,7 @@ import android.util.Log;
 
 public class ProductDBHelperTest extends AndroidTestCase{
 
-	ProductDBHelper pDBHelper;
+	ProductDBHelper pDBHelper; 
 	
 /*	public void test1SaveProduct(){
 		pDBHelper = new ProductDBHelper(getContext());
