@@ -48,5 +48,4 @@ public class SqliteHelper extends SQLiteOpenHelper{
 		db.execSQL(ProductDBHelper.UPGRADE);
 		onCreate(db);
 	}
-
 }
