@@ -31,7 +31,7 @@ public class MarketController {
 		this.marketService = marketService;
 	}
 	
-	@RequestMapping(value="/client/logout",method=RequestMethod.GET)
+	@RequestMapping(value="/client/search",method=RequestMethod.GET)
 	public @ResponseBody Object clientLogout(HttpSession session){
 		session.invalidate();
 		return Collections.singletonMap("status", true);
