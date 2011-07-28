@@ -35,6 +35,7 @@ E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\User.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\UserServiceImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\config\FormatAnnotationIntrospector.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\Record.java
+E:\huaqibei\source\server\market\src\main\java\com\ipay\server\web\MarketController.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\security\UserDetailsServiceImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\web\HomeController.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\Order.java
@@ -47,4 +48,5 @@ E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\Serv
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\dao\impl\DaoImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\MarketInfo.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\IMarketService.java
+E:\huaqibei\source\server\market\src\main\java\com\ipay\server\web\UserController.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\IProductService.java
