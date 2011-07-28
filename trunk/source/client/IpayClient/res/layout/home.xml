@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@android:color/white"
+  >
+  
+  	<include layout="@layout/navi_bar"/>
+	  
+  	<TextView 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textColor="#000000"
+		android:textSize="26sp"
+		android:textStyle="bold"
+		android:text="欢迎，Popcorn"
+		android:layout_marginBottom="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+  	/>
+  
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:background="@drawable/bg_home_search_div"
+		android:padding="10dp"
+		android:layout_margin="2dp"
+  	>
+  	
+  		<EditText
+  			android:layout_height="wrap_content" 
+  			android:layout_width="wrap_content"
+  			android:layout_weight="1.0"
+  			android:singleLine="true"
+  			android:hint="你在找什么？"
+  		/>
+  		
+  		<Button 
+  			android:layout_width="wrap_content"
+  			android:layout_height="wrap_content"
+  			android:layout_alignParentRight="true"
+  			android:text="搜索"
+  		/>
+  	</LinearLayout>
+  	
+  	<!-- List -->
+  	<ListView 
+  	android:id="@+id/home_listview"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:layout_weight="1.0"
+  	android:layout_marginTop="10dp"
+  	android:cacheColorHint="#00000000"
+  	android:dividerHeight="1.0dp"
+  	/>
+  	
+</LinearLayout>

@@ -22,16 +22,19 @@
 			android:layout_height="wrap_content"	
 			android:visibility="gone"		
 		/>
+		<!-- 底部tab -->
 		<RadioGroup 
+			android:id="@+id/tab_group"
 			android:layout_width="fill_parent"
 			android:layout_height="50dp"
 			android:gravity="center_vertical"
 			android:layout_gravity="bottom"
 			android:orientation="horizontal"
-			android:id="@+id/test_menu_bar"
-			android:background="@drawable/menu_bar_bg">
-		<RadioButton 
-			android:id="@+id/radio_button0"
+			android:background="@drawable/menu_bar_bg"
+			android:checkedButton="@+id/radio_button0"
+			>
+			<RadioButton 
+			android:id="@id/radio_button0"
 			android:tag="radio_button0"
 			android:layout_width="fill_parent"
   			android:layout_height="fill_parent"
