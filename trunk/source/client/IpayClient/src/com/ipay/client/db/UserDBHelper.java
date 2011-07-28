@@ -81,7 +81,7 @@ public class UserDBHelper{
 	 * @return	被影响的行数;如果删除失败抛出DBException
 	 */
 	public int DelUser(String username) throws DBException{
-		int id = db.delete(USER_TABLE_NAME, USER_NAME + "=" + username, null);
+		int id = db.delete(USER_TABLE_NAME, USER_NAME + "= '" + username + "'", null);
 		Log.d(TAG, "DelUser"+id);
 		
 		if(id == 0)
@@ -121,28 +121,13 @@ public class UserDBHelper{
 		cursor.close();
 		return userList;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public SQLiteDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(SQLiteDatabase db) {
+		this.db = db;
+	}
 	
 }

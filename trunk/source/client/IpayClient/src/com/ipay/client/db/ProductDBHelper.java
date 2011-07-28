@@ -1,11 +1,13 @@
 package com.ipay.client.db;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ipay.client.model.Product;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -121,6 +123,26 @@ public class ProductDBHelper {
 		db.endTransaction();
 	}
 	
+	public List<Product> GetProductList(){
+		List<Product> productList = new ArrayList<Product>();
+		Cursor cursor = db.query(PRODUCT_TABLE_NAME, 
+				null, null, null, null, null, null);
+		cursor.moveToFirst();
+		
+		while(!cursor.isAfterLast() && (cursor.getString(1) != null)){
+			Product product = new Product();
+			product.setName(cursor.getString(1));
+			product.setBarcode(cursor.getString(2));
+			product.setBanner(cursor.getString(3));
+			product.setPrice(cursor.getFloat(4));
+			product.setDescription(cursor.getString(5));
+			productList.add(product);
+			cursor.moveToNext();
+		}
+		
+		return productList;
+	}
+	
 	/**
 	 * 删除单个商品信息
 	 * 
@@ -129,7 +151,7 @@ public class ProductDBHelper {
 	 * @throws DBException
 	 */
 	public int DelProduct(String barcode) throws DBException{
-		int id = db.delete(PRODUCT_TABLE_NAME, PRODUCT_BARCODE+ "=" + barcode, null);
+		int id = db.delete(PRODUCT_TABLE_NAME, PRODUCT_BARCODE+ "='" + barcode + "'", null);
 		Log.d(TAG, "DelProduct"+id);
 		
 		if(id == 0)
@@ -148,4 +170,13 @@ public class ProductDBHelper {
 		Log.d(TAG, "Clear " + rows + "rows");
 		return rows;
 	}
+
+	public SQLiteDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(SQLiteDatabase db) {
+		this.db = db;
+	}
+	
 }
