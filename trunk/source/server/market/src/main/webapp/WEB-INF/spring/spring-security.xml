@@ -22,6 +22,11 @@
 		
 		<s:intercept-url pattern="/resources/**" filters="none" />
 		<s:logout logout-success-url="/login" />
+		
+   <!-- <s:session-management>
+			<s:concurrency-control max-sessions="1" />
+		</s:session-management>
+		<s:session-management invalid-session-url="/sessionTimeout" /> -->
 	</s:http>
 	
 	<!-- 认证配置, 使用userDetailsService提供的用户信息 -->

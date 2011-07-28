@@ -14,6 +14,7 @@ public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
 		if (request.getContentType().contains("application/json")) {
+			response.setStatus(400);
 	        response.getWriter().print("{\"status\":\"false\"}");
 	        response.getWriter().flush();
 		}else {

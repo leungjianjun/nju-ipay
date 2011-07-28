@@ -1,16 +1,13 @@
 package com.ipay.server.web;
 
 import java.security.Principal;
-import java.text.DateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +39,7 @@ public class ClientController {
 		return "login_test";
 	}
 	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@RequestMapping(value = "client/test", method = RequestMethod.GET)
 	public @ResponseBody Map<String, String> test(Locale locale,Principal principal) {
 		logger.info("client login "+ locale.toString());
 		return Collections.singletonMap("name", principal.getName());
