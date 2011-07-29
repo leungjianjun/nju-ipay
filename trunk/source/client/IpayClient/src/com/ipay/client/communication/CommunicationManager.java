@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.google.zxing.common.StringUtils;
 import com.ipay.client.model.Order;
 import com.ipay.client.model.Product;
@@ -45,6 +47,8 @@ public class CommunicationManager {
 		return manager;
 	}
 
+	public static final String TAG = "CommunicationManager";
+	
 	public static final String LOGIN_URL = "https://192.168.0.1:8443/j_security_check";
 	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
 	public static final String PRODUCT_URL = "";
@@ -94,24 +98,33 @@ public class CommunicationManager {
 		JSONObject result;
 		try {
 			HttpResponse response = httpClient.execute(post);
+			
+			Log.d(TAG, "********execute post");
+			
 			if(response.getStatusLine().getStatusCode() == OK){
+				
+				Log.d(TAG, "********response.getStatusLine().getStatusCode() == OK");
+				
 				String retSrc = EntityUtils.toString(response.getEntity());
 				result = new JSONObject(retSrc);
 				status = result.getBoolean("status");
 			}
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+			Log.d(TAG, "********ClientProtocolException: " + e.toString());
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Log.d(TAG, "********IOException: " + e.toString());
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			Log.d(TAG, "********JSONException: " + e.toString());
 			e.printStackTrace();
 		}
 		
 		//登陆成功
 		if(status == true){
+			
+			Log.d(TAG,"********status == true");
+			
 			if(session == null){
 				return new Session(username, password);
 			}else{
@@ -122,6 +135,7 @@ public class CommunicationManager {
 		}
 		//登陆失败
 		else{
+			Log.d(TAG,"********status == false");
 			return null;
 		}
 		
