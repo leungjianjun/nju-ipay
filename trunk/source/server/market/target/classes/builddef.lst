@@ -27,6 +27,7 @@ E:\huaqibei\source\server\market\src\main\java\com\ipay\server\config\Converting
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\config\CustomHibernateSessionFilter.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\config\JacksonConversionServiceConfigurer.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\dao\IDao.java
+E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\ProductInfoServiceImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\Market.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\IService.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\MarketServiceImpl.java
@@ -34,6 +35,7 @@ E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\Admin.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\User.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\UserServiceImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\config\FormatAnnotationIntrospector.java
+E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\IProductInfoService.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\Record.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\web\MarketController.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\security\UserDetailsServiceImpl.java
