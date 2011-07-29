@@ -44,7 +44,9 @@ public class ProductInfo extends BaseEntity {
 	@JoinColumn
 	private Set<Attribute> atttributes = Sets.newHashSet();
 	
-	private String imgUrl;
+	private String minImgUrl;
+	
+	private String midImgUrl;
 
 	public String getBanner() {
 		return banner;
@@ -78,12 +80,20 @@ public class ProductInfo extends BaseEntity {
 		this.atttributes = atttributes;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
+	public String getMinImgUrl() {
+		return minImgUrl;
 	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setMinImgUrl(String minImgUrl) {
+		this.minImgUrl = minImgUrl;
+	}
+
+	public String getMidImgUrl() {
+		return midImgUrl;
+	}
+
+	public void setMidImgUrl(String midImgUrl) {
+		this.midImgUrl = midImgUrl;
 	}
 
 
