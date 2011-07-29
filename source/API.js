@@ -167,12 +167,12 @@ var result_get_marketInfo = {
  * url http://xxx.xxx.xxx.xxx:8080/client/MarketSpecialProducs?mid={market id}&page={pageNum}
  * 方法：get
  * 说明：1.特价商品是商场放在门口的那些商品，往往要帮某个品牌推销，或者清仓的那种 2 每页10个 
- *       3.商品图像url用相对地址
+ *       3.商品图像url用相对地址,像/images/143_234324234_min.gif,要添加前缀http://xxx.xxx.xxx.xxx:8080
  */
 var get_market_specialProducts = {}
 
 var result_get_market_specialProducts = {
-		specialsProducts:[{name:"",oldPrice:12.5,nowPrice:8.5,adWords:"",pid:123,imgUrl:""},
+		specialsProducts:[{name:"",oldPrice:12.5,nowPrice:8.5,adWords:"",pid:123,minImgUrl:""},
 		                  {},//分别是：商品名，原价，现价，广告语，商品id（不是特价商品id），图像地址
 		                  {}]
 }
@@ -187,7 +187,7 @@ var result_get_market_specialProducts = {
 var get_market_hotProducts = {}
 
 var result_get_market_hotProducts = {
-		hotProducts:[{id:123,name:"",price:12.5,imgUrl:""},//可以根据客户端需要的信息改动
+		hotProducts:[{id:123,name:"",price:12.5,minImgUrl:""},//可以根据客户端需要的信息改动
 		             {},
 		             {}]
 }
@@ -213,7 +213,8 @@ var result_get_productInfo_by_barcode = {
 		name:"",
 		banner:"",
 		barcode:"",
-		imgUrl:"",
+		minImgUrl:"",
+		midImgUrl:"",//查看大图
 		price:12.4,
 		quantity:50,
 		attributes:[{key:"",value:""},
@@ -250,7 +251,8 @@ var result_get_productInfo_by_id = {
 		name:"",
 		banner:"",
 		barcode:"",
-		imgUrl:"",
+		minImgUrl:"",
+		midImgUrl:"",//查看大图
 		price:12.4,
 		quantity:50,
 		attributes:[{key:"",value:""},
@@ -268,6 +270,14 @@ var error_get_product = {//查看上面统一的错误处理风格
 
 //=================================================================
 //搜索商品
+
+/**
+ * 搜索商品
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/SearchProduct?mid={market id}&name={productName}&page={pageNum}
+ * 方法 get
+ * 说明 1.实时搜索，只要部分名字就能开始搜索 2.每页10个
+ */
 var search_product = {}
 
 var result_search_product = {
