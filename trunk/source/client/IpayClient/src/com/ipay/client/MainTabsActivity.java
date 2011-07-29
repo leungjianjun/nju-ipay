@@ -31,17 +31,20 @@ public class MainTabsActivity extends TabActivity {
 		
 		setContentView(R.layout.main_tabs);
 		tabhost = getTabHost();
+		//商场首页
 		Intent home = new Intent(this, HomeActivity.class);
 		tabhost.addTab(tabhost.newTabSpec("HOME").setIndicator("HOME")
 				.setContent(home));
+		
 		Intent tab2 = new Intent(this, TestActivity2.class);
 		tabhost.addTab(tabhost.newTabSpec("tab2").setIndicator("TAB2")
 				.setContent(tab2));
-		Intent tab3 = new Intent(this, TestActivity3.class);
-		tabhost.addTab(tabhost.newTabSpec("tab3").setIndicator("TAB3")
-				.setContent(tab3));
+		//购物车
+		Intent cart = new Intent(this, ShoppingCartActivity.class);
+		tabhost.addTab(tabhost.newTabSpec("CART").setIndicator("CART")
+				.setContent(cart));
 		
-		Intent account = new Intent(this, TestActivity1.class);
+		Intent account = new Intent(this, MarketInfoActivity.class);
 		tabhost.addTab(tabhost.newTabSpec("ACCOUNT").setIndicator("ACCOUNT")
 				.setContent(account));
 
@@ -66,7 +69,7 @@ public class MainTabsActivity extends TabActivity {
 					
 					break;
 				case R.id.radio_button2:
-					tabhost.setCurrentTabByTag("tab3");
+					tabhost.setCurrentTabByTag("CART");
 					selected=2;
 					break;
 				case R.id.radio_button3:

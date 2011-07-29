@@ -61,7 +61,7 @@ public class TestActivity3 extends Activity {
 						int position, long id) {
 					// TODO Auto-generated method stub
 					
-					Intent i=new Intent(getParent(), TestActivity1.class);
+					Intent i=new Intent(getParent(), MarketInfoActivity.class);
 					startActivity(i);
 				}
 			});

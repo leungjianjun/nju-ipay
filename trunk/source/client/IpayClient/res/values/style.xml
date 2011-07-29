@@ -55,6 +55,20 @@
 	</style>
 
 	<!-- 导航栏按钮 -->
+	
+	<style name="navi_bar_button">
+        <item name="android:background">@drawable/transparent_btn_bg</item>
+        <item name="android:textColor">@color/simple_button_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">5dip</item>
+        <item name="android:paddingBottom">5dip</item>
+        <item name="android:paddingLeft">7dip</item>
+        <item name="android:paddingRight">7dip</item>
+    </style>
 
 	<!-- 菜单栏按钮 -->
 	<style name="menu_bar_button">
