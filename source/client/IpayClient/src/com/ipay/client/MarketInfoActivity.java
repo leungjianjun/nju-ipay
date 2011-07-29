@@ -11,15 +11,13 @@ import android.widget.TextView;
  * @author tangym
  *
  */
-public class TestActivity1 extends Activity {
+public class MarketInfoActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.test);
-		TextView text=(TextView)findViewById(R.id.test);
-		text.setText("this is tab1");
+		setContentView(R.layout.market_info);
 		
 	}
 

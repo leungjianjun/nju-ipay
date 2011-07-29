@@ -34,7 +34,6 @@
 	  
 	<!-- 存储商品名称和信息的容器 -->
 	<RelativeLayout 
-		android:orientation="vertical"
 	  	android:layout_width="fill_parent"
 	  	android:layout_height="wrap_content" 
 	  	android:layout_marginTop="2dp"
@@ -81,7 +80,7 @@
 			android:textSize="14sp"
 			android:layout_marginTop="5dip"
 			android:layout_marginRight="5dip"
-			android:text="Add"
+			android:text="移除"
 		/>
   </RelativeLayout>
      

@@ -20,13 +20,15 @@
 		<activity android:name=".barcode.CaptureActivity">
 		</activity>
 
-		<activity android:name=".TestActivity1">
+		<activity android:name=".MarketInfoActivity">
 		</activity>
 		<activity android:name=".TestActivity2">
 		</activity>
 		<activity android:name=".TestActivity3">
 		</activity>
 		<activity android:name=".HomeActivity">
+		</activity>
+		<activity android:name=".ShoppingCartActivity">
 		</activity>
 	</application>
 

@@ -1,38 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 顶部导航栏 from fanfou header-->
 <RelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="47dp"
-  android:background="@drawable/bg_navi_bar"
-  android:gravity="center_vertical"
-  android:layout_alignParentTop="true">
-  
-  <!-- 标题 iPay  此处先用文字代替 -->
-  
-  <TextView 
-  	android:id="@+id/navi_bar_title"
-  	android:layout_width="wrap_content"
-  	android:layout_height="wrap_content"
-	android:layout_alignParentLeft="true"
-	android:layout_marginTop="6dp"
-	android:layout_marginLeft="3dp"
-	android:layout_marginBottom="6dp"
-	android:text="@string/app_name"
-	android:textColor="@color/simple_button_color"
-	android:textSize="24sp"
-  />
-  <!-- 搜索按钮 -->
-  <ImageButton
-    android:id="@+id/navi_bar_search" 
-  	android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:layout_alignParentRight="true"
-    android:paddingRight="10dip"
-    android:paddingLeft="10dip"
-  	android:background="@null"
-    android:src="@drawable/navi_bar_search_selector"
-  />
+  	xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:layout_width="fill_parent"
+  	android:layout_height="47dp"
+  	android:background="@drawable/bg_navi_bar"
+  	android:gravity="center_vertical"
+  	android:layout_alignParentTop="true"
+  	>
+  	<!-- 返回按钮 -->
+  	<Button 
+  		android:id="@+id/navi_bar_back"
+  		android:layout_width="wrap_content"
+  		android:layout_height="fill_parent"
+  		android:layout_alignParentLeft="true"
+  		style="@style/navi_bar_button"
+  		android:text="返回"
+  	/>
+  	
+  	<!-- 搜索按钮 -->
+  	<ImageButton
+    	android:id="@+id/navi_bar_search" 
+  		android:layout_width="wrap_content"
+    	android:layout_height="fill_parent"
+    	android:layout_alignParentRight="true"
+    	android:paddingRight="10dip"
+    	android:paddingLeft="10dip"
+  		android:background="@null"
+    	android:src="@drawable/navi_bar_search_selector"
+  	/>
   
    	<!-- 购物车按钮 -->
    	<ImageButton 
@@ -80,10 +75,4 @@
 		style="@style/gProgressBar.Horizontal"
      />
    
-   
-   
-  
-  
-
-    
 </RelativeLayout>

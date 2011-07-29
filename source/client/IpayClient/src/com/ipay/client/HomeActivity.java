@@ -57,7 +57,7 @@ public class HomeActivity extends Activity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 
-				Intent i = new Intent(HomeActivity.this, TestActivity1.class);
+				Intent i = new Intent(HomeActivity.this, MarketInfoActivity.class);
 				startActivity(i);
 			}
 		});
