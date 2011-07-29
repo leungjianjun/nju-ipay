@@ -35,6 +35,7 @@ public class ProductInfo extends BaseEntity {
 	/**
 	 * 商品名称
 	 */
+	@NotNull
 	private String name;
 	
 	/**
