@@ -48,8 +48,8 @@ public class ProductInfoServiceTest {
 	@Test
 	public void testUpdateProductInfo(){
 		ProductInfo productInfo = productInfoService.find(ProductInfo.class, 1);
-		productInfo.setMinImgUrl("images/1_738374833_min.gif");
-		productInfo.setMidImgUrl("images/1_738374833_mid.gif");
+		productInfo.setMinImgUrl("/images/1_738374833_min.gif");
+		productInfo.setMidImgUrl("/images/1_738374833_mid.gif");//不要漏了斜杠
 		productInfoService.update(productInfo);
 	}
 
