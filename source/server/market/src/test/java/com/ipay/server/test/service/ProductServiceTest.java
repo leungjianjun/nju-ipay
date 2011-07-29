@@ -42,26 +42,6 @@ public class ProductServiceTest {
 	}
 	
 	@Test
-	public void testCreateProductInfo(){
-		ProductInfo productInfo = new ProductInfo();
-		productInfo.setBanner("广华集团");
-		productInfo.setBarcode("738374833");
-		productInfo.setMinImgUrl("product/image/123.gif");//url格式另外定义
-		productInfo.setName("广华牌摇摆杯");
-		productInfo.getAtttributes().add(new Attribute("容量","600ml"));
-		productService.createProductInfo(productInfo);
-		
-		ProductInfo productInfo2 = new ProductInfo();
-		productInfo2.setBanner("上海绅门服饰有限公司");
-		productInfo2.setBarcode("838374833");
-		productInfo2.setMinImgUrl("product/image/124.gif");//url格式另外定义
-		productInfo2.setMidImgUrl("product/image/124.gif");//url格式另外定义
-		productInfo2.setName("绅门男士柔棉弹力背心");
-		productInfo2.getAtttributes().add(new Attribute("颜色","黑色、白色、灰色"));
-		productService.createProductInfo(productInfo2);
-	}
-	
-	@Test
 	public void testGetProductInfoByCode(){
 		ProductInfo productInfo = productService.getProductInfoByCode("738374833");
 		Assert.assertEquals("广华集团", productInfo.getBanner());

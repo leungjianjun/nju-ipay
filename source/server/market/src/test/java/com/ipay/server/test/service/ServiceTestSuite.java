@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
 	ClientServiceTest.class,
 	MarketServiceTest.class,
 	ProductServiceTest.class,
+	ProductInfoServiceTest.class,
 	RecordServiceTest.class
 	
 })
