@@ -177,7 +177,7 @@ public class InitDatabase {
 							productinfo.setVersion(1);
 							productinfo.setBanner("Produce_1");
 							productinfo.setName(bookname);
-							productinfo.setImgUrl(imgUrl);
+							productinfo.setMinImgUrl(imgUrl);
 							banner=getDetail(detail,productinfo,flag);
 						
 						
@@ -289,7 +289,7 @@ public class InitDatabase {
 						System.out.println(author+" "+printer);
 						productinfo.setBanner(printer);
 						productinfo.setVersion(1);
-						productinfo.setImgUrl(imgUrl);
+						productinfo.setMinImgUrl(imgUrl);
 						barcode=getDetail(detail,productinfo,flag);					
 						productinfo.setBarcode(barcode);
 											productService.createProductInfo(productinfo);
@@ -380,7 +380,7 @@ public class InitDatabase {
 						System.out.println(author+" "+printer);
 						productinfo.setBanner(printer);
 						productinfo.setVersion(1);
-						productinfo.setImgUrl(imgUrl);
+						productinfo.setMinImgUrl(imgUrl);
 						barcode=getDetail(detail,productinfo,flag);					
 						productinfo.setBarcode(barcode);
 					productService.createProductInfo(productinfo);
