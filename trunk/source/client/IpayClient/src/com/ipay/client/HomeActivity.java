@@ -28,11 +28,11 @@ public class HomeActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
-		
+
 		list = (ListView) findViewById(R.id.home_listview);
 
 		ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
-		
+
 		for (int i = 0; i < 4; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", R.drawable.goods_image_example);// 图像资源的ID
@@ -56,9 +56,19 @@ public class HomeActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
+				switch (position) {
+				case 0:
+					Intent marketInfo = new Intent(HomeActivity.this,
+							MarketInfoActivity.class);
+					startActivity(marketInfo);
+					break;
+				case 1:
+					Intent  hotGoods= new Intent(HomeActivity.this,
+							HotGoodsActivity.class);
+					startActivity(hotGoods);
+					break;
+				}
 
-				Intent i = new Intent(HomeActivity.this, MarketInfoActivity.class);
-				startActivity(i);
 			}
 		});
 

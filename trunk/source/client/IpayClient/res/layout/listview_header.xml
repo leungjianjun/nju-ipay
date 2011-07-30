@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:gravity="center"
+  android:background="@android:drawable/list_selector_background"
+  >
+  <TextView 
+  	android:id="@+id/list_refresh"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_marginTop="10dp"
+  	android:layout_marginBottom="10dp"
+  	style="@style/normalText.Big"
+  	android:text="刷新"
+  />
+  <ProgressBar 
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	style="@android:style/Widget.ProgressBar.Small"
+  	android:visibility="gone" 
+  />
+</LinearLayout>
