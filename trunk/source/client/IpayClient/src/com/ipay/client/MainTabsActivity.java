@@ -44,7 +44,7 @@ public class MainTabsActivity extends TabActivity {
 		tabhost.addTab(tabhost.newTabSpec("CART").setIndicator("CART")
 				.setContent(cart));
 		
-		Intent account = new Intent(this, MarketInfoActivity.class);
+		Intent account = new Intent(this, AccountActivity.class);
 		tabhost.addTab(tabhost.newTabSpec("ACCOUNT").setIndicator("ACCOUNT")
 				.setContent(account));
 
