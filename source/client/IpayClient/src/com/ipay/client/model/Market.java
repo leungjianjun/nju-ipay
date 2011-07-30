@@ -1,9 +1,15 @@
 package com.ipay.client.model;
 
 public class Market {
+	public static final String NAME="name";
+	public static final String LOCATION="location";
+	public static final String INTRODUCTION="introduction";
+	public static final String SERVICE_PHONE="servicePhone";
+	public static final String COMPLAIN_PHONE="complainPhone";
+	public static final String CREATE_DATE = "createDate";
 	private int id;
 	private String name;
-	private String laction;
+	private String location;
 	private String introduction;
 	private String servicePhone;
 	private String complainPhone;
@@ -17,11 +23,11 @@ public class Market {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getLaction() {
-		return laction;
+	public String getLocation() {
+		return location;
 	}
-	public void setLaction(String laction) {
-		this.laction = laction;
+	public void setLocation(String laction) {
+		this.location = laction;
 	}
 	public String getIntroduction() {
 		return introduction;
