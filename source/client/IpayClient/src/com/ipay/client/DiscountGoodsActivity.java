@@ -17,10 +17,10 @@ import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * @author tangym
- *
+ * 
  */
 public class DiscountGoodsActivity extends Activity {
-	
+
 	private ListView listView;
 
 	private View listHeader;

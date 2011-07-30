@@ -26,7 +26,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:background="@drawable/bg_home_search_div"
+		android:background="@drawable/listview_item_view_bg"
 		android:padding="10dp"
 		android:layout_margin="2dp"
   	>
@@ -53,7 +53,7 @@
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
   	android:layout_weight="1.0"
-  	android:layout_marginTop="10dp"
+  	android:layout_marginTop="5dp"
   	android:cacheColorHint="#00000000"
    	android:divider="@drawable/divider_horizonal"
   	android:dividerHeight="1.0dp"

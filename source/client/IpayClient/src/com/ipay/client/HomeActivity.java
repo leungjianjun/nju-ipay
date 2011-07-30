@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class HomeActivity extends Activity {
 
 	private ListView list;
+	ArrayList<HashMap<String, Object>> data;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,9 @@ public class HomeActivity extends Activity {
 
 		list = (ListView) findViewById(R.id.home_listview);
 
-		ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+		data = new ArrayList<HashMap<String, Object>>();
+		createListData();
 
-		for (int i = 0; i < 4; i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("ItemImage", R.drawable.goods_image_example);// 图像资源的ID
-			map.put("ItemTitle", "选项 " + i);
-			data.add(map);
-		}
 		// 生成适配器的Item和动态数组对应的元素
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this, data,// 数据源
 				R.layout.home_item_view,// ListItem的XML实现
@@ -63,12 +59,12 @@ public class HomeActivity extends Activity {
 					startActivity(marketInfo);
 					break;
 				case 1:
-					Intent  hotGoods= new Intent(HomeActivity.this,
+					Intent hotGoods = new Intent(HomeActivity.this,
 							HotGoodsActivity.class);
 					startActivity(hotGoods);
 					break;
 				case 2:
-					Intent  discntGoods= new Intent(HomeActivity.this,
+					Intent discntGoods = new Intent(HomeActivity.this,
 							DiscountGoodsActivity.class);
 					startActivity(discntGoods);
 					break;
@@ -77,6 +73,17 @@ public class HomeActivity extends Activity {
 			}
 		});
 
+	}
+
+	private void createListData() {
+		String[] menu = { "商场介绍", "热卖商品", "打折商品" };
+
+		for (int i = 0; i < 3; i++) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("ItemImage", R.drawable.goods_image_example);// 图像资源的ID
+			map.put("ItemTitle", menu[i]);
+			data.add(map);
+		}
 	}
 
 }
