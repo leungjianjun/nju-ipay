@@ -33,6 +33,8 @@
 		</activity>
 		<activity android:name=".HotGoodsActivity">
 		</activity>
+		<activity android:name=".DiscountGoodsActivity">
+		</activity>
 	</application>
 
 	<instrumentation android:name="android.test.InstrumentationTestRunner"

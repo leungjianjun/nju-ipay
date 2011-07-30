@@ -3,7 +3,9 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="horizontal"
   android:layout_width="fill_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:background="@drawable/listview_item_selector"
+  >
   
   <ImageView 
   	android:id="@+id/home_item_image"
@@ -17,6 +19,7 @@
   	android:layout_width="wrap_content"
   	android:layout_height="wrap_content"
   	android:layout_weight="1.0"
+  	android:layout_gravity="center_vertical"
   	android:textSize="24sp"
   />
 </LinearLayout>

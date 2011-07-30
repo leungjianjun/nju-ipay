@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 关于页面 
-	 用来介绍软件的一些信息，如：开发者，要感谢的人，遵照的协议等
--->
+
+<!-- 商品信息页面 -->
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-    
+  
+  <!-- 顶部菜单栏 -->
+  <include layout="@layout/navi_bar_back"/>
+  
+  
+      
 </LinearLayout>
