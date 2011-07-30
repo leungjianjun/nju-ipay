@@ -13,8 +13,9 @@ public class AjaxAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 
 public void onAuthenticationSuccess(HttpServletRequest request,HttpServletResponse response, Authentication auth)
     throws IOException, ServletException {
+	System.out.println("yes=========================="+request.getContentType());
 	if (request.getContentType().contains("application/json")) {
-        response.getWriter().print("{\"status\":\"false\"}");
+        response.getWriter().print("{\"status\":\"true\"}");
         response.getWriter().flush();
 	}else {
 		super.onAuthenticationSuccess(request, response, auth);

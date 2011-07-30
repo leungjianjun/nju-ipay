@@ -48,7 +48,7 @@
     	<property name="forceHttps" value="false" />
 	</bean>
 
-	<bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+	<bean id="authenticationFilter" class="com.ipay.server.security.AjaxUsernamePasswordAuthenticationFilter">
     	<property name="authenticationManager" ref="authenticationManager"/>
     	<property name="filterProcessesUrl" value="/j_spring_security_check"/>
     	<property name="authenticationFailureHandler" ref="failureHandler"/>
