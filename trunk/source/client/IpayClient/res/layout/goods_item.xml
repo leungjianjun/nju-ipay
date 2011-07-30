@@ -4,7 +4,8 @@
   android:orientation="horizontal"
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  android:padding="5dp">
+  android:padding="5dp"
+  >
   
 	<!-- 如果商品有图片，则这部分负责显示图片；否则，删除这个布局 
   	图片大小为48*48，可以根据需求调整。
