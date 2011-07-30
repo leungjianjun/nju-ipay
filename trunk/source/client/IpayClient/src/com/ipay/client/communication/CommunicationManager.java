@@ -49,7 +49,7 @@ public class CommunicationManager {
 
 	public static final String TAG = "CommunicationManager";
 	
-	public static final String LOGIN_URL = "https://192.168.0.1:8443/j_security_check";
+	public static final String LOGIN_URL = "https://192.168.1.100:8443/j_security_check";
 	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
 	public static final String PRODUCT_URL = "";
 	public static final String PAY_URL = "";
@@ -119,7 +119,6 @@ public class CommunicationManager {
 			Log.d(TAG, "********JSONException: " + e.toString());
 			e.printStackTrace();
 		}
-		
 		//登陆成功
 		if(status == true){
 			
