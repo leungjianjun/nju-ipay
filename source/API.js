@@ -71,6 +71,7 @@
  * 说"你的网络存在问题"呢,所以有些错误必定只能有客户端来说明
  */
 //=================================================================
+//用户相关
 /**
  * 登录
  * 
@@ -109,6 +110,55 @@ var result_client_logout = {
 		status:true
 }
 
+/**
+ * 查看个人信息
+ * 
+ * url https://xxx.xxx.xxx.xxx:8443/client/GetInfo
+ * 方法:get
+ */
+var get_client_info = {}
+
+var result_get_client_info = {
+	account:"",
+	realname:"",
+	phonenum:""
+}
+
+/**
+ * 设置跟人信息
+ * 
+ * url https://xxx.xxx.xxx.xxx:8443/client/SetInfo
+ * 方法:post
+ */
+var set_client_info = {
+	account:"",//把要修改的写下来，不用修改的就不写
+	phonenum:""
+}
+
+var result_set_client_info = {
+		status:true
+}
+
+/**
+ * 设置密码
+ * 
+ * url https://xxx.xxx.xxx.xxx:8443/client/SetInfo
+ * 方法：post
+ * data:orlPassword:""&newPassword:""
+ */
+var set_password = {}
+
+var result_set_password = {
+	status:true
+}
+
+//400 bad request
+var error_set_info = {
+	status:false,
+	error:"参数错误"
+}
+
+
 //================================================================
 //进入商店
 
@@ -130,10 +180,18 @@ var result_search_market = {
 }
 
 /**
+ * 
+ * url http://xxx.xxx.xxx.xxx:8080/client/findMarketId
+ * 方法 get
  * (extention)
  * 说明:通过连入商场的网络从而使用商场ip访问服务器,根据服务器记录的ip返回商场id
  */
 var find_market_by_ip = {}
+
+var result_find_market_by_ip = {
+	ip:"202.119.48.38",
+	id:123
+}
 
 /*
  * 在搜索商店完毕后，用户点击某个商店就会进入商场详细信息的页面，
@@ -363,6 +421,20 @@ var result_pay_order = {
 /*
  * 客户端根据结果提示用户下一步此操作
  */
+
+//================================================================
+//购买记录
+
+/**
+ * 
+ * 
+ */
+var get_records = {}
+
+var result_get_records = {
+	records:[{id:134,createDate:"",marketName:"",total:""}]
+}
+
 
 //=================================================================
 //安全说明“
