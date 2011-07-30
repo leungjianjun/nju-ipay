@@ -5,6 +5,7 @@ package com.ipay.client;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -74,16 +75,6 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		Log.d(TAG, "onDestory");
-		// if (mLoginTask != null
-		// && mLoginTask.getStatus() == GenericTask.Status.RUNNING) {
-		// mLoginTask.cancel(true);
-		// }
-		//
-		// // dismiss dialog before destroy
-		// // to avoid android.view.WindowLeaked Exception
-		// TaskFeedback.getInstance(TaskFeedback.DIALOG_MODE,
-		// LoginActivity.this)
-		// .cancel();
 		super.onDestroy();
 	}
 
@@ -97,18 +88,12 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-
-		// if (mLoginTask != null
-		// && mLoginTask.getStatus() == GenericTask.Status.RUNNING) {
-		// // If the task was running, want to start it anew when the
-		// // Activity restarts.
-		// // This addresses the case where you user changes orientation
-		// // in the middle of execution.
-		// outState.putBoolean(SIS_RUNNING_KEY, true);
-		// }
 	}
 
 	private void doLogin() {
+		Intent intent=new Intent(LoginActivity.this, MainTabsActivity.class);
+		startActivity(intent);
+		finish();
 
 	}
 
