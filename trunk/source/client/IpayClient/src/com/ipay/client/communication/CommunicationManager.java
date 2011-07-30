@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.ipay.client.model.Market;
 import com.ipay.client.model.Order;
 import com.ipay.client.model.Product;
 import com.ipay.client.model.Session;
@@ -61,7 +62,8 @@ public class CommunicationManager {
 	public static final String LOGIN_URL = "https://192.168.1.100:8443/j_security_check";
 	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
 	public static final String MARKET_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/findMarketId";
-	public static final String PRODUCT_URL = "";
+	public static final String MARKET_INFO_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketInfo?mid=";
+	public static final String PRODUCT_INFO_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductInfoByCode?";
 	public static final String PAY_URL = "";
 	 /** OK: Success! */
     public static final int OK = 200;
@@ -219,24 +221,84 @@ public class CommunicationManager {
 		
 		
 	}
-
-	
 	/**
-	 * @param barcode
-	 * @return 查找失败返回null
+	 * 获得指定商场的详细信息
+	 * @param MarketId
+	 * @return
 	 */
-	public Product findInfo(String barcode) {
-		HttpGet get = new HttpGet(PRODUCT_URL + barcode);
-		HttpClient client = new DefaultHttpClient();
+	public Market getMarketInfo(int MarketId){
+		HttpGet get = new HttpGet(MARKET_INFO_URL+marketId);
+		HttpClient httpClient = new DefaultHttpClient();
 		try {
-			HttpResponse response = client.execute(get);
+			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
-				
+				String retSrc = EntityUtils.toString(response.getEntity());
+				JSONObject result = new JSONObject(retSrc);
+				Market market = new Market(marketId);
+				market.setName(result.getString(Market.NAME));
+				market.setLocation(result.getString(Market.LOCATION));
+				market.setIntroduction(result.getString(Market.INTRODUCTION));
+				market.setServicePhone(result.getString(Market.SERVICE_PHONE));
+				market.setServicePhone(result.getString(Market.COMPLAIN_PHONE));
+				market.setServicePhone(result.getString(Market.CREATE_DATE));
+				return market;
 			}
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 获得当前接入的商场信息
+	 * @return
+	 */
+	public Market getMarketInfo(){
+		return getMarketInfo(marketId);
+	}
+	
+	/**
+	 * @param barcode
+	 * @return 查找失败返回null
+	 */
+	public Product getProductInfo(String barcode) {
+		HttpGet get = new HttpGet(PRODUCT_INFO_URL+"mid="+marketId+"&code="+barcode);
+		HttpClient client = new DefaultHttpClient();
+		try {
+			HttpResponse response = client.execute(get);
+			if(response.getStatusLine().getStatusCode() == OK){
+				String retSrc = EntityUtils.toString(response.getEntity());
+				JSONObject result = new JSONObject(retSrc);
+				Product product = new Product();
+				product.setId(result.getInt(Product.ID));
+				product.setName(result.getString(Product.NAME));
+				product.setBanner(result.getString(Product.BANNER));
+				product.setBarcode(barcode);
+				product.setMidImgUrl(result.getString(Product.MID_IMG_URL));
+				product.setMinImgUrl(result.getString(Product.MIN_IMG_URL));
+				product.setPrice(result.getDouble(Product.PRICE));
+				product.setQuantity(result.getInt(Product.QUANTITY));
+				JSONArray attrs = result.getJSONArray(Product.ATTRIBUTES);
+				for(int i = 0; i < attrs.length(); i++){
+					JSONObject attr = attrs.getJSONObject(i);
+					product.putAttr(attr.getString("key"), attr.getString("value"));
+				}
+				return product;
+			}
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -277,13 +339,34 @@ public class CommunicationManager {
 		return status;
 		
 	}
-	/*
+	
+	/**
 	 * 用于获得商场id
 	 * 每一次客户端成功连接到商场网络时，必须调用此方法
-	 * 
+	 * @return
 	 */
 	public boolean initConnection(){
-		
+		HttpGet get = new HttpGet(MARKET_ID_URL);
+		HttpClient httpClient = new DefaultHttpClient();
+		try {
+			HttpResponse response = httpClient.execute(get);
+			if(response.getStatusLine().getStatusCode() == OK){
+				String retSrc = EntityUtils.toString(response.getEntity());
+			JSONObject result = new JSONObject(retSrc);
+			marketId = result.getInt("id");
+			return true;
+			}
+			
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		return false;
 	}
 

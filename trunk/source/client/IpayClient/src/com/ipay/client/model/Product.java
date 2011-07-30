@@ -1,12 +1,42 @@
 package com.ipay.client.model;
 
+import java.util.HashMap;
+
 public class Product {
+	public static final String ID="id";
+	public static final String NAME="name";
+	public static final String BANNER="banner";
+	public static final String MIN_IMG_URL="minImgUrl";
+	public static final String MID_IMG_URL="midImgUrl";
+	public static final String PRICE="price";
+	public static final String QUANTITY="quantity";
+	public static final String ATTRIBUTES="attributes";
 	private double price;
 	private String description;
 	private String barcode;
 	private String name;//商品名称
 	private String banner;//生产商
-	
+	private int id;
+	private int quantity;
+	private String midImgUrl;
+	private String minImgUrl;
+	public String getMidImgUrl() {
+		return midImgUrl;
+	}
+
+	public void setMidImgUrl(String midImgUrl) {
+		this.midImgUrl = midImgUrl;
+	}
+
+	public String getMinImgUrl() {
+		return minImgUrl;
+	}
+
+	public void setMinImgUrl(String minImgUrl) {
+		this.minImgUrl = minImgUrl;
+	}
+
+	private HashMap<String, String> attributes = new HashMap<String, String>();
 	
 	public Product(){
 		
@@ -51,7 +81,32 @@ public class Product {
 	public void setBanner(String banner) {
 		this.banner = banner;
 	}
-	
+	public void putAttr(String key, String value){
+		attributes.put(key, value);
+	}
+	public String getAttr(String key){
+		return attributes.get(key);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public HashMap<String, String> getAttributes() {
+		return attributes;
+	}
 	
 	
 }
