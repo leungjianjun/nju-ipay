@@ -15,6 +15,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.StringEntity;
@@ -29,7 +30,6 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.google.zxing.common.StringUtils;
 import com.ipay.client.model.Order;
 import com.ipay.client.model.Product;
 import com.ipay.client.model.Session;
@@ -42,6 +42,7 @@ import com.ipay.client.model.Session;
  */
 
 public class CommunicationManager {
+	private int marketId;
 	private CommunicationManager() {
 
 	}
@@ -59,6 +60,7 @@ public class CommunicationManager {
 	
 	public static final String LOGIN_URL = "https://192.168.1.100:8443/j_security_check";
 	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
+	public static final String MARKET_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/findMarketId";
 	public static final String PRODUCT_URL = "";
 	public static final String PAY_URL = "";
 	 /** OK: Success! */
@@ -92,23 +94,28 @@ public class CommunicationManager {
 	 * @return	失败返回null
 	 */
 	public Session login(Session session, String username, String password) {
-		HostnameVerifier hostnameVerifier = SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
-
-        DefaultHttpClient client = new DefaultHttpClient();
-
-        SchemeRegistry registry = new SchemeRegistry();
-        SSLSocketFactory socketFactory = SSLSocketFactory.getSocketFactory();
-        socketFactory.setHostnameVerifier((X509HostnameVerifier) hostnameVerifier);
-        registry.register(new Scheme("https", socketFactory, 443));
-        SingleClientConnManager mgr = new SingleClientConnManager(client.getParams(), registry);
-        DefaultHttpClient httpClient = new DefaultHttpClient(mgr, client.getParams());
-
-        // Set verifier     
-        HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+//		HostnameVerifier hostnameVerifier = SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+//
+//        DefaultHttpClient client = new DefaultHttpClient();
+//
+//        SchemeRegistry registry = new SchemeRegistry();
+//        SSLSocketFactory socketFactory = SSLSocketFactory.getSocketFactory();
+//        socketFactory.setHostnameVerifier((X509HostnameVerifier) hostnameVerifier);
+//        registry.register(new Scheme("https", socketFactory, 443));
+//        SingleClientConnManager mgr = new SingleClientConnManager(client.getParams(), registry);
+//        DefaultHttpClient httpClient = new DefaultHttpClient(mgr, client.getParams());
+//
+//        // Set verifier     
+//        HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
         
+		HttpClient httpClient = new DefaultHttpClient();
+		SSLSocketFactory sf = (SSLSocketFactory)httpClient.getConnectionManager()
+		    .getSchemeRegistry().getScheme("https").getSocketFactory();
+		sf.setHostnameVerifier(new AllowAllHostnameVerifier());
 		HttpPost post = new HttpPost(LOGIN_URL);
 		try {
 			StringEntity entity = new StringEntity("j_username="+username+"&j_password="+password);
+			entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 			post .setEntity(entity);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -269,6 +276,15 @@ public class CommunicationManager {
 		}
 		return status;
 		
+	}
+	/*
+	 * 用于获得商场id
+	 * 每一次客户端成功连接到商场网络时，必须调用此方法
+	 * 
+	 */
+	public boolean initConnection(){
+		
+		return false;
 	}
 
 }
