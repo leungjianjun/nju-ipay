@@ -67,7 +67,7 @@ public class CommunicationManager {
 
 	public static final String TAG = "CommunicationManager";
 	
-	public static final String LOGIN_URL = "https://192.168.1.107:8443/j_security_check";
+	public static final String LOGIN_URL = "https://192.168.1.107:8443/IpayServerMarket/j_security_check";
 	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
 	public static final String MARKET_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/findMarketId";
 	public static final String MARKET_INFO_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketInfo?mid=";
