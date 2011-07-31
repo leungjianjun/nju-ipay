@@ -9,10 +9,15 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerPNames;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
@@ -22,6 +27,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -110,10 +118,25 @@ public class CommunicationManager {
 //        // Set verifier     
 //        HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
         
-		HttpClient httpClient = new DefaultHttpClient();
-		SSLSocketFactory sf = (SSLSocketFactory)httpClient.getConnectionManager()
-		    .getSchemeRegistry().getScheme("https").getSocketFactory();
-		sf.setHostnameVerifier(new AllowAllHostnameVerifier());
+//		HttpClient httpClient = new DefaultHttpClient();
+//		SSLSocketFactory sf = (SSLSocketFactory)httpClient.getConnectionManager()
+//		    .getSchemeRegistry().getScheme("https").getSocketFactory();
+//		sf.setHostnameVerifier(new AllowAllHostnameVerifier());
+		
+		SchemeRegistry schemeRegistry = new SchemeRegistry();
+		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+		schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
+		 
+		HttpParams params = new BasicHttpParams();
+		params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
+		params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
+		params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
+		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+		 
+		ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
+		HttpClient httpClient = new DefaultHttpClient(cm, params);
+		
+		
 		HttpPost post = new HttpPost(LOGIN_URL);
 		try {
 			StringEntity entity = new StringEntity("j_username="+username+"&j_password="+password);
