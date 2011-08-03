@@ -11,9 +11,11 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler{
 	
+	/**
+	 * 重写spring security自带的登录失败处理方法,使其同时支持ajax和form.ajax登录失败后将返回json的失败数据
+	 */
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
-		System.out.println("no=========================="+request.getContentType());
 		if (request.getContentType().contains("application/json")) {
 			response.setStatus(400);
 	        response.getWriter().print("{\"status\":\"false\"}");

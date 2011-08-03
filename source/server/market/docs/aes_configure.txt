@@ -1,0 +1,7 @@
+近日，在Matrix Security版上(http://www.matrix.org.cn/thread.shtml?topicId=39543&forumId=55)提出一个问题，即他的程序不能正确运行，抛出异常Exception in thread "main" java.security.InvalidKeyException: Illegal key size。
+
+我运行一下它的程序，Work Fine。
+
+我发现很多人都遇到这样的问题，而我自己的习惯是，每当我安装JDK的时候，我总是非常讨厌它已有的Policy File，我会立即到SUN的网站下载最"强"的PolicyFile。
+
+两个包名为local_policy.jar与US_export_policy.jar，把这两个包放到java/jre/lib/security/下覆盖原来的。就ok。可以解决上述问题。

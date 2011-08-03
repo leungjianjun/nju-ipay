@@ -58,8 +58,9 @@
 	<bean id="successHandler" class="com.ipay.server.security.AjaxAuthenticationSuccessHandler">
     	<property name="defaultTargetUrl" value="/"/>
 	</bean>
-	<bean id="failureHandler" class="com.ipay.server.security.AjaxAuthenticationFailureHandler" />
-
+	<bean id="failureHandler" class="com.ipay.server.security.AjaxAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/login"/>
+	</bean>
 	<context:component-scan base-package="com.ipay.server.dao" />
 	
 </beans>
