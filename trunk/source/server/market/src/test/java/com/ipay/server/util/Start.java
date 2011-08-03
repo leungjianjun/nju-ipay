@@ -1,11 +1,12 @@
 package com.ipay.server.util;
 
 import org.mortbay.jetty.Server;
+import org.mortbay.jetty.security.SslSocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 
 public class Start {
 
-	public static final int PORT = 25000;
+	public static final int PORT = 8080;
 	public static final String CONTEXT = "";
 
 	public static void main(String[] args) throws Exception {
@@ -30,6 +31,11 @@ public class Start {
 		WebAppContext webContext = new WebAppContext("src/main/webapp", contextPath);
 		webContext.setClassLoader(Thread.currentThread().getContextClassLoader());
 		server.setHandler(webContext);
+		SslSocketConnector sslConnector = new SslSocketConnector();
+		sslConnector.setPort(8443);
+		sslConnector.setKeyPassword("changeit");
+		sslConnector.setKeystore("D:\\Program Files\\Java\\jdk1.6.0_26\\bin\\server.keystore");
+		server.addConnector(sslConnector);
 		server.setStopAtShutdown(true);
 		return server;
 	}
