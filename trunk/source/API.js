@@ -72,18 +72,20 @@
  */
 //=================================================================
 //用户相关
+
 /**
  * 登录
  * 
  * url https://xxx.xxx.xxx.xxx:8443/j_spring_security_check
  * 方法：post
- * data j_username={account}&j_password={password}
  * 
- * 说明：1.登录使用ssl。2.密码不需要在客户端加密。3.json里面不需要任何数据
- * 服务器原理：登录时有spring security处理安全问题，用户的权限，登录状态都由其控制，所以登录的时候会怪怪的
+ * 说明：1.登录使用ssl。2.密码不需要在客户端加密。3.已经spring security的部分代码重写，可以使用json登录
  * 
  */
-var client_login = {}
+var client_login = {
+	account:"ljj",
+	password:"123456"
+}
 
 var result_client_login = {
 		status:true
@@ -364,7 +366,24 @@ var result_search_product = {
  * 
  * 说明：1.证书就是RSA非对称加密的私钥 2.对证书进行AES加密，加密密码是 帐号+支付密码
  * 作用：即使证书被偷走也无法取得证书内容
+ * 
+ * 细节：商场服务器把支付密码+帐号发送给银行，银行生成加密的私钥和公钥保存到数据库，等待下载
  */
+
+/**
+ * 获取加密的私钥
+ * 
+ * url https://xxx.xxx.xxx.xxx:8443/client/getEncryptPrivateKey
+ * 方法 get
+ * 说明：1.将获取一个即时生成的文件，然后就像下载文件一样下载，其实就是byte流 
+ *       2.文件大小是656字节，使用aes 256加密的私钥。把下载的文件保存在一个地方。
+ *       3.只要下载一次就行了，不需要每次用的时候又下载。
+ *       4.私钥已经加密过了，保存的时候不要再加密了，用私钥的时候要先解密
+ * 
+ */
+var get_encrypt_privatekey ={}
+
+var result_get_encrypt_privatekey = {}
 
 /*
  * 商家注册
