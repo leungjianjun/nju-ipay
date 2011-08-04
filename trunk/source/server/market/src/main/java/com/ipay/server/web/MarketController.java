@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipay.server.entity.Market;
@@ -18,7 +19,7 @@ import com.ipay.server.service.IMarketService;
 @Controller
 public class MarketController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MarketController.class);
 	
 	private IMarketService<Market> marketService;
 
@@ -31,9 +32,18 @@ public class MarketController {
 		this.marketService = marketService;
 	}
 	
-	@RequestMapping(value="/client/search",method=RequestMethod.GET)
-	public @ResponseBody Object clientLogout(HttpSession session){
-		session.invalidate();
+	/**
+	 * 搜索商场，每页显示10条
+	 * 
+	 * @param name
+	 * 		商场名的部分文字
+	 * @param page
+	 * 		页数，默认从1开始
+	 * @return
+	 */
+	@RequestMapping(value="/client/searchMarket",method=RequestMethod.GET)
+	public @ResponseBody Object searchMarket(@RequestParam String name,@RequestParam String page){
+		
 		return Collections.singletonMap("status", true);
 	}
 

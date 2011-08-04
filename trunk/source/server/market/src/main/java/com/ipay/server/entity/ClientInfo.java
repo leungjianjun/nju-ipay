@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * 该实体包含顾客的详细信息
@@ -17,17 +18,20 @@ public class ClientInfo extends BaseEntity {
 	/**
 	 * 手机号
 	 */
+	@NotNull
 	private String phonenum;
 	
 	/**
 	 * 真实姓名,实名制
 	 */
+	@NotNull
 	private String realname;
 	
 	/**
 	 * 注册时间
 	 */
 	@Temporal(value = TemporalType.TIMESTAMP)
+	@NotNull
 	private Date createDate;
 
 	public String getPhonenum() {
