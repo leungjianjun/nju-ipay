@@ -86,6 +86,8 @@ public class CommunicationManager {
 	//搜索商品
 	public static final String SEARCH_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/SearchProduct?";
 	
+	//支付
+	public static final String GET_KEY_URL = "https://xxx.xxx.xxx.xxx:8443/client/getEncryptPrivateKey";
 	public static final String PAY_URL = "";
 	 /** OK: Success! */
     public static final int OK = 200;
@@ -118,21 +120,20 @@ public class CommunicationManager {
 	 */
 	public Session login(Session session, String username, String password) {
 	
-		HttpClient httpClient = createHttpsClient();	
-		HttpPost post = new HttpPost(LOGIN_URL);
+		JSONObject data = new JSONObject();
 		try {
-			StringEntity entity = new StringEntity("j_username="+username+"&j_password="+password);
-			entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-			post .setEntity(entity);
-		} catch (UnsupportedEncodingException e) {
+			data.put("account",username);
+			data.put("password", password);
+		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+		
 		
 		boolean status = false;
 		JSONObject result;
 		try {
-			HttpResponse response = httpClient.execute(post);
+			HttpResponse response = doPost(LOGIN_URL, data);
 			
 			Log.d(TAG, "********execute post");
 			
@@ -274,20 +275,18 @@ public class CommunicationManager {
 	 * @return
 	 */
 	public boolean setPassword(String oldPassword,String newPassword){
-		HttpClient httpClient = createHttpsClient();	
-		HttpPost post = new HttpPost(SET_PASSWORD_URL);
+		JSONObject data = new JSONObject();
 		try {
-			StringEntity entity = new StringEntity("oldPassword："+oldPassword+"&newPassword:"+newPassword);
-			entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-			post .setEntity(entity);
-		} catch (UnsupportedEncodingException e) {
+			data.put("oldPassword", oldPassword);
+			data.put("newPassword", newPassword);
+		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-		
+			
 		boolean status = false;
 		try {
-			HttpResponse response = httpClient.execute(post);
+			HttpResponse response = doPost(SET_PASSWORD_URL, data);
 			if(response.getStatusLine().getStatusCode() == OK){
 				JSONObject result = getJsonResult(response);
 				status = result.getBoolean("status");
@@ -341,6 +340,28 @@ public class CommunicationManager {
 		return markets;
 	}
 	
+	/**
+	 * 获取加密密钥并保存
+	 * 保存位置 /sdcard/.ipay/key
+	 * @return
+	 */
+	public boolean getEncryptPrivateKey(){
+		HttpGet get = new HttpGet(GET_KEY_URL);
+		HttpClient httpClient = createHttpsClient();
+		try {
+			HttpResponse response = httpClient.execute(get);
+			if(response.getStatusLine().getStatusCode() == OK){
+				
+			}
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 	/**
 	 * 获得指定商场的详细信息
 	 * @param MarketId
