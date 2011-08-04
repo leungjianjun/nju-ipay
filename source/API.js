@@ -78,7 +78,7 @@
  * 
  * url https://xxx.xxx.xxx.xxx:8443/j_spring_security_check
  * 方法：post
- * 
+ * controller:spring security
  * 说明：1.登录使用ssl。2.密码不需要在客户端加密。3.已经spring security的部分代码重写，可以使用json登录
  * 
  */
@@ -94,7 +94,7 @@ var result_client_login = {
 //400 Bad request错误
 var error_client_login = {//查看上面统一的错误处理风格
 		status:false,
-		error:"用户名或密码错误"
+		error:"用户名或密码错误"//国际化问题没解决
 }
 
 /**
@@ -102,6 +102,7 @@ var error_client_login = {//查看上面统一的错误处理风格
  * 
  * url http://xxx.xxx.xxx.xxx:8080/client/logout
  * 方法:get
+ * controller:userController
  * 说明:1.如无特别说明,任何http连接都可以使用https连接,你可以设置客户端在任何时候都使用https连接
  *      2.登出就是删除session,如果session失效,你看到的应该是session失效的页面
  * 
@@ -117,6 +118,7 @@ var result_client_logout = {
  * 
  * url https://xxx.xxx.xxx.xxx:8443/client/GetInfo
  * 方法:get
+ * controller:clientController
  */
 var get_client_info = {}
 
@@ -131,6 +133,8 @@ var result_get_client_info = {
  * 
  * url https://xxx.xxx.xxx.xxx:8443/client/SetInfo
  * 方法:post
+ * controller:clientController
+ * 
  */
 var set_client_info = {
 	account:"",//把要修改的写下来，不用修改的就不写
@@ -138,17 +142,20 @@ var set_client_info = {
 }
 
 var result_set_client_info = {
-		status:true
+	status:true
 }
 
 /**
  * 设置密码
  * 
- * url https://xxx.xxx.xxx.xxx:8443/client/SetInfo
+ * url https://xxx.xxx.xxx.xxx:8443/client/changePassword
  * 方法：post
- * data:orlPassword:""&newPassword:""
+ * controller:userController
  */
-var set_password = {}
+var set_password = {
+	oldPassword:"",
+	newPassword:""	
+}
 
 var result_set_password = {
 	status:true
