@@ -13,8 +13,30 @@ import com.ipay.server.entity.User;
  */
 public interface IUserService<T extends User> extends IService<T> {
 	
+	/**
+	 * 新建一个权限
+	 * 
+	 * @param authority
+	 */
 	public void createAuthority(Authority authority);
 	
+	/**
+	 * 根据权限名字获取权限实体
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public Authority getAuthority(String name);
+	
+	/**
+	 * 根据帐号密码获取用户,注意密码的哈希化在controller层完成
+	 * 
+	 * @param account
+	 * 			用户帐号
+	 * @param password
+	 * 			哈希过的的密码
+	 * @return
+	 */
+	public T getUser(String account,String password);
 
 }

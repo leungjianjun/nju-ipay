@@ -15,7 +15,6 @@ public class AjaxUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
 	 */
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		//如果是json的登录就添加对json的支持
-		System.out.println("================================attempt authentication");
 		if (request.getContentType().contains("application/json")) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
