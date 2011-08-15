@@ -1,6 +1,10 @@
 package com.ipay.client.communication;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
@@ -10,6 +14,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -32,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.ipay.client.model.Market;
@@ -50,8 +56,9 @@ import com.ipay.client.model.UserInfo;
 
 public class CommunicationManager {
 	private int marketId;
+	private DefaultHttpClient httpClient;
 	private CommunicationManager() {
-
+		httpClient = createHttpsClient();
 	}
 
 	private static CommunicationManager manager;
@@ -158,7 +165,7 @@ public class CommunicationManager {
 		if(status == true){
 			
 			Log.d(TAG,"********status == true");
-			
+
 			if(session == null){
 				return new Session(username, password);
 			}else{
@@ -181,7 +188,6 @@ public class CommunicationManager {
 	 */
 	public boolean logout(){
 		HttpGet get = new HttpGet(LOGOUT_URL);
-		HttpClient httpClient = new DefaultHttpClient();
 		
 		boolean status = false;
 		try {
@@ -208,7 +214,6 @@ public class CommunicationManager {
 	 * @return
 	 */
 	public UserInfo getUserInfo(){
-		HttpClient httpClient = createHttpsClient();
 		HttpGet get = new HttpGet(USER_INFO_URL);
 		try {
 			HttpResponse response = httpClient.execute(get);
@@ -310,7 +315,6 @@ public class CommunicationManager {
 	 * @return
 	 */
 	public ArrayList<Market> searchMarket(String name, int pageNum){
-		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet get = new HttpGet(SEARCH_MARKET_URL+"name="+name+"&page="+pageNum);
 		ArrayList<Market> markets = new ArrayList<Market>();
 		try {
@@ -341,17 +345,60 @@ public class CommunicationManager {
 	}
 	
 	/**
-	 * 获取加密密钥并保存
-	 * 保存位置 /sdcard/.ipay/key
+	 * 检查本地是否已有该帐号对应的key
+	 * 若有，直接使用
+	 * 若无，获取加密密钥并保存
+	 * 保存位置 /data/data/ipay/files,所以需要context
+	 * @param username
+	 * @param context
 	 * @return
 	 */
-	public boolean getEncryptPrivateKey(){
+	public byte[] getEncryptPrivateKey(String username, Context context){
+		//查找本地key
+		byte[] key = new byte[656];
+		try {	
+			FileInputStream inputStream = context.openFileInput(username+".key");
+			inputStream.read(key);
+			inputStream.close();
+		} catch (FileNotFoundException e1) {
+			//未找到，需要下载
+			key = downloadEncryptPrivateKey(username);
+			if(key != null){
+				//保存key
+				try {
+					FileOutputStream outputStream = context.openFileOutput(username+".key", Context.MODE_PRIVATE);
+					outputStream.write(key);
+					outputStream.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return key;
+	}
+	/**
+	 * 从服务器获得key
+	 * @param username
+	 * @return
+	 */
+	private byte[] downloadEncryptPrivateKey(String username){
 		HttpGet get = new HttpGet(GET_KEY_URL);
-		HttpClient httpClient = createHttpsClient();
+		byte[] key = new byte[656];
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
-				
+				InputStream inputStream = response.getEntity().getContent();
+				inputStream.read(key);
+				inputStream.close();
+				return key;
 			}
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
@@ -360,7 +407,7 @@ public class CommunicationManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		return null;
 	}
 	/**
 	 * 获得指定商场的详细信息
@@ -369,7 +416,6 @@ public class CommunicationManager {
 	 */
 	public MarketInfo getMarketInfo(int MarketId){
 		HttpGet get = new HttpGet(MARKET_INFO_URL+marketId);
-		HttpClient httpClient = new DefaultHttpClient();
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
@@ -410,9 +456,8 @@ public class CommunicationManager {
 	 */
 	public Product getProductInfo(String barcode) {
 		HttpGet get = new HttpGet(PRODUCT_INFO_URL+"mid="+marketId+"&code="+barcode);
-		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpResponse response = client.execute(get);
+			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
 				String retSrc = EntityUtils.toString(response.getEntity());
 				JSONObject result = new JSONObject(retSrc);
@@ -445,7 +490,6 @@ public class CommunicationManager {
 		return null;
 	}
 	private HttpResponse doPost(String url, JSONObject jsonObject) throws ClientProtocolException, IOException{
-		HttpClient httpclient = createHttpsClient();
 	    HttpPost request = new HttpPost(url);
 	    HttpEntity entity;
 	    StringEntity s = new StringEntity(jsonObject.toString());
@@ -453,7 +497,7 @@ public class CommunicationManager {
 	    entity = s;
 	    request.setEntity(entity);
 	    HttpResponse response;
-	    response = httpclient.execute(request);
+	    response = httpClient.execute(request);
 	    return response;
 	}
 
@@ -465,7 +509,6 @@ public class CommunicationManager {
 	 */
 	public boolean initConnection(){
 		HttpGet get = new HttpGet(MARKET_ID_URL);
-		HttpClient httpClient = new DefaultHttpClient();
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
@@ -538,7 +581,7 @@ public class CommunicationManager {
 	 * https连接时使用
 	 * @return
 	 */
-	private HttpClient createHttpsClient(){
+	private DefaultHttpClient createHttpsClient(){
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
 		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
 		schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
@@ -550,7 +593,7 @@ public class CommunicationManager {
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		 
 		ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
-		HttpClient httpClient = new DefaultHttpClient(cm, params);
+		DefaultHttpClient httpClient = new DefaultHttpClient(cm, params);
 		return httpClient;
 	}
 	private JSONObject getJsonResult(HttpResponse response){
