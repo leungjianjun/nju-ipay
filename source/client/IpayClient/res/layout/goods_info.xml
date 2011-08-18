@@ -2,14 +2,63 @@
 
 <!-- 商品信息页面 -->
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
   
-  <!-- 顶部菜单栏 -->
-  <include layout="@layout/navi_bar_back"/>
-  
-  
-      
+	<!-- 顶部菜单栏 -->
+	<include layout="@layout/navi_bar_back"/>
+	  
+	<ScrollView 
+		android:background="#FFEFF0F4"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+		<LinearLayout 
+			android:orientation="vertical"
+			android:layout_height="fill_parent"
+			android:layout_width="fill_parent">
+			<!-- 商品名称 -->
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:text="商品名称"/>
+			<!-- 商品图片 -->
+			<ImageView 
+				android:layout_height="wrap_content"
+				android:layout_width="fill_parent"
+				android:scaleType="centerInside"
+				android:src="@drawable/goods_img_example_large"
+			/>
+			
+			<!-- 分割线 -->
+			
+			<View 
+				android:background="@drawable/goods_info_divider"
+				android:clickable="true"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:minHeight="20dip"/>
+				
+			<TextView 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="品名"/>
+			<TextView 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="价格"/>
+			<TextView 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="生产商"/>			
+			<Button 
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="装入购物车"
+			/>
+
+		</LinearLayout>
+	</ScrollView>
 </LinearLayout>

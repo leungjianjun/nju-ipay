@@ -63,7 +63,7 @@ public class ShoppingCartActivity  extends Activity{
 					int position, long id) {
 				// TODO Auto-generated method stub
 
-				Intent i = new Intent(ShoppingCartActivity.this, MarketInfoActivity.class);
+				Intent i = new Intent(ShoppingCartActivity.this, GoodsInfoActivity.class);
 				startActivity(i);
 			}
 		});
