@@ -17,6 +17,7 @@ E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\Prod
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\ClientInfo.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\RecordServiceImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\web\ClientController.java
+E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\ServiceException.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\BaseEntity.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\SpecialProduct.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\security\AjaxAuthenticationFailureHandler.java
@@ -49,7 +50,9 @@ E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\Authority.
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\impl\ServiceImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\dao\impl\DaoImpl.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\entity\MarketInfo.java
+E:\huaqibei\source\server\market\src\main\java\com\ipay\server\security\ExceptionMessage.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\security\AjaxUsernamePasswordAuthenticationFilter.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\IMarketService.java
+E:\huaqibei\source\server\market\src\main\java\com\ipay\server\security\PasswordEncoder.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\web\UserController.java
 E:\huaqibei\source\server\market\src\main\java\com\ipay\server\service\IProductService.java

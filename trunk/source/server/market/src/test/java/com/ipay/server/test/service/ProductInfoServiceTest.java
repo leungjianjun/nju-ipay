@@ -1,13 +1,16 @@
 package com.ipay.server.test.service;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.ipay.server.dao.impl.DaoImpl;
 import com.ipay.server.entity.Attribute;
 import com.ipay.server.entity.ProductInfo;
 import com.ipay.server.service.IProductInfoService;
+import com.ipay.server.service.impl.ProductInfoServiceImpl;
 import com.ipay.server.util.SpringJUnit45ClassRunner;
 
 @RunWith(SpringJUnit45ClassRunner.class)
@@ -54,6 +57,12 @@ public class ProductInfoServiceTest {
 			productInfo.setMidImgUrl("/images/1_738374833_mid.gif");//不要漏了斜杠
 			productInfoService.update(productInfo);
 		}*/
+	}
+	
+	@After
+	public void afterStuff(){
+		DaoImpl<ProductInfo> dao = (DaoImpl<ProductInfo>) ((ProductInfoServiceImpl) productInfoService).getDao();
+		dao.getHibernateTemplate().flush();
 	}
 
 }
