@@ -12,7 +12,6 @@
   	<TextView 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textColor="#000000"
 		android:textSize="26sp"
 		android:textStyle="bold"
 		android:text="欢迎，Popcorn"
@@ -47,7 +46,7 @@
   		/>
   	</LinearLayout>
   	
-  	<!-- List -->
+  	<!-- 商场主页功能列表 -->
   	<ListView 
   	android:id="@+id/home_listview"
   	android:layout_width="fill_parent"
