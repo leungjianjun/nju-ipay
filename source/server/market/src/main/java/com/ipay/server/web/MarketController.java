@@ -100,8 +100,8 @@ public class MarketController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value="/client/MarketSpecialProducs",method=RequestMethod.GET)
-	public @ResponseBody Object getMarketSpecialProducs(@RequestParam int mid,@RequestParam int page){
+	@RequestMapping(value="/client/MarketSpecialProducts",method=RequestMethod.GET)
+	public @ResponseBody Object getMarketSpecialProducts(@RequestParam int mid,@RequestParam int page){
 		List<SpecialProduct> sps = marketService.getSpecialProduct(mid, page);
 		Set<Map<String,Object>> contents = Sets.newHashSet();
 		for(SpecialProduct sp:sps){
@@ -116,6 +116,8 @@ public class MarketController {
 		}
 		return Collections.singletonMap("specialsProducts", contents);
 	}
+	
+	
 	
 	/**
 	 * 统一异常处理方法，把所有的service exception放在这里处理，返回json风格

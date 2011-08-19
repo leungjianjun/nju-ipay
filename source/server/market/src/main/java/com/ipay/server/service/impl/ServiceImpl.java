@@ -2,11 +2,15 @@ package com.ipay.server.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ipay.server.dao.IDao;
 import com.ipay.server.entity.BaseEntity;
+import com.ipay.server.security.ExceptionMessage;
 import com.ipay.server.service.IService;
+import com.ipay.server.service.ServiceException;
 
 public abstract class ServiceImpl<T extends BaseEntity> implements IService<T> {
 
@@ -22,7 +26,13 @@ public abstract class ServiceImpl<T extends BaseEntity> implements IService<T> {
 	}
 	
 	public T find(Class<T> clazz, int id){
-		return dao.get(clazz, id);
+		T object = dao.get(clazz, id);
+		if(object==null){
+			throw new ServiceException(ExceptionMessage.RESOURCE_NOT_FOUND,HttpServletResponse.SC_BAD_REQUEST);
+		}else{
+			return object;
+		}
+		
 	}
 	
 	public abstract void create(T baseBean);
