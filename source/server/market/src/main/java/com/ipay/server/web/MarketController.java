@@ -92,11 +92,29 @@ public class MarketController {
 		return result;
 	}
 	
+	/**
+	 * 获取特价商品
+	 * 
+	 * specialsProducts:[{name:"",oldPrice:12.5,newPrice:8.5,adWords:"",pid:123,minImgUrl:""},
+	 * @param mid
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/client/MarketSpecialProducs",method=RequestMethod.GET)
 	public @ResponseBody Object getMarketSpecialProducs(@RequestParam int mid,@RequestParam int page){
 		List<SpecialProduct> sps = marketService.getSpecialProduct(mid, page);
-		
-		return page;
+		Set<Map<String,Object>> contents = Sets.newHashSet();
+		for(SpecialProduct sp:sps){
+			Map<String,Object> temp = Maps.newHashMap();
+			temp.put("name", sp.getProduct().getProductInfo().getName());
+			temp.put("oldPrice", sp.getOldprice());
+			temp.put("newPrice", sp.getProduct().getPrice());
+			temp.put("adWords", sp.getIntroduction());
+			temp.put("pid", sp.getProduct().getId());
+			temp.put("minImgUrl", sp.getProduct().getProductInfo().getMinImgUrl());
+			contents.add(temp);
+		}
+		return Collections.singletonMap("specialsProducts", contents);
 	}
 	
 	/**
