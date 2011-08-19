@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="#fff4f4f4">
+	
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="47dip"
+		android:background="@drawable/bg_navi_bar"
+	>
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_centerInParent="true"
+			android:textSize="20sp"
+			android:textColor="#ffffff"
+			android:textStyle="bold"
+			android:text="Select Market"/>
+	</RelativeLayout>
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:background="#fff4f4f4">
+		
+		
+		<LinearLayout 
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<!-- 搜索栏 -->
+			<LinearLayout 
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dip">
+	
+				<!-- 支持自动补全的输入框 -->
+				<AutoCompleteTextView 
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_weight="1.0"
+					android:singleLine="true"
+					android:completionThreshold="1"/>
+				<!-- 搜索按钮 -->
+				<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="搜索"
+					/>
+			</LinearLayout>	
+			
+			<!-- 搜索结果 -->
+			<ListView 
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:layout_weight="1.0"
+				android:layout_marginTop="5dp"
+	  			android:cacheColorHint="#00000000"
+	   			android:divider="@drawable/divider_horizonal"
+	  			android:dividerHeight="1.0dp"
+			/>
+			
+		</LinearLayout>
+	</ScrollView>
+
+</LinearLayout>

@@ -45,18 +45,7 @@
 			android:button="@null"
 			style="@style/menu_bar_button"
 			/>
-			<RadioButton 
-			android:id="@+id/radio_button1"
-			android:tag="radio_button1"
-			android:layout_width="fill_parent"
-  			android:layout_height="fill_parent"
-  			android:layout_weight="1.0"
-			android:layout_marginTop="1.0dip"
-			android:text="@string/menu_bar_item_scanner"
-			android:drawableTop="@drawable/btn_menu_bar_more"
-			android:button="@null"
-			style="@style/menu_bar_button"
-			/>
+	
 			<RadioButton 
 			android:id="@+id/radio_button2"
 			android:tag="radio_button2"

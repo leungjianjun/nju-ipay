@@ -63,12 +63,11 @@ public class MainTabsActivity extends TabActivity {
 				switch (rid) {
 				case R.id.radio_button0:
 					tabHost.setCurrentTabByTag("HOME");
-					
 					break;
-				case R.id.radio_button1:
-					tabHost.setCurrentTabByTag("tab2");
-					
-					break;
+//				case R.id.radio_button1:
+//					tabHost.setCurrentTabByTag("tab2");
+//					
+//					break;
 				case R.id.radio_button2:
 					tabHost.setCurrentTabByTag("CART");
 					break;
