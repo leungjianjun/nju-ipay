@@ -58,7 +58,7 @@ public class MarketServiceImpl<T extends Market> extends ServiceImpl<T> implemen
 	public T finMarketByIp(String ip) {
 		T market = dao.findUniqueBy("from Market as market where market.ip =?", ip);
 		if(market==null){
-			throw new ServiceException(ExceptionMessage.CLIENT_NOT_FOUND,HttpServletResponse.SC_BAD_REQUEST);
+			throw new ServiceException(ExceptionMessage.MARKET_NOT_FOUND,HttpServletResponse.SC_BAD_REQUEST);
 		}else{
 			return market;
 		}
