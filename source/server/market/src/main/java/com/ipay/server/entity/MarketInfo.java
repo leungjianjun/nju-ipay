@@ -54,7 +54,7 @@ public class MarketInfo extends BaseEntity {
 	/**
 	 * 特价商品列表
 	 */
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="marketInfo",cascade = CascadeType.ALL)
 	private Set<SpecialProduct> specialProducts = Sets.newHashSet();
 
 	public String getComplainPhone() {

@@ -3,6 +3,7 @@ package com.ipay.server.entity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -12,6 +13,10 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class SpecialProduct extends BaseEntity{
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn
+	private MarketInfo marketInfo;
 	
 	/**
 	 * 特价商品所指向的商品
@@ -53,6 +58,14 @@ public class SpecialProduct extends BaseEntity{
 
 	public void setOldprice(double oldprice) {
 		this.oldprice = oldprice;
+	}
+
+	public MarketInfo getMarketInfo() {
+		return marketInfo;
+	}
+
+	public void setMarketInfo(MarketInfo marketInfo) {
+		this.marketInfo = marketInfo;
 	}
 
 }

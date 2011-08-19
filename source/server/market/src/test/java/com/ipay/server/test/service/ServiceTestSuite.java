@@ -8,8 +8,8 @@ import org.junit.runners.Suite;
 	UserServiceTest.class,
 	ClientServiceTest.class,
 	MarketServiceTest.class,
-	ProductServiceTest.class,
 	ProductInfoServiceTest.class,
+	ProductServiceTest.class,
 	RecordServiceTest.class
 	
 })

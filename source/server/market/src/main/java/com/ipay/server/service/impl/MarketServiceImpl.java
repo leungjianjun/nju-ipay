@@ -1,5 +1,10 @@
 package com.ipay.server.service.impl;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,11 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ipay.server.dao.IDao;
 import com.ipay.server.entity.Market;
 import com.ipay.server.entity.SpecialProduct;
+import com.ipay.server.security.ExceptionMessage;
 import com.ipay.server.service.IMarketService;
+import com.ipay.server.service.ServiceException;
 
 @Service("marketService")
 @Transactional
 public class MarketServiceImpl<T extends Market> extends ServiceImpl<T> implements IMarketService<T> {
+	
+	public final int QUANTITY_PER_PAGE = 10;
 
 	@Autowired
 	private IDao<SpecialProduct> specialProductDao; 
@@ -38,6 +47,26 @@ public class MarketServiceImpl<T extends Market> extends ServiceImpl<T> implemen
 
 	public void setSpecialProductDao(IDao<SpecialProduct> specialProductDao) {
 		this.specialProductDao = specialProductDao;
+	}
+
+	public List<T> findMarketsByName(String name, int pageNum) {
+		int firstResult = (pageNum-1)*QUANTITY_PER_PAGE;
+		return dao.createQuery("from Market as market where market.marketInfo.name like :name").setParameter("name", "%"+name+"%")
+				.setFirstResult(firstResult).setMaxResults(firstResult+QUANTITY_PER_PAGE ).list();
+	}
+
+	public T finMarketByIp(String ip) {
+		T market = dao.findUniqueBy("from Market as market where market.ip =?", ip);
+		if(market==null){
+			throw new ServiceException(ExceptionMessage.CLIENT_NOT_FOUND,HttpServletResponse.SC_BAD_REQUEST);
+		}else{
+			return market;
+		}
+	}
+
+	public List<SpecialProduct> getSpecialProduct(int mid, int page) {
+		int firstResult = (page-1)*QUANTITY_PER_PAGE;
+		return specialProductDao.list("from SpecialProduct sp where sp.marketInfo.market.id =? ",firstResult,firstResult+QUANTITY_PER_PAGE, mid);
 	}
 
 }
