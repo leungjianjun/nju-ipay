@@ -19,9 +19,8 @@ import android.widget.TabHost;
 public class MainTabsActivity extends TabActivity {
 	private static final String TAG="MainTabsActivity";
 
-	private TabHost tabhost;
+	private TabHost tabHost;
 	private RadioGroup tabGroup;
-	private int selected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +29,27 @@ public class MainTabsActivity extends TabActivity {
 		Log.d(TAG, "onCreate");
 		
 		setContentView(R.layout.main_tabs);
-		tabhost = getTabHost();
+		tabHost = getTabHost();
 		//商场首页
 		Intent home = new Intent(this, HomeActivity.class);
-		tabhost.addTab(tabhost.newTabSpec("HOME").setIndicator("HOME")
+		tabHost.addTab(tabHost.newTabSpec("HOME").setIndicator("HOME")
 				.setContent(home));
 		
 		Intent tab2 = new Intent(this, TestActivity2.class);
-		tabhost.addTab(tabhost.newTabSpec("tab2").setIndicator("TAB2")
+		tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("TAB2")
 				.setContent(tab2));
 		//购物车
 		Intent cart = new Intent(this, ShoppingCartActivity.class);
-		tabhost.addTab(tabhost.newTabSpec("CART").setIndicator("CART")
+		tabHost.addTab(tabHost.newTabSpec("CART").setIndicator("CART")
 				.setContent(cart));
 		
 		Intent account = new Intent(this, AccountActivity.class);
-		tabhost.addTab(tabhost.newTabSpec("ACCOUNT").setIndicator("ACCOUNT")
+		tabHost.addTab(tabHost.newTabSpec("ACCOUNT").setIndicator("ACCOUNT")
 				.setContent(account));
+		
+		Intent more = new Intent(this, MoreActivity.class);
+		tabHost.addTab(tabHost.newTabSpec("MORE").setIndicator("MORE")
+				.setContent(more));
 
 		tabGroup = (RadioGroup) this
 				.findViewById(R.id.tab_group);
@@ -59,29 +62,21 @@ public class MainTabsActivity extends TabActivity {
 				Log.d("", "you selected=" + rid);
 				switch (rid) {
 				case R.id.radio_button0:
-					tabhost.setCurrentTabByTag("HOME");
-					selected=0;
+					tabHost.setCurrentTabByTag("HOME");
 					
 					break;
 				case R.id.radio_button1:
-					tabhost.setCurrentTabByTag("tab2");
-					selected=1;
+					tabHost.setCurrentTabByTag("tab2");
 					
 					break;
 				case R.id.radio_button2:
-					tabhost.setCurrentTabByTag("CART");
-					selected=2;
+					tabHost.setCurrentTabByTag("CART");
 					break;
 				case R.id.radio_button3:
-					tabhost.setCurrentTabByTag("ACCOUNT");
-					selected=3;
+					tabHost.setCurrentTabByTag("ACCOUNT");
 					break;
 				case R.id.radio_button4:
-					Log.d(TAG,"more checked");
-					
-					Intent i=new Intent(MainTabsActivity.this, TestActivity2.class);
-					startActivity(i);
-					group.check(selected);
+					tabHost.setCurrentTabByTag("MORE");
 					break;
 
 				}

@@ -13,93 +13,95 @@
 		android:background="#FFEFF0F4"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-	<LinearLayout 
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:orientation="vertical"
-		android:padding="15dp"
-		>
-		<TextView 
+		<LinearLayout 
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="基本信息"/>
-			
-		<TableLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:background="@drawable/bg_panel">
-		
-			<TableRow>
-				<TextView 
-					android:padding="5dp"
-					android:text="姓名:"/>
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:padding="15dp"
+			>
+			<TextView 
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="基本信息"/>
 				
-				<TextView 
-					android:padding="5dp"
-					android:text="张三"/>
-			</TableRow>
+			<TableLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/bg_panel">
 			
-			<View 
-				android:background="#ffcccccc"
-				android:layout_height="1dp"
-				android:layout_marginTop="3dp"
-				android:layout_marginBottom="3dp"
-			/>
-			
-			<TableRow>
-				<TextView 
-					android:padding="5dp"
-					android:text="卡号:"/>
+				<TableRow>
+					<TextView 
+						android:padding="5dp"
+						android:text="姓名:"/>
+					
+					<TextView 
+						android:padding="5dp"
+						android:text="张三"/>
+				</TableRow>
 				
-				<TextView 
-					android:padding="5dp"
-					android:text="123456789"/>
-			</TableRow>
-			
-		</TableLayout>
-		
-		<TextView 
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="10dp"
-			android:text="账户金额"/>
-			
-		<TableLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:background="@drawable/bg_panel">
-		
-			<TableRow>
-				<TextView 
-					android:padding="5dp"
-					android:text="总计消费:"/>
+				<View 
+					android:background="#ffcccccc"
+					android:layout_height="1dp"
+					android:layout_marginTop="3dp"
+					android:layout_marginBottom="3dp"
+				/>
 				
-				<TextView 
-					android:padding="5dp"
-					android:text="12345678"/>
-			</TableRow>
-			
-			<View 
-				android:background="#ffcccccc"
-				android:layout_height="1dp"
-				android:layout_marginTop="3dp"
-				android:layout_marginBottom="3dp"/>
-			
-			<TableRow>
-				<TextView 
-					android:padding="5dp"
-					android:text="剩余金额:"/>
+				<TableRow>
+					<TextView 
+						android:padding="5dp"
+						android:text="卡号:"/>
+					
+					<TextView 
+						android:padding="5dp"
+						android:text="123456789"/>
+				</TableRow>
 				
-				<TextView 
-					android:padding="5dp"
-					android:text="123456789"/>
-			</TableRow>
+			</TableLayout>
 			
-		</TableLayout>
-		
-		
-		
-		
+			<TextView 
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:text="账户金额"/>
+				
+			<TableLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/bg_panel">
+			
+				<TableRow>
+					<TextView 
+						android:padding="5dp"
+						android:text="总计消费:"/>
+					
+					<TextView 
+						android:padding="5dp"
+						android:text="12345678"/>
+				</TableRow>
+				
+				<View 
+					android:background="#ffcccccc"
+					android:layout_height="1dp"
+					android:layout_marginTop="3dp"
+					android:layout_marginBottom="3dp"/>
+				
+				<TableRow>
+					<TextView 
+						android:padding="5dp"
+						android:text="剩余金额:"/>
+					
+					<TextView 
+						android:padding="5dp"
+						android:text="123456789"/>
+				</TableRow>
+				
+			</TableLayout>
+			
+			<Button 
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="交易历史"/>
+
 		</LinearLayout>	
 	</ScrollView>
 </LinearLayout>
