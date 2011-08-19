@@ -73,7 +73,7 @@ public class DiscountGoodsActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				Intent i = new Intent(DiscountGoodsActivity.this,
-						MarketInfoActivity.class);
+						GoodsInfoActivity.class);
 				startActivity(i);
 			}
 		});

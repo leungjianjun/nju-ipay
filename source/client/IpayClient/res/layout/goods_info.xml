@@ -20,9 +20,11 @@
 			android:layout_width="fill_parent">
 			<!-- 商品名称 -->
 			<TextView
-				android:layout_width="fill_parent"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textSize="16sp"
+				android:layout_gravity="center_horizontal"
+				android:layout_margin="5dip"
+				android:textSize="20sp"
 				android:text="商品名称"/>
 			<!-- 商品图片 -->
 			<ImageView 
@@ -44,18 +46,40 @@
 			<TextView 
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="品名"/>
+				android:layout_marginLeft="10dip"
+				android:layout_marginTop="5dip"
+				android:textSize="16sp"
+				android:textColor="@android:color/black"
+				android:text="品名：哈利波特与混血王子"/>
 			<TextView 
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="价格"/>
+				android:layout_marginLeft="10dip"
+				android:layout_marginTop="5dip"
+				android:textSize="16sp"
+				android:textColor="@android:color/black"
+				android:text="价格：100"/>
 			<TextView 
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="生产商"/>			
+				android:layout_marginLeft="10dip"
+				android:layout_marginTop="5dip"
+				android:textSize="16sp"
+				android:textColor="@android:color/black"
+				android:text="生产商：人民文学出版社"/>	
+			<TextView 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dip"
+				android:layout_marginTop="5dip"
+				android:textSize="16sp"
+				android:textColor="@android:color/black"
+				android:text="简介：内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"/>			
 			<Button 
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="5dip"
+				android:textSize="20sp"
 				android:text="装入购物车"
 			/>
 
