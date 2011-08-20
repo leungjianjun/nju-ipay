@@ -74,7 +74,7 @@ public class CommunicationManager {
 	
 
 	//用户相关
-	public static final String LOGIN_URL = "https://192.168.1.107:8443/IpayServerMarket/j_security_check";
+	public static final String LOGIN_URL ="https://192.168.1.103:8443/j_spring_security_check";
 	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
 	public static final String USER_INFO_URL = "https://xxx.xxx.xxx.xxx:8443/client/GetInfo";
 	public static final String SET_USER_INFO_URL = "https://xxx.xxx.xxx.xxx:8443/client/SetInfo";
@@ -136,6 +136,8 @@ public class CommunicationManager {
 			e1.printStackTrace();
 		}
 		
+		Log.d(TAG,"********user json="+data.toString());
+		
 		
 		boolean status = false;
 		JSONObject result;
@@ -145,10 +147,13 @@ public class CommunicationManager {
 			Log.d(TAG, "********execute post");
 			
 			if(response.getStatusLine().getStatusCode() == OK){
-				
+				String statusLine=response.getStatusLine().toString();
+				Log.d(TAG, "********response.getStatusLine()=="+statusLine);
 				Log.d(TAG, "********response.getStatusLine().getStatusCode() == OK");
 				
 				result = getJsonResult(response);
+				String s=result.toString();
+				Log.d(TAG, "********Status=="+s);
 				status = result.getBoolean("status");
 			}
 		} catch (ClientProtocolException e) {
@@ -157,7 +162,8 @@ public class CommunicationManager {
 		} catch (IOException e) {
 			Log.d(TAG, "********IOException: " + e.toString());
 			e.printStackTrace();
-		} catch (JSONException e) {
+		} 
+		catch (JSONException e) {
 			Log.d(TAG, "********JSONException: " + e.toString());
 			e.printStackTrace();
 		}
@@ -491,11 +497,9 @@ public class CommunicationManager {
 	}
 	private HttpResponse doPost(String url, JSONObject jsonObject) throws ClientProtocolException, IOException{
 	    HttpPost request = new HttpPost(url);
-	    HttpEntity entity;
 	    StringEntity s = new StringEntity(jsonObject.toString());
-	    s.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-	    entity = s;
-	    request.setEntity(entity);
+	    s.setContentType("application/json");
+	    request.setEntity(s);
 	    HttpResponse response;
 	    response = httpClient.execute(request);
 	    return response;
@@ -600,6 +604,8 @@ public class CommunicationManager {
 		JSONObject result = null;
 		try {
 			String retSrc = EntityUtils.toString(response.getEntity());
+			
+			Log.d(TAG, "********Result-----"+retSrc);
 			result = new JSONObject(retSrc);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

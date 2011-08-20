@@ -47,7 +47,7 @@
 	  	android:id="@+id/login_username"
 	  	android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
-	  	android:text="@string/login_label_username"
+	  	android:text="@string/login_text_username"
 	  	android:layout_alignParentTop="true"
 	    android:layout_marginTop="5dp"
 	  	/>
@@ -67,7 +67,7 @@
 		android:layout_height="wrap_content"
 		android:layout_below="@id/login_username_edit"
 		android:layout_marginTop="3dp"            
-		android:text="@string/login_label_password"
+		android:text="@string/login_text_password"
 		/>
 		
 		<!-- 密码输入框 -->
@@ -94,16 +94,16 @@
         
 		<!-- 提示栏 -->
 		<TextView
-		android:id="@+id/login_progress_text"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignLeft="@id/login_password_edit"
-		android:layout_alignBottom="@id/login_signin_button"
-		android:gravity="bottom"
-		android:textSize="13dp"
-		android:textColor="#888"
-		android:autoLink="web"
-		android:clickable="true"
+			android:id="@+id/login_progress_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@id/login_password_edit"
+			android:layout_alignBottom="@id/login_signin_button"
+			android:gravity="bottom"
+			android:textSize="13dp"
+			android:textColor="#888"
+			android:autoLink="web"
+			android:clickable="true"
 		/>
 		
   </RelativeLayout>
@@ -114,7 +114,7 @@
   
     <TextView  
 		android:id="@+id/login_learn_more_link"
-		android:text="@string/login_label_learn_more"
+		android:text="@string/login_text_learn_more"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="15dp"
 		android:layout_alignParentBottom="true"

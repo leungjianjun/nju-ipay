@@ -1,19 +1,39 @@
-/**
- * 
+/*    Copyright 2011 Popcorn
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
  */
+
 package com.ipay.client;
+
+import java.util.HashMap;
+
+import com.ipay.client.communication.CommunicationManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * @author tangym
@@ -22,17 +42,16 @@ import android.widget.EditText;
 public class LoginActivity extends Activity {
 
 	private static final String TAG = "LoginActivity";
-	private static final String SIS_RUNNING_KEY = "running";
 
 	private String username;
 	private String password;
-	// private User user;
 
-	// views
 	private EditText usernameEdit;
 	private EditText passwordEdit;
-	private Button signinBtn;
+	private TextView progressText;
+	private Button loginBtn;
 	private ProgressDialog progressDialog;
+	private LoginTask loginTask;
 
 	private SharedPreferences preferences;
 
@@ -41,35 +60,21 @@ public class LoginActivity extends Activity {
 		// TODO Auto-generated method stub
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
-
-		// No Title bar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		requestWindowFeature(Window.FEATURE_PROGRESS);
-
-		// 获取偏好设置
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-		// 初始化views
+		//初始化
 		setContentView(R.layout.login);
 		usernameEdit = (EditText) findViewById(R.id.login_username_edit);
 		passwordEdit = (EditText) findViewById(R.id.login_password_edit);
-		signinBtn = (Button) findViewById(R.id.login_signin_button);
+		progressText = (TextView) findViewById(R.id.login_progress_text);
+		loginBtn = (Button) findViewById(R.id.login_signin_button);
 
-		if (savedInstanceState != null) {
-			if (savedInstanceState.containsKey(SIS_RUNNING_KEY)) {
-				if (savedInstanceState.getBoolean(SIS_RUNNING_KEY)) {
-					Log.d(TAG, "Was previously logging in. Restart action.");
-					doLogin();
-				}
-			}
-		}
-
-		signinBtn.setOnClickListener(new View.OnClickListener() {
+		loginBtn.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				doLogin();
 			}
 		});
-
 	}
 
 	@Override
@@ -81,7 +86,6 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onStop() {
 		Log.d(TAG, "onStop");
-		// TODO Auto-generated method stub
 		super.onStop();
 	}
 
@@ -90,22 +94,94 @@ public class LoginActivity extends Activity {
 		super.onSaveInstanceState(outState);
 	}
 
+	/**
+	 * 登录
+	 */
 	private void doLogin() {
-		Intent intent=new Intent(LoginActivity.this, MainTabsActivity.class);
-		startActivity(intent);
-		finish();
+		
+		username = usernameEdit.getText().toString();
+		password = passwordEdit.getText().toString();
 
+		if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+			progressText.setText(R.string.login_text_null_username_or_password);
+		} else {
+			loginTask = new LoginTask();
+			loginTask.execute(username, password);
+		}
 	}
 
-	private void onLoginBegan() {
-
+	private void onLoginStart() {
+		progressDialog = ProgressDialog.show(this, "",
+				getString(R.string.login_text_status_logining), true,true);
 	}
 
 	private void onLoginSucceeded() {
-
+		progressDialog.dismiss();
+		Intent intent = new Intent(LoginActivity.this, MainTabsActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
 	private void onLoginFailed() {
+
+		progressDialog.dismiss();
+		progressText.setText("用户名或密码错误");
+
+	}
+
+	/**
+	 * 实际上用于登录的异步任务类
+	 * 
+	 * @author tangym
+	 * 
+	 */
+	private class LoginTask extends AsyncTask<String, Integer, String> {
+		
+		private static final String  TASK_TAG="LoginTask";
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			Log.d(TASK_TAG, "onPreExecut");
+			onLoginStart();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+//			try {
+//				Thread.sleep(2000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
+			Log.d(TASK_TAG,"doInBackground");
+			String username=params[0];
+			String password=params[1];
+			CommunicationManager cm=CommunicationManager.instance();
+			if(cm.login(null, username, password)!=null){
+				Log.d(TASK_TAG,"Login Success");
+				return "ok";
+			}else{
+				Log.d(TASK_TAG,"Login Fail");
+				return "fail";
+			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+			Log.d(TASK_TAG,"onCancelled");
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			if (result.equals("ok"))
+				onLoginSucceeded();
+			else
+				onLoginFailed();
+		}
 
 	}
 

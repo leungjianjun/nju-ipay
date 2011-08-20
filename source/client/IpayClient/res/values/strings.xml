@@ -146,10 +146,12 @@
   <string name="app_name">iPay</string>
   
   <!-- 登录(login)部分 -->
-  <string name="login_label_username">Account</string>
-  <string name="login_label_password">Password</string>
+  <string name="login_text_username">Account</string>
+  <string name="login_text_password">Password</string>
   <string name="login_button_login">Login</string>
-  <string name="login_label_learn_more">Learn more...</string>
+  <string name="login_text_learn_more">Learn more...</string>
+  <string name="login_text_null_username_or_password">用户名或密码为空</string>
+  <string name="login_text_status_logining">登录中...</string>
   
   <!-- 购物车（shopping cart）部分 -->
   <string name="shopping_cart_pay" >Pay</string>
