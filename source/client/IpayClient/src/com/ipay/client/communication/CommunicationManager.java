@@ -57,8 +57,14 @@ import com.ipay.client.model.UserInfo;
 public class CommunicationManager {
 	private int marketId;
 	private DefaultHttpClient httpClient;
+	private Session session;
 	private CommunicationManager() {
 		httpClient = createHttpsClient();
+		session = new Session();
+	}
+
+	public Session getSession() {
+		return session;
 	}
 
 	private static CommunicationManager manager;
@@ -127,7 +133,7 @@ public class CommunicationManager {
 	 * @throws IOException 
 	 * @throws ClientProtocolException 
 	 */
-	public Session login(Session session, String username, String password) throws ClientProtocolException, IOException {
+	public int login(String username, String password) throws ClientProtocolException, IOException {
 	
 		JSONObject data = new JSONObject();
 		try {
@@ -141,14 +147,15 @@ public class CommunicationManager {
 		Log.d(TAG,"********user json="+data.toString());
 		
 		
+		int statusCode = BAD_REQUEST;
 		boolean status = false;
 		JSONObject result;
 		try {
 			HttpResponse response = doPost(LOGIN_URL, data);
 			
 			Log.d(TAG, "********execute post");
-			
-			if(response.getStatusLine().getStatusCode() == OK){
+			statusCode = response.getStatusLine().getStatusCode();
+			if(statusCode == OK){
 				String statusLine=response.getStatusLine().toString();
 				Log.d(TAG, "********response.getStatusLine()=="+statusLine);
 				Log.d(TAG, "********response.getStatusLine().getStatusCode() == OK");
@@ -158,29 +165,22 @@ public class CommunicationManager {
 				Log.d(TAG, "********Status=="+s);
 				status = result.getBoolean("status");
 			}
+			
 		} 
 		catch (JSONException e) {
 			Log.d(TAG, "********JSONException: " + e.toString());
 			e.printStackTrace();
 		}
 		//登陆成功
-		if(status == true){
-			
+		if(status == true){			
 			Log.d(TAG,"********status == true");
-
-			if(session == null){
-				return new Session(username, password);
-			}else{
+			if(session.getUsername() == null){
 				session.setUsername(username);
 				session.setPassword(password);
-				return session;
 			}
+
 		}
-		//登陆失败
-		else{
-			Log.d(TAG,"********status == false");
-			return null;
-		}
+		return statusCode;
 		
 	}
 	
@@ -196,12 +196,17 @@ public class CommunicationManager {
 		boolean status = false;
 		try {
 			HttpResponse response = httpClient.execute(get);
-			String retSrc = EntityUtils.toString(response.getEntity());
+			if(response.getStatusLine().getStatusCode() == OK){
+				String retSrc = EntityUtils.toString(response.getEntity());
 			JSONObject result = new JSONObject(retSrc);
 			status = result.getBoolean("status");
+			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if(status == true){
+			session = new Session();
 		}
 		return status;
 		
