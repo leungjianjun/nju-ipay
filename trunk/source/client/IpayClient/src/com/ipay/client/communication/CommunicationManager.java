@@ -194,7 +194,7 @@ public class CommunicationManager {
 	 */
 	public boolean logout(){
 		HttpGet get = new HttpGet(LOGOUT_URL);
-		
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		boolean status = false;
 		try {
 			HttpResponse response = httpClient.execute(get);
@@ -221,6 +221,7 @@ public class CommunicationManager {
 	 */
 	public UserInfo getUserInfo(){
 		HttpGet get = new HttpGet(USER_INFO_URL);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
@@ -322,6 +323,7 @@ public class CommunicationManager {
 	 */
 	public ArrayList<Market> searchMarket(String name, int pageNum){
 		HttpGet get = new HttpGet(SEARCH_MARKET_URL+"name="+name+"&page="+pageNum);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		ArrayList<Market> markets = new ArrayList<Market>();
 		try {
 			HttpResponse response = httpClient.execute(get);
@@ -397,6 +399,7 @@ public class CommunicationManager {
 	 */
 	private byte[] downloadEncryptPrivateKey(String username){
 		HttpGet get = new HttpGet(GET_KEY_URL);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		byte[] key = new byte[656];
 		try {
 			HttpResponse response = httpClient.execute(get);
@@ -422,6 +425,7 @@ public class CommunicationManager {
 	 */
 	public MarketInfo getMarketInfo(int MarketId){
 		HttpGet get = new HttpGet(MARKET_INFO_URL+marketId);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
@@ -462,6 +466,7 @@ public class CommunicationManager {
 	 */
 	public Product getProductInfo(String barcode) {
 		HttpGet get = new HttpGet(PRODUCT_INFO_URL+"mid="+marketId+"&code="+barcode);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
@@ -513,6 +518,7 @@ public class CommunicationManager {
 	 */
 	public boolean initConnection(){
 		HttpGet get = new HttpGet(MARKET_ID_URL);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == OK){
@@ -538,11 +544,20 @@ public class CommunicationManager {
 	 * 
 	 * @param session
 	 * @param payPassword 支付密码
+	 * @param key 证书,在调用此方法前需先调用getEncryptPrivateKey获得证书
 	 * @return 支付失败返回null
 	 */
-	public Order pay(Session session, String payPassword) {
+	public Order pay(Session session, String payPassword, byte[] key) {
 		boolean success = false;
 		
+		//私钥解密
+		String decryptoKey;
+		try {
+			decryptoKey = AesCrypto.decrypt(session.getUsername()+payPassword, new String(key));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//封装订单JSON
 		JSONObject param = new JSONObject();
 		JSONArray products = new JSONArray();
