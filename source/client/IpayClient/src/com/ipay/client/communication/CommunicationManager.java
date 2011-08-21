@@ -124,8 +124,10 @@ public class CommunicationManager {
 	 * @param username
 	 * @param password
 	 * @return	失败返回null
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public Session login(Session session, String username, String password) {
+	public Session login(Session session, String username, String password) throws ClientProtocolException, IOException {
 	
 		JSONObject data = new JSONObject();
 		try {
@@ -156,12 +158,6 @@ public class CommunicationManager {
 				Log.d(TAG, "********Status=="+s);
 				status = result.getBoolean("status");
 			}
-		} catch (ClientProtocolException e) {
-			Log.d(TAG, "********ClientProtocolException: " + e.toString());
-			e.printStackTrace();
-		} catch (IOException e) {
-			Log.d(TAG, "********IOException: " + e.toString());
-			e.printStackTrace();
 		} 
 		catch (JSONException e) {
 			Log.d(TAG, "********JSONException: " + e.toString());
@@ -191,8 +187,10 @@ public class CommunicationManager {
 	/**
 	 * 
 	 * @return
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public boolean logout(){
+	public boolean logout() throws ClientProtocolException, IOException{
 		HttpGet get = new HttpGet(LOGOUT_URL);
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		boolean status = false;
@@ -201,12 +199,6 @@ public class CommunicationManager {
 			String retSrc = EntityUtils.toString(response.getEntity());
 			JSONObject result = new JSONObject(retSrc);
 			status = result.getBoolean("status");
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,8 +210,10 @@ public class CommunicationManager {
 	/**
 	 * 查看个人信息
 	 * @return
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public UserInfo getUserInfo(){
+	public UserInfo getUserInfo() throws ClientProtocolException, IOException{
 		HttpGet get = new HttpGet(USER_INFO_URL);
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
@@ -233,12 +227,6 @@ public class CommunicationManager {
 				info.setPhone(result.getString(UserInfo.PHONE_NUM));
 				return info;
 			}
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -249,8 +237,10 @@ public class CommunicationManager {
 	 * 
 	 * @param info
 	 * @return
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public boolean setUserInfo(UserInfo info){
+	public boolean setUserInfo(UserInfo info) throws ClientProtocolException, IOException{
 		JSONObject jInfo = new JSONObject();
 		boolean status = false;
 		try {
@@ -267,12 +257,6 @@ public class CommunicationManager {
 				JSONObject result = getJsonResult(response);
 				status = result.getBoolean("status");
 			}
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
