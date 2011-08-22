@@ -45,6 +45,7 @@ import com.ipay.client.model.MarketInfo;
 import com.ipay.client.model.Order;
 import com.ipay.client.model.Product;
 import com.ipay.client.model.Session;
+import com.ipay.client.model.SpecialProduct;
 import com.ipay.client.model.UserInfo;
 
 /**
@@ -449,7 +450,79 @@ public class CommunicationManager {
 	public MarketInfo getMarketInfo(){
 		return getMarketInfo(marketId);
 	}
+	/**
+	 * 获得商场特价商品
+	 * @param pageNum
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public ArrayList<SpecialProduct> getSpecialProducts(int pageNum) throws ClientProtocolException, IOException{
+		ArrayList<SpecialProduct> specialProducts = new ArrayList<SpecialProduct>();
+		HttpGet get = new HttpGet(SPECIAL_PRODUCT_URL+"mid="+marketId+"&page="+pageNum);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 	
+		HttpResponse response = httpClient.execute(get);
+		if(response.getStatusLine().getStatusCode() == OK){
+			JSONObject result = getJsonResult(response);
+			try {
+				JSONArray jProducts = result.getJSONArray("specialProducts");
+				
+				for(int i = 0; i < jProducts.length(); i++){
+					SpecialProduct product = new SpecialProduct();
+					JSONObject jProduct = jProducts.getJSONObject(i);
+					product.setId(jProduct.getInt(Product.ID));
+					product.setName(jProduct.getString(Product.NAME));
+					product.setPrice(jProduct.getDouble(SpecialProduct.OLD_PRICE));
+					product.setSpecialPrice(jProduct.getDouble(SpecialProduct.New_PRICE));
+					product.setMinImgUrl(jProduct.getString(Product.MIN_IMG_URL));
+					product.setAdWords(jProduct.getString(SpecialProduct.AD_WORDS));
+					specialProducts.add(product);
+				}
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}
+		return specialProducts;
+	}
+	/**
+	 * 获得商场热销商品
+	 * @param pageNum
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public ArrayList<Product> getHotProducts(int pageNum) throws ClientProtocolException, IOException{
+		ArrayList<Product> hotProducts = new ArrayList<Product>();
+		HttpGet get = new HttpGet(HOT_PRODUCT_URL+"mid="+marketId+"&page="+pageNum);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
+	
+		HttpResponse response = httpClient.execute(get);
+		if(response.getStatusLine().getStatusCode() == OK){
+			JSONObject result = getJsonResult(response);
+			try {
+				JSONArray jProducts = result.getJSONArray("hotProducts");
+				
+				for(int i = 0; i < jProducts.length(); i++){
+					Product product = new Product();
+					JSONObject jProduct = jProducts.getJSONObject(i);
+					product.setId(jProduct.getInt(Product.ID));
+					product.setName(jProduct.getString(Product.NAME));
+					product.setPrice(jProduct.getDouble(Product.PRICE));
+					product.setMinImgUrl(jProduct.getString(Product.MIN_IMG_URL));
+					hotProducts.add(product);
+				}
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}
+		return hotProducts;
+		
+	}
 	/**
 	 * @param barcode
 	 * @return 查找失败返回null
