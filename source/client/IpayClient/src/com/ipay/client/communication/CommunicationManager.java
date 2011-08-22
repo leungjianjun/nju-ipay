@@ -307,7 +307,7 @@ public class CommunicationManager {
 	/**
 	 * 
 	 * @param name
-	 * @param pageNum
+	 * @param pageNum 从1开始
 	 * @return
 	 */
 	public ArrayList<Market> searchMarket(String name, int pageNum){
@@ -350,20 +350,21 @@ public class CommunicationManager {
 	 * @param context
 	 * @return
 	 */
-	public byte[] getEncryptPrivateKey(String username, Context context){
+	public byte[] getEncryptPrivateKey(Context context){
 		//查找本地key
 		byte[] key = new byte[656];
+		
 		try {	
-			FileInputStream inputStream = context.openFileInput(username+".key");
+			FileInputStream inputStream = context.openFileInput(session.getUsername()+".key");
 			inputStream.read(key);
 			inputStream.close();
 		} catch (FileNotFoundException e1) {
 			//未找到，需要下载
-			key = downloadEncryptPrivateKey(username);
+			key = downloadEncryptPrivateKey(session.getUsername());
 			if(key != null){
 				//保存key
 				try {
-					FileOutputStream outputStream = context.openFileOutput(username+".key", Context.MODE_PRIVATE);
+					FileOutputStream outputStream = context.openFileOutput(session.getUsername()+".key", Context.MODE_PRIVATE);
 					outputStream.write(key);
 					outputStream.close();
 				} catch (FileNotFoundException e) {
