@@ -231,7 +231,7 @@ var result_get_marketInfo = {
 /**
  * 特价商品
  * 
- * url http://xxx.xxx.xxx.xxx:8080/client/MarketSpecialProducs?mid={market id}&page={pageNum}
+ * url http://xxx.xxx.xxx.xxx:8080/client/MarketSpecialProducts?mid={market id}&page={pageNum}
  * 方法：get
  * 说明：1.特价商品是商场放在门口的那些商品，往往要帮某个品牌推销，或者清仓的那种 2 每页10个 
  *       3.商品图像url用相对地址,像/images/143_234324234_min.gif,要添加前缀http://xxx.xxx.xxx.xxx:8080
@@ -239,7 +239,7 @@ var result_get_marketInfo = {
 var get_market_specialProducts = {}
 
 var result_get_market_specialProducts = {
-		specialsProducts:[{name:"",oldPrice:12.5,nowPrice:8.5,adWords:"",pid:123,minImgUrl:""},
+		specialsProducts:[{name:"",oldPrice:12.5,newPrice:8.5,adWords:"",pid:123,minImgUrl:""},
 		                  {},//分别是：商品名，原价，现价，广告语，商品id（不是特价商品id），图像地址
 		                  {}]
 }
