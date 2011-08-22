@@ -3,23 +3,23 @@ package com.ipay.server.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ipay.server.entity.User;
-import com.ipay.server.service.IUserService;
+import com.ipay.server.entity.Transaction;
+import com.ipay.server.service.ITransactionService;
 
-@Service("userService")
+@Service("transactionService")
 @Transactional
-public class UserServiceImpl<T extends User> extends ServiceImpl<T> implements IUserService<T> {
+public class TransactionServiceImpl<T extends Transaction> extends ServiceImpl<T> implements ITransactionService<T> {
 
 	@Override
 	public void create(T baseBean) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(T baseBean) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

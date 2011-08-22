@@ -1,5 +1,7 @@
 package com.ipay.server.service;
 
-public interface IUserService {
+import com.ipay.server.entity.User;
+
+public interface IUserService<T extends User> extends IService<T>{
 
 }
