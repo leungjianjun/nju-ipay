@@ -1,6 +1,7 @@
 package com.ipay.client.ui.base;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.widget.ListView;
 
 
@@ -10,10 +11,12 @@ import android.widget.ListView;
  * @author tangym
  *
  */
-public abstract class BaseListActivity  extends Activity{
+public abstract class BaseListActivity  extends BaseActivity{
+	
 	private static final String TAG="BaseListActivity";
 	
 	protected ListView listView;
+	
 	
 	
 	
