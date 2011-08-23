@@ -1,5 +1,6 @@
 package com.ipay.server.test.service;
 
+import java.security.KeyPair;
 import java.util.Date;
 
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.ipay.server.entity.CreditCard;
 import com.ipay.server.entity.User;
+import com.ipay.server.security.KeyManager;
 import com.ipay.server.security.PasswordEncoder;
 import com.ipay.server.service.IUserService;
 import com.ipay.server.test.util.SpringJUnit45ClassRunner;
@@ -48,8 +50,14 @@ public class UserServiceTest {
 		creditCard.setCardnum("837941h43bh32h");
 		creditCard.setEnable(true);
 		creditCard.setPaypass(PasswordEncoder.encode("paypass", user.getAccount()));
-		creditCard.setPrivateKey(privateKey)
+		KeyPair keyPair = KeyManager.generatorKeypair();
+		creditCard.setPrivateKey(KeyManager.encryptPrivateKey(keyPair.getPrivate(), "paypass", creditCard.getCardnum()));
+		System.out.println(keyPair.getPublic().getEncoded().length);
+		creditCard.setPublicKey(keyPair.getPublic().getEncoded());
+		creditCard.setUser(user);
 		user.setCreditCard(creditCard);
+		
+		userService.create(user);
 	}
 
 }
