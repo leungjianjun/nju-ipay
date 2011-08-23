@@ -12,14 +12,18 @@ public class CreditCardServiceImpl<T extends CreditCard> extends ServiceImpl<T> 
 
 	@Override
 	public void create(T baseBean) {
-		// TODO Auto-generated method stub
+		dao.persist(baseBean);
 		
 	}
 
 	@Override
 	public void delete(T baseBean) {
-		// TODO Auto-generated method stub
+		dao.delete(baseBean);
 		
+	}
+
+	public T getCreditCardByNum(String cardnum) {
+		return dao.findUniqueBy("from CreditCard as cc where cc.cardnum =?", cardnum);
 	}
 
 }

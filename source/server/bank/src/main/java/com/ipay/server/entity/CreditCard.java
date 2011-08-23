@@ -10,6 +10,7 @@ public class CreditCard extends BaseEntity {
 	/**
 	 * 信用卡号
 	 */
+	@Column(nullable = false, unique = true)
 	private String cardnum;
 	
 	/**
