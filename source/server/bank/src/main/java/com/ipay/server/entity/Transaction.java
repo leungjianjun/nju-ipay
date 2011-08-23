@@ -8,18 +8,33 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Transaction extends BaseEntity {
 	
+	/**
+	 * 支出卡
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	private CreditCard payerCard;
 	
+	/**
+	 * 收款卡
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
 	private CreditCard payeeCard;
 	
-	private float amount;
+	/**
+	 * 转账金额
+	 */
+	private double amount;
 	
-	private float fee;
+	/**
+	 * 转账收取的手续费
+	 */
+	private double fee;
 	
+	/**
+	 * 交易是否有效,如果交易无效,则金额是不会发生转移的
+	 */
 	private boolean effective;
 
 	public CreditCard getPayerCard() {
@@ -38,28 +53,28 @@ public class Transaction extends BaseEntity {
 		this.payeeCard = payeeCard;
 	}
 
-	public float getAmount() {
-		return amount;
-	}
-
-	public void setAmount(float amount) {
-		this.amount = amount;
-	}
-
-	public float getFee() {
-		return fee;
-	}
-
-	public void setFee(float fee) {
-		this.fee = fee;
-	}
-
 	public boolean isEffective() {
 		return effective;
 	}
 
 	public void setEffective(boolean effective) {
 		this.effective = effective;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public double getFee() {
+		return fee;
+	}
+
+	public void setFee(double fee) {
+		this.fee = fee;
 	}
 
 }

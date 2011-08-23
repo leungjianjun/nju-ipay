@@ -1,4 +1,4 @@
-package com.ipay.server.util;
+package com.ipay.server.test.util;
 
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.webapp.WebAppContext;
