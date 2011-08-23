@@ -1,4 +1,4 @@
-package com.ipay.server.payment;
+package com.ipay.server.bankproxy;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
