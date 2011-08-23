@@ -13,28 +13,22 @@ import android.view.MenuItem;
  * @author tangym
  * 
  */
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
 	
 	private static final String TAG = "BaseActivity";
 	
+	
 	protected SharedPreferences preferences;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		_onCreate(savedInstanceState);
+		
 	}
-
-	/**
-	 * 真实的onCreate方法
-	 * 
-	 * @param savedInstanceState
-	 * @return
-	 */
-	protected boolean _onCreate(Bundle savedInstanceState) {
-		return true;
-
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
 	}
 	
 	@Override
@@ -43,8 +37,8 @@ public class BaseActivity extends Activity {
 	}
 	
 	@Override
-	protected void onStart() {
-		super.onStart();
+	protected void onPause() {
+		super.onPause();
 	}
 	
 	@Override
@@ -60,6 +54,7 @@ public class BaseActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return super.onCreateOptionsMenu(menu);
+	
 	}
 	
 	
@@ -67,6 +62,7 @@ public class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return super.onOptionsItemSelected(item);
 	}
+	
 	
 
 }
