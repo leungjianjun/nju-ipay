@@ -1,5 +1,6 @@
 package com.ipay.server.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -29,11 +30,13 @@ public class CreditCard extends BaseEntity {
 	/**
 	 * 使用aes加密的rsa私钥
 	 */
+	@Column(length=700)
 	private byte[] privateKey;
 	
 	/**
 	 * rsa公钥
 	 */
+	@Column(length=200)
 	private byte[] publicKey;
 	
 	/**
