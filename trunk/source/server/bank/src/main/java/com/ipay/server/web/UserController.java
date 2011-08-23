@@ -7,20 +7,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipay.server.service.ServiceException;
 
 @Controller
-public class BankController {
-	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
+public class UserController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	/**
 	 * 统一异常处理方法，把所有的service exception放在这里处理，返回json风格
@@ -39,5 +35,5 @@ public class BankController {
 		failureMessages.put("error", exception.getMessage());
 		return failureMessages;
 	}
-	
+
 }
