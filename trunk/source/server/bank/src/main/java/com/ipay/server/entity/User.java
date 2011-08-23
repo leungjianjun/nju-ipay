@@ -16,33 +16,67 @@ import javax.validation.constraints.Size;
 @Entity
 public class User extends BaseEntity{
 	
+	/**
+	 * 银行开户的帐号默认为信用卡号，可以修改
+	 */
 	@NotNull
 	@Size(min = 2, max = 25)
 	@Column(nullable = false, unique = true)
 	private String account;
 	
+	/**
+	 * 密码使用sha加密
+	 */
 	@NotNull
 	@Size(min = 2, max = 25)
 	private String password;
 	
+	/**
+	 * 信用需要个人信息，用户的真实姓名，可直接从身份证复印件获取
+	 */
 	private String realname;
 	
+	/**
+	 * 地址，用户的住址
+	 */
 	private String address;
 	
+	/**
+	 * 身份证号
+	 */
 	private String idnumber;
 	
+	/**
+	 * 电话号码，需要联系用户
+	 */
 	private String phonenum;
 	
+	/**
+	 * 备注信息
+	 */
 	private String remark;
 	
+	/**
+	 * 出生年月日
+	 */
 	@Temporal(value = TemporalType.DATE)
 	@NotNull
 	private Date birthday;
 	
+	/**
+	 * 性别，男真女假
+	 * 
+	 */
 	private boolean sex;
 	
+	/**
+	 * 帐号是否可用
+	 */
 	private boolean enbale = true;
 	
+	/**
+	 * 用户的信用卡
+	 */
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn
 	private CreditCard creditCard;

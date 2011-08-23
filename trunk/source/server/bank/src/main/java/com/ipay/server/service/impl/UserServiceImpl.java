@@ -12,13 +12,11 @@ public class UserServiceImpl<T extends User> extends ServiceImpl<T> implements I
 
 	@Override
 	public void create(T baseBean) {
-		// TODO Auto-generated method stub
-		
+		dao.persist(baseBean);
 	}
 
 	@Override
 	public void delete(T baseBean) {
-		// TODO Auto-generated method stub
 		
 	}
 

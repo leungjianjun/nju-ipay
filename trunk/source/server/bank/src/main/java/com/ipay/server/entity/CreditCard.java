@@ -6,18 +6,39 @@ import javax.persistence.OneToOne;
 @Entity
 public class CreditCard extends BaseEntity {
 	
+	/**
+	 * 信用卡号
+	 */
 	private String cardnum;
 	
+	/**
+	 * 支付密码,使用sha加密
+	 */
 	private String paypass;
 	
-	private float balance;
+	/**
+	 * 信用卡余额,可以为负值
+	 */
+	private double balance;
 	
+	/**
+	 * 信用卡是否可用
+	 */
 	private boolean enable;
 	
+	/**
+	 * 使用aes加密的rsa私钥
+	 */
 	private byte[] privateKey;
 	
+	/**
+	 * rsa公钥
+	 */
 	private byte[] publicKey;
 	
+	/**
+	 * 信用卡的持有者
+	 */
 	@OneToOne
 	private User user;
 
@@ -35,14 +56,6 @@ public class CreditCard extends BaseEntity {
 
 	public void setPaypass(String paypass) {
 		this.paypass = paypass;
-	}
-
-	public float getBalance() {
-		return balance;
-	}
-
-	public void setBalance(float balance) {
-		this.balance = balance;
 	}
 
 	public boolean isEnable() {
@@ -75,6 +88,14 @@ public class CreditCard extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 
 }
