@@ -6,6 +6,7 @@
   android:layout_height="fill_parent"
   android:background="@android:color/white">
   
+  	<include layout="@layout/navi_bar"/>
   	<TextView 
  		 android:id="@+id/test2"
  		 android:layout_width="fill_parent"
@@ -17,5 +18,25 @@
   		android:layout_height="wrap_content"
   		android:singleLine="true"
   	/>
+  	
+  	<Button 
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:id="@+id/test_start"
+  		android:text="start"
+  	/>
+  	<Button
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:id="@+id/test_success"
+  		android:text="success"
+  	/>
+  	<Button
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:id="@+id/test_fail"
+  		android:text="fail"
+  	/>
+  	
     
 </LinearLayout>

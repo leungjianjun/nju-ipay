@@ -73,7 +73,7 @@
         
 	<!-- 长条进度条，导航栏底部 -->
 	<ProgressBar 
-		android:id="@+id/progress_bar"
+		android:id="@+id/navi_bar_progress_bar"
 		android:layout_width="fill_parent"
 		android:layout_height="2dip"
 		android:layout_alignParentBottom="true"

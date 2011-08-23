@@ -15,14 +15,18 @@
 
 package com.ipay.client;
 
-import java.util.HashMap;
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
 
 import com.ipay.client.communication.CommunicationManager;
+import com.ipay.client.task.TaskResult;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,7 +34,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,11 +60,11 @@ public class LoginActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
+		// 获取preference
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		//初始化
+		// 初始化
 		setContentView(R.layout.login);
 		usernameEdit = (EditText) findViewById(R.id.login_username_edit);
 		passwordEdit = (EditText) findViewById(R.id.login_password_edit);
@@ -80,6 +83,7 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		Log.d(TAG, "onDestory");
+		// if(loginTask!=null&&LoginTask.)
 		super.onDestroy();
 	}
 
@@ -98,7 +102,7 @@ public class LoginActivity extends Activity {
 	 * 登录
 	 */
 	private void doLogin() {
-		
+
 		username = usernameEdit.getText().toString();
 		password = passwordEdit.getText().toString();
 
@@ -112,7 +116,7 @@ public class LoginActivity extends Activity {
 
 	private void onLoginStart() {
 		progressDialog = ProgressDialog.show(this, "",
-				getString(R.string.login_text_status_logining), true,true);
+				getString(R.string.login_text_status_logining), true, true);
 	}
 
 	private void onLoginSucceeded() {
@@ -135,47 +139,59 @@ public class LoginActivity extends Activity {
 	 * @author tangym
 	 * 
 	 */
-	private class LoginTask extends AsyncTask<String, Integer, String> {
-		
-		private static final String  TASK_TAG="LoginTask";
+	private class LoginTask extends AsyncTask<String, Integer, TaskResult> {
+
+		private static final String TASK_TAG = "LoginTask";
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			Log.d(TASK_TAG, "onPreExecut");
+			Log.d(TASK_TAG, "onPreExecute");
 			onLoginStart();
 		}
 
 		@Override
-		protected String doInBackground(String... params) {
-//			try {
-//				Thread.sleep(2000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			
-			Log.d(TASK_TAG,"doInBackground");
-			String username=params[0];
-			String password=params[1];
-			CommunicationManager cm=CommunicationManager.instance();
-			if(cm.login(null, username, password)!=null){
-				Log.d(TASK_TAG,"Login Success");
-				return "ok";
-			}else{
-				Log.d(TASK_TAG,"Login Fail");
-				return "fail";
+		protected TaskResult doInBackground(String... params) {
+			Log.d(TASK_TAG, "doInBackground");
+			// 获取输入的用户名和密码
+			String username = params[0];
+			String password = params[1];
+			CommunicationManager cm = CommunicationManager.instance();
+			try {
+				if (cm.login(username, password) == 200) {
+					Log.d(TASK_TAG, "Login Succeed");
+					Editor editor = preferences.edit();
+					editor.putString("username", username);
+					editor.putString("password", password);
+					// add 存储当前用户的id
+					// editor.putString(Preferences.CURRENT_USER_ID,
+					// user.getId());
+					editor.commit();
+
+					return TaskResult.OK;
+				} else {
+					Log.d(TASK_TAG, "Login Fail");
+					return TaskResult.FAILED;
+				}
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			return TaskResult.FAILED;
 		}
 
 		@Override
 		protected void onCancelled() {
 			super.onCancelled();
-			Log.d(TASK_TAG,"onCancelled");
+			Log.d(TASK_TAG, "onCancelled");
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
 			if (result.equals("ok"))
 				onLoginSucceeded();
