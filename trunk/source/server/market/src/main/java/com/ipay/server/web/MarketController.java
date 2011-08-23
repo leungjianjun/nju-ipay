@@ -110,11 +110,11 @@ public class MarketController {
 			temp.put("oldPrice", sp.getOldprice());
 			temp.put("newPrice", sp.getProduct().getPrice());
 			temp.put("adWords", sp.getIntroduction());
-			temp.put("pid", sp.getProduct().getId());
+			temp.put("id", sp.getProduct().getId());
 			temp.put("minImgUrl", sp.getProduct().getProductInfo().getMinImgUrl());
 			contents.add(temp);
 		}
-		return Collections.singletonMap("specialsProducts", contents);
+		return Collections.singletonMap("specialProducts", contents);
 	}
 	
 	

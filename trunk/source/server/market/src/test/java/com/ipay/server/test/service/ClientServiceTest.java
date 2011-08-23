@@ -49,7 +49,7 @@ public class ClientServiceTest {
 		client.setCardnum("638409233433434");
 		client.setPassword(sha.encodePassword("123456", client.getAccount()));
 		client.getAuthorityList().add(userService.getAuthority("client"));
-		client.setPaypass(sha.encodePassword("payapss", client.getAccount()));
+		client.setPaypass(sha.encodePassword("paypass", client.getAccount()));
 		client.getClientInfo().setCreateDate(new Date());//这里不要都是一个时间的
 		client.getClientInfo().setPhonenum("1599623223");
 		client.getClientInfo().setRealname("杨建军");
