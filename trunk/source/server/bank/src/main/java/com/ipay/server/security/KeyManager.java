@@ -10,6 +10,8 @@ import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+import javax.crypto.Cipher;
+
 import com.ipay.server.security.codec.Hex;
 import com.ipay.server.security.encrypt.BytesEncryptor;
 import com.ipay.server.security.encrypt.Encryptors;
@@ -107,6 +109,51 @@ public class KeyManager {
 			return sig.verify(sign);
 		} catch (Exception e) {
 			return false;
+		}
+	}
+	
+	/**
+	 * 使用RSA公钥加密数据
+	 * 
+	 * @param publicKeyBytes
+	 *            打包的byte[]形式公钥
+	 * @param data
+	 *            要加密的数据
+	 * @return 加密数据
+	 */
+	public static byte[] encryptByRSA(byte[] publicKeyBytes, byte[] data) {
+		try {
+			KeyFactory mykeyFactory = KeyFactory.getInstance("RSA");
+			X509EncodedKeySpec pub_spec = new X509EncodedKeySpec(publicKeyBytes);
+			PublicKey pubKey = mykeyFactory.generatePublic(pub_spec);
+			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+			return cipher.doFinal(data);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * 用RSA私钥解密
+	 * 
+	 * @param privateKeyBytes
+	 *            私钥打包成byte[]形式
+	 * @param data
+	 *            要解密的数据
+	 * @return 解密数据
+	 */
+	public static byte[] decryptByRSA(byte[] privateKeyBytes, byte[] data) {
+		try {
+			PKCS8EncodedKeySpec priv_spec = new PKCS8EncodedKeySpec(
+					privateKeyBytes);
+			KeyFactory mykeyFactory = KeyFactory.getInstance("RSA");
+			PrivateKey privKey = mykeyFactory.generatePrivate(priv_spec);
+			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+			cipher.init(Cipher.DECRYPT_MODE, privKey);
+			return cipher.doFinal(data);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
