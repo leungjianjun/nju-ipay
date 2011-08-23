@@ -5,17 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
@@ -27,7 +26,6 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -38,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.ipay.client.model.Market;
@@ -103,27 +102,6 @@ public class CommunicationManager {
 	//支付
 	public static final String GET_KEY_URL = "https://xxx.xxx.xxx.xxx:8443/client/getEncryptPrivateKey";
 	public static final String PAY_URL = "";
-	 /** OK: Success! */
-    public static final int OK = 200;
-    /** Not Modified: There was no new data to return. */
-    public static final int NOT_MODIFIED = 304;
-    /** Bad Request: The request was invalid.  An accompanying error message will explain why. This is the status code will be returned during rate limiting. */
-    public static final int BAD_REQUEST = 400;
-    /** Not Authorized: Authentication credentials were missing or incorrect. */
-    public static final int NOT_AUTHORIZED = 401;
-    /** Forbidden: The request is understood, but it has been refused.  An accompanying error message will explain why. */
-    public static final int FORBIDDEN = 403;
-    /** Not Found: The URI requested is invalid or the resource requested, such as a user, does not exists. */
-    public static final int NOT_FOUND = 404;
-    /** Not Acceptable: Returned by the Search API when an invalid format is specified in the request. */
-    public static final int NOT_ACCEPTABLE = 406;
-    /** Internal Server Error: Something is broken.  Please post to the group so the Weibo team can investigate. */
-    public static final int INTERNAL_SERVER_ERROR = 500;
-    /** Bad Gateway: Weibo is down or being upgraded. */
-    public static final int BAD_GATEWAY = 502;
-    /** Service Unavailable: The Weibo servers are up, but overloaded with requests. Try again later. The search and trend methods use this to indicate when you are being rate limited. */
-    public static final int SERVICE_UNAVAILABLE = 503;
-
 		
 	/**
 	 * 
@@ -148,7 +126,7 @@ public class CommunicationManager {
 		Log.d(TAG,"********user json="+data.toString());
 		
 		
-		int statusCode = BAD_REQUEST;
+		int statusCode = HttpStatus.SC_BAD_REQUEST;
 		boolean status = false;
 		JSONObject result;
 		try {
@@ -156,7 +134,7 @@ public class CommunicationManager {
 			
 			Log.d(TAG, "********execute post");
 			statusCode = response.getStatusLine().getStatusCode();
-			if(statusCode == OK){
+			if(statusCode == HttpStatus.SC_OK){
 				String statusLine=response.getStatusLine().toString();
 				Log.d(TAG, "********response.getStatusLine()=="+statusLine);
 				Log.d(TAG, "********response.getStatusLine().getStatusCode() == OK");
@@ -197,7 +175,7 @@ public class CommunicationManager {
 		boolean status = false;
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				String retSrc = EntityUtils.toString(response.getEntity());
 			JSONObject result = new JSONObject(retSrc);
 			status = result.getBoolean("status");
@@ -224,7 +202,7 @@ public class CommunicationManager {
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				String retSrc = EntityUtils.toString(response.getEntity());
 				JSONObject result = new JSONObject(retSrc);
 				UserInfo info = new UserInfo();
@@ -259,7 +237,7 @@ public class CommunicationManager {
 		
 		try {
 			HttpResponse response = doPost(SET_USER_INFO_URL, jInfo);
-			if(response.getStatusLine().getStatusCode() == OK){			
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){			
 				JSONObject result = getJsonResult(response);
 				status = result.getBoolean("status");
 			}
@@ -289,7 +267,7 @@ public class CommunicationManager {
 		boolean status = false;
 		try {
 			HttpResponse response = doPost(SET_PASSWORD_URL, data);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				JSONObject result = getJsonResult(response);
 				status = result.getBoolean("status");
 			}
@@ -317,7 +295,7 @@ public class CommunicationManager {
 		ArrayList<Market> markets = new ArrayList<Market>();
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				JSONObject result = getJsonResult(response);
 				JSONArray jMarkets = result.getJSONArray("markets");
 				for(int i = 0; i < jMarkets.length(); i++){
@@ -394,7 +372,7 @@ public class CommunicationManager {
 		byte[] key = new byte[656];
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				InputStream inputStream = response.getEntity().getContent();
 				inputStream.read(key);
 				inputStream.close();
@@ -419,7 +397,7 @@ public class CommunicationManager {
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				JSONObject result = getJsonResult(response);
 				MarketInfo marketInfo = new MarketInfo(marketId);
 				marketInfo.setName(result.getString(MarketInfo.NAME));
@@ -463,7 +441,7 @@ public class CommunicationManager {
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 	
 		HttpResponse response = httpClient.execute(get);
-		if(response.getStatusLine().getStatusCode() == OK){
+		if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 			JSONObject result = getJsonResult(response);
 			try {
 				JSONArray jProducts = result.getJSONArray("specialProducts");
@@ -500,7 +478,7 @@ public class CommunicationManager {
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 	
 		HttpResponse response = httpClient.execute(get);
-		if(response.getStatusLine().getStatusCode() == OK){
+		if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 			JSONObject result = getJsonResult(response);
 			try {
 				JSONArray jProducts = result.getJSONArray("hotProducts");
@@ -532,7 +510,7 @@ public class CommunicationManager {
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				String retSrc = EntityUtils.toString(response.getEntity());
 				JSONObject result = new JSONObject(retSrc);
 				Product product = new Product();
@@ -584,7 +562,7 @@ public class CommunicationManager {
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				String retSrc = EntityUtils.toString(response.getEntity());
 			JSONObject result = new JSONObject(retSrc);
 			marketId = result.getInt("id");
@@ -642,7 +620,7 @@ public class CommunicationManager {
 		//post
 		try {
 			HttpResponse response = doPost(PAY_URL, param);
-			if(response.getStatusLine().getStatusCode() == OK){
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				
 			}
 		} catch (ClientProtocolException e) {
@@ -697,5 +675,25 @@ public class CommunicationManager {
 		}
 		
 		return result;
+	}
+	/**
+	 * 获得图片
+	 * @param url
+	 * @return
+	 * @throws IOException 
+	 */
+	public static Drawable getImage(String address) throws IOException{
+		URL url = null;
+		try {
+			url = new URL(address);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		Object content = url.getContent();
+		InputStream is = (InputStream)content;
+		Drawable d = Drawable.createFromStream(is, "src");
+		return d;
 	}
 }
