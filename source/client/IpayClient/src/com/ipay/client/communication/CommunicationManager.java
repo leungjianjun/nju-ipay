@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
@@ -129,8 +130,9 @@ public class CommunicationManager {
 		int statusCode = HttpStatus.SC_BAD_REQUEST;
 		boolean status = false;
 		JSONObject result;
+		HttpResponse response = null;
 		try {
-			HttpResponse response = doPost(LOGIN_URL, data);
+			response = doPost(LOGIN_URL, data);
 			
 			Log.d(TAG, "********execute post");
 			statusCode = response.getStatusLine().getStatusCode();
@@ -157,7 +159,6 @@ public class CommunicationManager {
 				session.setUsername(username);
 				session.setPassword(password);
 			}
-
 		}
 		return statusCode;
 		
