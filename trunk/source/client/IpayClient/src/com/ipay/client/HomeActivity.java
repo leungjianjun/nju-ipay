@@ -6,6 +6,8 @@ package com.ipay.client;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.ipay.client.ui.base.BaseActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author tangym
  * 
  */
-public class HomeActivity extends Activity {
+public class HomeActivity extends BaseActivity {
 
 	private ListView list;
 	ArrayList<HashMap<String, Object>> data;
@@ -76,7 +78,7 @@ public class HomeActivity extends Activity {
 	}
 
 	private void createListData() {
-		String[] menu = { "商场介绍", "热卖商品", "打折商品" };
+		String[] menu = getResources().getStringArray(R.array.home_menu_array);
 
 		for (int i = 0; i < 3; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();

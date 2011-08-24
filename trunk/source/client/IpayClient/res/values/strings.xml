@@ -153,6 +153,13 @@
   <string name="login_text_null_username_or_password">用户名或密码为空</string>
   <string name="login_text_status_logining">登录中...</string>
   
+  <!-- 主页面 -->
+  <string-array name="home_menu_array">
+  	<item >商场介绍</item>
+  	<item >热卖商品</item>
+  	<item >打折商品</item>
+  </string-array>
+  
   <!-- 购物车（shopping cart）部分 -->
   <string name="shopping_cart_pay" >Pay</string>
   <string name="shopping_cart_money">Money</string>
@@ -188,5 +195,9 @@
   <string name="menu_bar_item_cart">Cart</string>
   <string name="menu_bar_item_account">Account</string>
   <string name="menu_bar_item_more">More</string>
+  
+  
+  
+  
   
 </resources>
