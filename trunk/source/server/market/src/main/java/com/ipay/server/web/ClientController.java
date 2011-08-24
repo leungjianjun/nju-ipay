@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
+import com.ipay.server.bankproxy.BankServerProxy;
 import com.ipay.server.entity.Client;
 import com.ipay.server.service.IClientService;
 import com.ipay.server.service.ServiceException;
@@ -86,8 +87,9 @@ public class ClientController {
 	}
 	
 	@RequestMapping(value = "/client/getEncryptPrivateKey", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getEncryptPrivateKey(){
-		byte[] encryptPrivateKey = new byte[656];
+	public ResponseEntity<byte[]> getEncryptPrivateKey(Principal principal){
+		String cardnum = clientService.getClientByAccount(principal.getName()).getCardnum();
+		byte[] encryptPrivateKey = BankServerProxy.getEncryptPrivakeKey(cardnum);
 		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",656);
 		return new ResponseEntity<byte[]>(encryptPrivateKey,httpHeaders,HttpStatus.OK);
 	}
@@ -119,5 +121,4 @@ public class ClientController {
 		failureMessages.put("error", exception.getMessage());
 		return failureMessages;
 	}
-
 }
