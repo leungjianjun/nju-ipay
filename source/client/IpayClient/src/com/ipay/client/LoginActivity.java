@@ -109,8 +109,11 @@ public class LoginActivity extends Activity {
 		if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
 			progressText.setText(R.string.login_text_null_username_or_password);
 		} else {
-			loginTask = new LoginTask();
-			loginTask.execute(username, password);
+			//loginTask = new LoginTask();
+			//loginTask.execute(username, password);
+			Intent intent = new Intent(LoginActivity.this, MainTabsActivity.class);
+			startActivity(intent);
+			finish();
 		}
 	}
 
