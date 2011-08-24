@@ -6,8 +6,14 @@ public class Configure {
 	
 	public static final String DOMAIN = "localhost";
 	
-	public static String getBasicwebsite(){
+	public static final String GETENCRYPTKE = "/bank/getEncryptPrivateKey";
+	
+	public static String BasicWebsite(){
 		return DOMAIN+":"+PORT;
+	}
+	
+	public static String GetPrivateKey(){
+		return "http://"+BasicWebsite()+GETENCRYPTKE;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.ipay.server.entity;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -37,6 +38,9 @@ public class Market extends User {
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn
 	private MarketInfo marketInfo;
+	
+	@Column(length=700)
+	private byte[] encryptPrivateKey;
 	
 	/**
 	 * 商场的商品
@@ -74,6 +78,14 @@ public class Market extends User {
 
 	public void setProducts(Set<Product> products) {
 		this.products = products;
+	}
+
+	public byte[] getEncryptPrivateKey() {
+		return encryptPrivateKey;
+	}
+
+	public void setEncryptPrivateKey(byte[] encryptPrivateKey) {
+		this.encryptPrivateKey = encryptPrivateKey;
 	}
 
 }
