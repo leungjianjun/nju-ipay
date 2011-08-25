@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.ipay.client.ui.component;
 
 import java.util.ArrayList;
@@ -5,29 +8,24 @@ import java.util.ArrayList;
 import com.ipay.client.HotGoodsActivity;
 import com.ipay.client.R;
 import com.ipay.client.model.Product;
-
-import android.app.Activity;
+import com.ipay.client.model.SpecialProduct;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * 
- * 
- * 
  * @author tangym
- * 
+ *
  */
-public class GoodsArrayAdapter extends ArrayAdapter<Product> {
-
+public class SpecialGoodsArrayAdapter extends ArrayAdapter<SpecialProduct> {
 	protected LayoutInflater inflater;
 
-	public GoodsArrayAdapter(Context context, ArrayList<Product> items) {
+	public SpecialGoodsArrayAdapter(Context context, ArrayList<SpecialProduct> items) {
 		super(context, 0, items);
 		inflater = LayoutInflater.from(context);
 		setNotifyOnChange(true);
@@ -53,11 +51,11 @@ public class GoodsArrayAdapter extends ArrayAdapter<Product> {
 			view.setTag(holder);
 		}
 
-		Product product = getItem(position);
+		SpecialProduct product = getItem(position);
 
 		holder.goodsImage.setImageResource(R.drawable.goods_image_example);
 		holder.goodsName.setText(product.getName());
-		holder.goodsMeta.setText(product.getDescription());
+		holder.goodsMeta.setText(product.getAdWords());
 		holder.delButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -75,5 +73,4 @@ public class GoodsArrayAdapter extends ArrayAdapter<Product> {
 		TextView goodsMeta;
 		TextView delButton;
 	}
-
 }

@@ -35,6 +35,7 @@ public class ProgressBarFeedback extends Feedback{
 	@Override
 	public void succeed(String msg) {
 		progressBar.setProgress(100);
+		reset();
 	}
 
 	@Override

@@ -89,9 +89,9 @@ public class CommunicationManager {
 	
 	//进入商店
 	public static final String SEARCH_MARKET_URL = "http://xxx.xxx.xxx.xxx:8080/client/searchMarket?";	
-	public static final String MARKET_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/findMarketId";
+	public static final String MARKET_ID_URL = "http://192.168.1.106:8080/client/findMarketId";
 	public static final String MARKET_INFO_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketInfo?";
-	public static final String SPECIAL_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketSpecialProducs?";
+	public static final String SPECIAL_PRODUCT_URL = "http://192.168.1.106:8080/client/MarketSpecialProducts?";
 	public static final String HOT_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketHotProducts?";
 	
 	//扫描商品
@@ -438,12 +438,15 @@ public class CommunicationManager {
 	 */
 	public ArrayList<SpecialProduct> getSpecialProducts(int pageNum) throws ClientProtocolException, IOException{
 		ArrayList<SpecialProduct> specialProducts = new ArrayList<SpecialProduct>();
-		HttpGet get = new HttpGet(SPECIAL_PRODUCT_URL+"mid="+marketId+"&page="+pageNum);
+		//id 要改回 marketId
+		HttpGet get = new HttpGet(SPECIAL_PRODUCT_URL+"mid="+101+"&page="+pageNum);
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 	
 		HttpResponse response = httpClient.execute(get);
 		if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 			JSONObject result = getJsonResult(response);
+			
+			Log.d(TAG,"特殊商品:"+result.toString());
 			try {
 				JSONArray jProducts = result.getJSONArray("specialProducts");
 				

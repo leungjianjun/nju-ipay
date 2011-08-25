@@ -34,11 +34,6 @@ public abstract class BaseActivity extends Activity {
 
 	protected SharedPreferences preferences;
 
-	protected GenericTask task;
-
-	protected TaskListener taskListener;
-
-	protected Feedback feedback;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
