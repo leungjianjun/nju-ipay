@@ -11,6 +11,7 @@ public class Product {
 	public static final String PRICE="price";
 	public static final String QUANTITY="quantity";
 	public static final String ATTRIBUTES="attributes";
+	public static final String BARCADE = "barcode";
 	private double price;
 	private String description;
 	private String barcode;
