@@ -79,6 +79,8 @@ public class CommunicationManager {
 
 	public static final String TAG = "CommunicationManager";
 	
+	public static final String BASE_URL="http://192.168.1.106:8080";
+	public static final String BASE_IMAGE_URL="http://192.168.1.106:8080/images";
 
 	//用户相关
 	public static final String LOGIN_URL ="https://192.168.1.103:8443/j_spring_security_check";

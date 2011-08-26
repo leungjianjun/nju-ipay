@@ -4,6 +4,7 @@
 	<uses-sdk android:minSdkVersion="4" />
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:name=".app.IpayApplication"
 		android:theme="@android:style/Theme.NoTitleBar">
 
 		<uses-library android:name="android.test.runner" />
