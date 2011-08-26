@@ -190,20 +190,7 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 				e.printStackTrace();
 				return TaskResult.FAILED;
 			}
-//			list = new ArrayList<Product>();
-//			for (int i = (page-1)*10; i < page*10; i++) {
-//				list.add(new Product(111, "介绍: " + i, "1111", "名称: " + i,
-//						"111111"));
-//				try {
-//					Thread.sleep(500);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				
-//				publishProgress(process);
-//				process+=10;
-//			}
+
 			publishProgress(80);
 			
 			for (SpecialProduct product : list) {
