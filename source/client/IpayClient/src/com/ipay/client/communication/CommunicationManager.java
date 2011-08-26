@@ -97,8 +97,9 @@ public class CommunicationManager {
 	public static final String HOT_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketHotProducts?";
 	
 	//扫描商品
-	public static final String PRODUCT_INFO_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductInfoByCode?";
-	
+	public static final String PRODUCT_INFO_BY_BARCODE_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductInfoByCode?";
+	public static final String PRODUCT_INFO_BY_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductInfoById?";
+	public static final String PRODUCT_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductIdByCode?";
 	//搜索商品
 	public static final String SEARCH_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/SearchProduct?";
 	
@@ -508,11 +509,12 @@ public class CommunicationManager {
 		
 	}
 	/**
+	 * 通过条形码获得商品信息
 	 * @param barcode
 	 * @return 查找失败返回null
 	 */
 	public Product getProductInfo(String barcode) {
-		HttpGet get = new HttpGet(PRODUCT_INFO_URL+"mid="+marketId+"&code="+barcode);
+		HttpGet get = new HttpGet(PRODUCT_INFO_BY_BARCODE_URL+"mid="+marketId+"&code="+barcode);
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
@@ -547,6 +549,48 @@ public class CommunicationManager {
 		}
 		return null;
 	}
+	/**
+	 * 通过id获得商品信息
+	 * @param id
+	 * @return
+	 */
+	public Product getProductInfo(int id){
+		HttpGet get = new HttpGet(PRODUCT_INFO_BY_ID_URL+"pid="+id);
+		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
+		try {
+			HttpResponse response = httpClient.execute(get);
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+				String retSrc = EntityUtils.toString(response.getEntity());
+				JSONObject result = new JSONObject(retSrc);
+				Product product = new Product();
+				product.setId(result.getInt(Product.ID));
+				product.setName(result.getString(Product.NAME));
+				product.setBanner(result.getString(Product.BANNER));
+				product.setBarcode(result.getString(Product.BARCADE));
+				product.setMidImgUrl(result.getString(Product.MID_IMG_URL));
+				product.setMinImgUrl(result.getString(Product.MIN_IMG_URL));
+				product.setPrice(result.getDouble(Product.PRICE));
+				product.setQuantity(result.getInt(Product.QUANTITY));
+				JSONArray attrs = result.getJSONArray(Product.ATTRIBUTES);
+				for(int i = 0; i < attrs.length(); i++){
+					JSONObject attr = attrs.getJSONObject(i);
+					product.putAttr(attr.getString("key"), attr.getString("value"));
+				}
+				return product;
+			}
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	private HttpResponse doPost(String url, JSONObject jsonObject) throws ClientProtocolException, IOException{
 	    HttpPost request = new HttpPost(url);
 	    StringEntity s = new StringEntity(jsonObject.toString());
