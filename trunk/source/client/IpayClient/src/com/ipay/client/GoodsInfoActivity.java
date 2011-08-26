@@ -160,14 +160,12 @@ public class GoodsInfoActivity extends BaseActivity {
 
 		productImageView.setImageBitmap(IpayApplication.imageLoader.get(
 				product.getMidImgUrl(), imageCallback));
-		
+
 		productTitleTxt.setText(product.getName());
-		productNameTxt.setText("品名："+product.getName());
-		productPriceTxt.setText("价格："+product.getPrice());
-		productBrandTxt.setText("厂商："+product.getBanner());
-		productAttrsTxt.setText("简介："+product.getAttributes().toString());
-		
-		
+		productNameTxt.setText("品名：" + product.getName());
+		productPriceTxt.setText("价格：" + product.getPrice());
+		productBrandTxt.setText("厂商：" + product.getBanner());
+		productAttrsTxt.setText("简介：" + product.getAttributes().toString());
 
 	}
 
@@ -203,26 +201,33 @@ public class GoodsInfoActivity extends BaseActivity {
 
 	/**
 	 * TODO：通过Id获取
+	 * 
 	 * @author tangym
-	 *
+	 * 
 	 */
 	private class GetProductByIdTask extends GenericTask {
 
 		@Override
 		protected TaskResult doInBackground(TaskParams... params) {
-			int pid;
+			int pid = 0;
 
 			// 获取pid
 			try {
 				pid = params[0].getInt(PRODUCT_ID);
+				publishProgress(40);
 			} catch (ParamsNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				Log.d(TAG, "pid not found");
+				return TaskResult.FAILED;
 			}
-
-			// IpayApplication.communicationManager.
-
+			if (pid > 0) {
+				product = IpayApplication.communicationManager
+						.getProductInfo(pid);
+				publishProgress(80);
+			} else {
+				return TaskResult.FAILED;
+			}
 			return TaskResult.OK;
 		}
 
