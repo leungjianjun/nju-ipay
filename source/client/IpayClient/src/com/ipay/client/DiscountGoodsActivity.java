@@ -5,9 +5,7 @@ package com.ipay.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.apache.http.client.ClientProtocolException;
-
 import com.ipay.client.communication.CommunicationManager;
 import com.ipay.client.model.Product;
 import com.ipay.client.model.SpecialProduct;
@@ -23,6 +21,7 @@ import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import com.ipay.client.ui.component.SpecialGoodsArrayAdapter;
 
 import android.content.Intent;
+import android.graphics.Picture;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -91,13 +90,19 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 					Log.d("HotgoodsActivity", "已选择更多");
 					nextPage();
 				} else {
-					Intent i = new Intent(DiscountGoodsActivity.this,
+					Intent intent= new Intent(DiscountGoodsActivity.this,
 							GoodsInfoActivity.class);
-					startActivity(i);
+					Log.d(TAG,"position: "+ position);
+					intent.putExtra("pid",getItem(position).getId() );
+					startActivity(intent);
 				}
 			}
 		});
 
+	}
+	
+	private Product getItem(int position){
+		return listItemAdapter.getItem(position-1);
 	}
 
 	public void show() {
