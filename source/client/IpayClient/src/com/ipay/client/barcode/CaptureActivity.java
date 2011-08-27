@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.ipay.client.GoodsInfoActivity;
 import com.ipay.client.R;
 import com.ipay.client.barcode.camera.CameraManager;
 
@@ -129,11 +130,12 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 		ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this,rawResult);
 		String resultContent = resultHandler.getDisplayContents();
 		//返回结果
-		Intent intent = getIntent();
+		Intent intent = new Intent();
+		intent.setClass(CaptureActivity.this, GoodsInfoActivity.class);
 		Bundle bundle = new Bundle();
-		bundle.putString("BARCODE_RESULT", resultContent);
+		bundle.putString("barcode", resultContent);
 		intent.putExtras(bundle);
-		setResult(RESULT_OK,intent);
+		startActivity(intent);
 		finish();
 	}
 	
