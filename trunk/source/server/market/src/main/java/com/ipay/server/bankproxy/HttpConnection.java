@@ -1,11 +1,19 @@
 package com.ipay.server.bankproxy;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Map;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.google.common.collect.Maps;
+import com.ipay.server.security.ExceptionMessage;
 
 public class HttpConnection {
 	
@@ -13,6 +21,8 @@ public class HttpConnection {
      private static final String SERVLET_GET = "GET" ;
      private static final String SERVLET_DELETE = "DELETE" ;
      private static final String SERVLET_PUT = "PUT" ;
+     
+     private static ObjectMapper mapper = new ObjectMapper();
      
      private static String prepareParam(Map<String,Object> paramMap){
          StringBuffer sb = new StringBuffer();
@@ -30,11 +40,37 @@ public class HttpConnection {
              return sb.toString();
          }
      }
+     
 	
-	public void doPost(String urlStr,Map<String,Object> paramMap) throws IOException{
-		URL url = new URL(urlStr);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		
+	public static PayResponse doJsonPost(String urlStr,PayRequest payRequest) throws BankProxyServerException{
+		HttpURLConnection conn = null;
+		try {
+			URL url = new URL(urlStr);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod(SERVLET_POST);
+			conn.setDoInput(true);
+	        conn.setDoOutput(true);
+	        conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+			OutputStream os = conn.getOutputStream();
+			mapper.writeValue(os, payRequest);
+			os.close();
+			
+			InputStream is = conn.getInputStream();
+			PayResponse payResponse = new PayResponse();
+			return mapper.readValue(is, payResponse.getClass());
+		} catch (MalformedURLException e) {
+			throw new BankProxyServerException(ExceptionMessage.BANK_SERVER_NETWORK_ERROR);
+		} catch (IOException e) {
+			throw new BankProxyServerException("发送数据错误");
+			
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		/*Map<String,Map<String,byte[]>> contents = Maps.newHashMap();
+		contents.put("encryptData", "qwew");
+		contents.put("signData", "dfdsa");
+		HttpConnection.doJsonPost(Configure.PayRequest(), contents);*/
 	}
 	
 	public static byte[] doGet(String urlStr,Map<String,Object> paramMap) throws IOException{

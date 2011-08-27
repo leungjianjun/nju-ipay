@@ -30,7 +30,7 @@ public abstract class ControllerTest<T> extends TestCase{
     protected T controller;
     
     protected void setUp() throws Exception {  
-        String[] contexts = new String[] {"classpath:spring/root-context.xml","classpath:spring/appServlet/servlet-context.xml"};  
+        String[] contexts = new String[] {"classpath:spring/root-context.xml","classpath:spring/appServlet/servlet-context.xml","classpath:spring/spring-security.xml"};  
         context = new XmlWebApplicationContext();  
         context.setConfigLocations(contexts);  
         msc = new MockServletContext();  

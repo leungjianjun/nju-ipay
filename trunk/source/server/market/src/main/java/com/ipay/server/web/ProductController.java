@@ -98,6 +98,7 @@ public class ProductController {
 	public @ResponseBody Object getProductInfoById(@RequestParam int pid){
 		Product product = productService.find(Product.class, pid);
 		Map<String,Object> result = Maps.newHashMap();
+		result.put("id", product.getId());
 		result.put("price", product.getPrice());
 		result.put("quantity", product.getQuantity());
 		

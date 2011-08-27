@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ipay.server.bankproxy.BankServerProxy;
 import com.ipay.server.dao.IDao;
 import com.ipay.server.entity.Market;
 import com.ipay.server.entity.SpecialProduct;
 import com.ipay.server.security.ExceptionMessage;
+import com.ipay.server.security.KeyManager;
+import com.ipay.server.security.PrivateKeyEncryptor;
 import com.ipay.server.service.IMarketService;
 import com.ipay.server.service.ServiceException;
 
@@ -66,7 +69,13 @@ public class MarketServiceImpl<T extends Market> extends ServiceImpl<T> implemen
 
 	public List<SpecialProduct> getSpecialProduct(int mid, int page) {
 		int firstResult = (page-1)*QUANTITY_PER_PAGE;
-		return specialProductDao.list("from SpecialProduct sp where sp.marketInfo.market.id =? ",firstResult,firstResult+QUANTITY_PER_PAGE, mid);
+		return specialProductDao.list("from SpecialProduct as sp where sp.product.market.id =? ",firstResult,firstResult+QUANTITY_PER_PAGE, mid);
+	}
+
+	public byte[] prepareEncryptPrivatekey(String cardnum, String paypass) {
+		byte[] encryptPrivatekey = BankServerProxy.getEncryptPrivakeKey(cardnum);
+		byte[] privatekey = KeyManager.decryptPrivatekey(encryptPrivatekey, paypass, cardnum);
+		return PrivateKeyEncryptor.encrypt(privatekey);
 	}
 
 }

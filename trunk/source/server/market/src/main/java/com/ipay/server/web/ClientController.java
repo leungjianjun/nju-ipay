@@ -90,7 +90,7 @@ public class ClientController {
 	public ResponseEntity<byte[]> getEncryptPrivateKey(Principal principal){
 		String cardnum = clientService.getClientByAccount(principal.getName()).getCardnum();
 		byte[] encryptPrivateKey = BankServerProxy.getEncryptPrivakeKey(cardnum);
-		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",656);
+		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",encryptPrivateKey.length);
 		return new ResponseEntity<byte[]>(encryptPrivateKey,httpHeaders,HttpStatus.OK);
 	}
 	

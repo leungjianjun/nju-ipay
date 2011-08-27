@@ -66,6 +66,7 @@ public class MarketController {
 	
 	@RequestMapping(value="/client/findMarketId",method=RequestMethod.GET)
 	public @ResponseBody Object findMarketByIp(HttpServletRequest request){
+		logger.info("find market by ip");
 		Market market = marketService.finMarketByIp(request.getRemoteAddr());
 		Map<String,Object> result = Maps.newHashMap();
 		result.put("ip", market.getIp());
@@ -81,6 +82,7 @@ public class MarketController {
 	 */
 	@RequestMapping(value="/client/MarketInfo",method=RequestMethod.GET)
 	public @ResponseBody Object getMarketInfo(@RequestParam int mid){
+		logger.info("market info");
 		Market market = marketService.find(Market.class, mid);
 		Map<String,Object> result = Maps.newHashMap();
 		result.put("name", market.getMarketInfo().getName());

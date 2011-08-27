@@ -13,14 +13,27 @@
 	<s:http auto-config="false" use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
 		<s:custom-filter position="FORM_LOGIN_FILTER" ref="authenticationFilter" />
 		
+		<!-- 要求https才能链接 -->
 		<s:intercept-url pattern="/login" requires-channel="https"/>
 		<s:intercept-url pattern="/j_spring_security_check" requires-channel="https"/>
 		
+		<!-- 统一拦截方案 -->
 		<s:intercept-url pattern="/client/**" access="hasAnyRole('ROLE_client')"/>
 		<s:intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_admin')"/>
 		<s:intercept-url pattern="/market/**" access="hasAnyRole('ROLE_market')"/>
 		
+		<!-- 添加例外 -->
+		<s:intercept-url pattern="client/searchMarket" filters="none" />
+		<s:intercept-url pattern="client/findMarketId" filters="none" />
+		<s:intercept-url pattern="/client/MarketSpecialProducts" filters="none" />
+		<s:intercept-url pattern="/client/ProductInfoByCode" filters="none" />
+		<s:intercept-url pattern="/client/MarketHotProducts" filters="none" />
+		<s:intercept-url pattern="/client/ProductInfoById" filters="none" />
+		<s:intercept-url pattern="/client/SearchProduct" filters="none" />
+		<s:intercept-url pattern="/client/MarketInfo" filters="none" />
+		
 		<s:intercept-url pattern="/resources/**" filters="none" />
+		<s:intercept-url pattern="/images/**" filters="none" />
 		<s:logout logout-success-url="/login" />
 		
    <!-- <s:session-management>

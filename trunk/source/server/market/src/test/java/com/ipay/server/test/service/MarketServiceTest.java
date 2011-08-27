@@ -50,6 +50,7 @@ public class MarketServiceTest {
 		market.setCardnum("7387748847372");
 		market.setIp("202.119.48.38");
 		market.setPassword(PasswordEncoder.encode("market", market.getAccount()));
+		market.setEncryptPrivateKey(marketService.prepareEncryptPrivatekey("837941h43bh32i", "paypass2"));
 		MarketInfo marketInfo = new MarketInfo();
 		marketInfo.setComplainPhone("85409161");
 		marketInfo.setIntroduction("欢迎来到教育超市，教育超市是高校中最大的连锁超市");//这里写多一点，真是一点，找网上的
@@ -66,6 +67,7 @@ public class MarketServiceTest {
 		market2.setCardnum("7387748847372");
 		market2.setIp("202.119.48.38");
 		market2.setPassword(PasswordEncoder.encode("market", market.getAccount()));
+		market.setEncryptPrivateKey(marketService.prepareEncryptPrivatekey("837941h43bh32i", "paypass2"));
 		MarketInfo marketInfo2 = new MarketInfo();
 		marketInfo2.setComplainPhone("85409161");
 		marketInfo2.setIntroduction("欢迎来到教育超市，教育超市是高校中最大的连锁超市");//这里写多一点，真是一点，找网上的
@@ -82,6 +84,7 @@ public class MarketServiceTest {
 		market3.setCardnum("7387748847372");
 		market3.setIp("202.119.48.38");
 		market3.setPassword(PasswordEncoder.encode("market", market.getAccount()));
+		market.setEncryptPrivateKey(marketService.prepareEncryptPrivatekey("837941h43bh32i", "paypass2"));
 		MarketInfo marketInfo3 = new MarketInfo();
 		marketInfo3.setComplainPhone("85409161");
 		marketInfo3.setIntroduction("欢迎来到教育超市，教育超市是高校中最大的连锁超市");//这里写多一点，真是一点，找网上的
