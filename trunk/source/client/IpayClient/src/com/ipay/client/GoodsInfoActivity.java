@@ -14,7 +14,19 @@
  */
 package com.ipay.client;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Set;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import com.ipay.client.app.IpayApplication;
+import com.ipay.client.communication.CommunicationManager;
 import com.ipay.client.model.Product;
 import com.ipay.client.task.GenericTask;
 import com.ipay.client.task.ParamsNotFoundException;
@@ -24,10 +36,13 @@ import com.ipay.client.task.TaskResult;
 import com.ipay.client.ui.base.BaseActivity;
 import com.ipay.client.ui.component.Feedback;
 import com.ipay.client.ui.component.FeedbackFactory;
+import com.ipay.client.ui.component.ImageCache;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import com.ipay.client.ui.component.LazyImageLoader.ImageLoaderCallback;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -59,7 +74,7 @@ public class GoodsInfoActivity extends BaseActivity {
 	private TaskListener taskListener;
 	private Feedback feedback;
 	private Product product;
-	private ImageLoaderCallback imageCallback;
+	private Bitmap imageBitmap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,21 +82,17 @@ public class GoodsInfoActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.goods_info);
 		initViews();
-		// 图片回调
-		imageCallback = new ImageLoaderCallback() {
-
-			@Override
-			public void refresh(String url, Bitmap bitmap) {
-				productImageView.setImageBitmap(bitmap);
-			}
-		};
-
+		imageBitmap = ImageCache.defaultBitmap;
 		feedback = new FeedbackFactory().create(FeedbackType.PROGRESSBAR, this);
 		taskListener = new GetProductTaskListener();
 
 		getProduct();
+		
 	}
 
+	/**
+	 * 初始化
+	 */
 	private void initViews() {
 
 		productTitleTxt = (TextView) findViewById(R.id.goods_info_title);
@@ -101,17 +112,20 @@ public class GoodsInfoActivity extends BaseActivity {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		int pid = bundle.getInt(PRODUCT_ID, -1);
+		Log.d(TAG, "get *****pid*****: " + pid);
 		String barcode = null;
 		if (pid == -1) {
 			barcode = bundle.getString(PRODUCT_BARCODE);
+			Log.d(TAG, "get *****barcode*****: " + pid);
 			if (barcode != null) {
 				addToCartBtn.setVisibility(View.VISIBLE);
 				getProductByBarcode(barcode);
 			}
 
 		} else {
-
-			getProductById(pid);
+			
+			getProductByBarcode("838374833");
+//			getProductById(pid);
 		}
 
 	}
@@ -158,14 +172,17 @@ public class GoodsInfoActivity extends BaseActivity {
 	 */
 	private void update() {
 
-		productImageView.setImageBitmap(IpayApplication.imageLoader.get(
-				product.getMidImgUrl(), imageCallback));
-
+		productImageView.setImageBitmap(imageBitmap);
 		productTitleTxt.setText(product.getName());
 		productNameTxt.setText("品名：" + product.getName());
 		productPriceTxt.setText("价格：" + product.getPrice());
 		productBrandTxt.setText("厂商：" + product.getBanner());
-		productAttrsTxt.setText("简介：" + product.getAttributes().toString());
+		productAttrsTxt.setText("简介：" + '\n');
+		HashMap<String, String> attrs=product.getAttributes();
+		Set<String> keySet=attrs.keySet();
+		for(String key:keySet){
+			productAttrsTxt.append(key+": "+attrs.get(key));
+		}
 
 	}
 
@@ -224,6 +241,25 @@ public class GoodsInfoActivity extends BaseActivity {
 			if (pid > 0) {
 				product = IpayApplication.communicationManager
 						.getProductInfo(pid);
+
+				if (product != null) {
+					String imageURL = CommunicationManager.BASE_URL
+							+ product.getMidImgUrl();
+					Log.d(TAG, "mid image url: " + imageURL);
+					try {
+						URL url = new URL(imageURL);
+						url.getContent();
+						InputStream is = (InputStream) url.getContent();
+						imageBitmap = BitmapFactory
+								.decodeStream(new BufferedInputStream(is));
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+						Log.d(TAG,"获取图片失败");
+					}
+
+				}
+
 				publishProgress(80);
 			} else {
 				return TaskResult.FAILED;
@@ -242,6 +278,7 @@ public class GoodsInfoActivity extends BaseActivity {
 			// 获取pid
 			try {
 				barcode = params[0].getString(PRODUCT_BARCODE);
+				Log.d(TAG,"条形码为: " +barcode);
 				publishProgress(40);
 			} catch (ParamsNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -252,8 +289,28 @@ public class GoodsInfoActivity extends BaseActivity {
 			if (barcode != null) {
 				product = IpayApplication.communicationManager
 						.getProductInfo(barcode);
+				Log.d(TAG,"商品名称: "+product.getName());
+				publishProgress(80);
 			}
-			publishProgress(80);
+			
+			if (product != null) {
+				String imageURL = CommunicationManager.BASE_URL
+						+ product.getMidImgUrl();
+				Log.d(TAG, "mid image url: " + imageURL);
+				try {
+					URL url = new URL(imageURL);
+					url.getContent();
+					InputStream is = (InputStream) url.getContent();
+					imageBitmap = BitmapFactory
+							.decodeStream(new BufferedInputStream(is));
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+					Log.d(TAG,"获取图片失败");
+				}
+
+			}
+			
 			if (product != null)
 				return TaskResult.OK;
 			else

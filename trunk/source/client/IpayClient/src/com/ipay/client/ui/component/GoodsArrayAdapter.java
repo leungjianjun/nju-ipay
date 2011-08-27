@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.ipay.client.HotGoodsActivity;
 import com.ipay.client.R;
 import com.ipay.client.model.Product;
-
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

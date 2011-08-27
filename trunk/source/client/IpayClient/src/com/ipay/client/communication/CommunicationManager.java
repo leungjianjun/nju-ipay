@@ -56,7 +56,7 @@ import com.ipay.client.model.UserInfo;
  */
 
 public class CommunicationManager {
-	private int marketId;
+	private int marketId=2;
 	private DefaultHttpClient httpClient;
 	private Session session;
 	private CommunicationManager() {
@@ -80,7 +80,7 @@ public class CommunicationManager {
 	public static final String TAG = "CommunicationManager";
 	
 	public static final String BASE_URL="http://192.168.1.106:8080";
-	public static final String BASE_IMAGE_URL="http://192.168.1.106:8080/images";
+//	public static final String BASE_IMAGE_URL="http://192.168.1.105:8080/images";
 
 	//用户相关
 	public static final String LOGIN_URL ="https://192.168.1.103:8443/j_spring_security_check";
@@ -97,8 +97,8 @@ public class CommunicationManager {
 	public static final String HOT_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketHotProducts?";
 	
 	//扫描商品
-	public static final String PRODUCT_INFO_BY_BARCODE_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductInfoByCode?";
-	public static final String PRODUCT_INFO_BY_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductInfoById?";
+	public static final String PRODUCT_INFO_BY_BARCODE_URL = "http://192.168.1.106:8080/client/ProductInfoByCode?";
+	public static final String PRODUCT_INFO_BY_ID_URL = "http://192.168.1.106:8080/client/ProductInfoById?";
 	public static final String PRODUCT_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductIdByCode?";
 	//搜索商品
 	public static final String SEARCH_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/SearchProduct?";
@@ -442,7 +442,7 @@ public class CommunicationManager {
 	public ArrayList<SpecialProduct> getSpecialProducts(int pageNum) throws ClientProtocolException, IOException{
 		ArrayList<SpecialProduct> specialProducts = new ArrayList<SpecialProduct>();
 		//id 要改回 marketId
-		HttpGet get = new HttpGet(SPECIAL_PRODUCT_URL+"mid="+101+"&page="+pageNum);
+		HttpGet get = new HttpGet(SPECIAL_PRODUCT_URL+"mid="+marketId+"&page="+pageNum);
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 	
 		HttpResponse response = httpClient.execute(get);
