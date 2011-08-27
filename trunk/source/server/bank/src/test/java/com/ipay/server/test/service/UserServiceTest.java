@@ -58,6 +58,32 @@ public class UserServiceTest {
 		user.setCreditCard(creditCard);
 		
 		userService.create(user);
+		
+		User user1 = new User();
+		user1.setAccount("ljjmarket");//
+		user1.setAddress("南京大学鼓楼校区");
+		user1.setBirthday(new Date());
+		user1.setCreateDate(new Date());
+		user1.setEnbale(true);
+		user1.setIdnumber("23423748327948238u45");
+		user1.setPassword(PasswordEncoder.encode("123456", user1.getAccount()));
+		user1.setPhonenum("15996294422");
+		user1.setRealname("杨建军");
+		user1.setRemark("没有备注");
+		user1.setSex(true);
+
+		CreditCard creditCard1 = new CreditCard();
+		creditCard1.setBalance(10570.5);
+		creditCard1.setCardnum("837941h43bh32i");
+		creditCard1.setEnable(true);
+		creditCard1.setPaypass(PasswordEncoder.encode("paypass2", user1.getAccount()));
+		KeyPair keyPair1 = KeyManager.generatorKeypair();
+		creditCard1.setPrivateKey(KeyManager.encryptPrivateKey(keyPair1.getPrivate(), "paypass2", creditCard1.getCardnum()));
+		creditCard1.setPublicKey(keyPair1.getPublic().getEncoded());
+		creditCard1.setUser(user1);
+		user1.setCreditCard(creditCard1);
+		
+		userService.create(user1);
 	}
 
 }
