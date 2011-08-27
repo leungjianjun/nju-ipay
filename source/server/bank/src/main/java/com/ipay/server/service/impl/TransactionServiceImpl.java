@@ -12,7 +12,7 @@ public class TransactionServiceImpl<T extends Transaction> extends ServiceImpl<T
 
 	@Override
 	public void create(T baseBean) {
-		// TODO Auto-generated method stub
+		dao.persist(baseBean);
 
 	}
 

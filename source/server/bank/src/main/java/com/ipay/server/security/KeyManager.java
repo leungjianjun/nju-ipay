@@ -1,5 +1,9 @@
 package com.ipay.server.security;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -19,6 +23,44 @@ import com.ipay.server.security.util.Digest;
 
 public class KeyManager {
 	
+	private final static String BANK_PUBLIC_KEY_LOCATION = Thread.currentThread().getContextClassLoader().getResource("bank_public.key").getPath();
+	
+	private final static String BANK_PRIVATE_KEY_LOCATION = Thread.currentThread().getContextClassLoader().getResource("bank_private.key").getPath();
+	
+	public static byte[] getBankPublickey(){
+		File file = new File(BANK_PUBLIC_KEY_LOCATION);
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(file);
+			byte[] publickey = new byte[162];
+			fis.read(publickey);
+			return publickey;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static byte[] getBankPrivatekey(){
+		File file = new File(BANK_PRIVATE_KEY_LOCATION);
+
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(file);
+			byte[] publickey = new byte[635];
+			fis.read(publickey);
+			return publickey;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/**
 	 * 生成RSA密码对,也就是公钥和私钥
 	 * 

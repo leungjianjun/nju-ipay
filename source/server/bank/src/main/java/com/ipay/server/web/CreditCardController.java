@@ -37,6 +37,13 @@ public class CreditCardController {
 		return new ResponseEntity<byte[]>(creditCard.getPrivateKey(),httpHeaders,HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/bank/getPublicKey", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getPublicKey(@RequestParam String cardnum){
+		CreditCard creditCard = creditCardService.getCreditCardByNum(cardnum);
+		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",656);
+		return new ResponseEntity<byte[]>(creditCard.getPublicKey(),httpHeaders,HttpStatus.OK);
+	}
+	
 	public static HttpHeaders httpHeaderPrivateKeyAttachment(final String fileName,final int fileSize) {
 	    String encodedFileName = fileName.replace('"', ' ').replace(' ', '_');
 	    HttpHeaders responseHeaders = new HttpHeaders();
