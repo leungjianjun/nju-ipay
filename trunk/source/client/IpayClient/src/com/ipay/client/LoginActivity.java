@@ -196,7 +196,7 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
-			if (result.equals("ok"))
+			if (result==TaskResult.OK)
 				onLoginSucceeded();
 			else
 				onLoginFailed();
