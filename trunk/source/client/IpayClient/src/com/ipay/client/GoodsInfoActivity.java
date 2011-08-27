@@ -124,8 +124,8 @@ public class GoodsInfoActivity extends BaseActivity {
 
 		} else {
 			
-			getProductByBarcode("838374833");
-//			getProductById(pid);
+//			getProductByBarcode("838374833");
+			getProductById(pid);
 		}
 
 	}
