@@ -14,6 +14,7 @@ import com.ipay.client.barcode.camera.CameraManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -57,7 +58,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 		//设为全屏
 		Window window = getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.capture);
 		
 		//初始化相机
