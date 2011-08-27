@@ -82,7 +82,7 @@ public class SpecialGoodsArrayAdapter extends ArrayAdapter<SpecialProduct> {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				((HotGoodsActivity) getContext()).show();
+				//((HotGoodsActivity) getContext()).show();
 			}
 		});
 		return view;
