@@ -5,6 +5,7 @@ package com.ipay.client.ui.base;
 
 import com.ipay.client.LoginActivity;
 import com.ipay.client.R;
+import com.ipay.client.barcode.CaptureActivity;
 import com.ipay.client.task.GenericTask;
 import com.ipay.client.task.TaskListener;
 import com.ipay.client.ui.component.Feedback;
@@ -82,6 +83,8 @@ public abstract class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.omenu_about:
+			Intent intent=new Intent(this,CaptureActivity.class);
+			startActivity(intent);
 			return true;
 		case R.id.omenu_logout:
 			logout();
