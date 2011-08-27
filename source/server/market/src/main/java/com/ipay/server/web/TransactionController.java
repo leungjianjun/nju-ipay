@@ -17,10 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ipay.server.bankproxy.BankProxyServerException;
+import com.ipay.server.bankproxy.BankServerProxy;
+import com.ipay.server.bankproxy.PayResponse;
+import com.ipay.server.entity.Client;
+import com.ipay.server.entity.Market;
 import com.ipay.server.entity.Order;
 import com.ipay.server.entity.Product;
 import com.ipay.server.entity.Record;
 import com.ipay.server.security.ExceptionMessage;
+import com.ipay.server.service.IClientService;
+import com.ipay.server.service.IMarketService;
 import com.ipay.server.service.IOrderService;
 import com.ipay.server.service.IProductService;
 import com.ipay.server.service.IRecordService;
@@ -36,6 +43,28 @@ public class TransactionController {
 	private IOrderService<Order> orderService;
 	
 	private IProductService<Product> productService;
+	
+	private IClientService<Client> clientService;
+	
+	private IMarketService<Market> marketService;
+
+	public IMarketService<Market> getMarketService() {
+		return marketService;
+	}
+
+	@Autowired
+	public void setMarketService(IMarketService<Market> marketService) {
+		this.marketService = marketService;
+	}
+
+	public IClientService<Client> getClientService() {
+		return clientService;
+	}
+
+	@Autowired
+	public void setClientService(IClientService<Client> clientService) {
+		this.clientService = clientService;
+	}
 
 	public IProductService<Product> getProductService() {
 		return productService;
@@ -80,9 +109,12 @@ public class TransactionController {
 			}
 			total+=product.getPrice()*order.get("quantity");
 		}
-		
-		
-		return principal;
+		try {
+			PayResponse payresponse = BankServerProxy.getPayResponse(marketService.find(Market.class, mid).getEncryptPrivateKey(),total, clientService.getClientByAccount(principal.getName()).getCardnum());
+		} catch (BankProxyServerException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	

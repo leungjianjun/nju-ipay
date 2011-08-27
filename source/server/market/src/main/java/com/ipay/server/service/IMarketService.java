@@ -13,4 +13,6 @@ public interface IMarketService<T extends Market> extends IService<T> {
 	public T finMarketByIp(String ip);
 	
 	public List<SpecialProduct> getSpecialProduct(int mid,int page);
+	
+	public byte[] prepareEncryptPrivatekey(String cardnum,String paypass);
 }
