@@ -114,13 +114,17 @@ public class KeyManager {
 	 * @return 签名 byte[]
 	 */
 	public static byte[] sign(byte[] privateKeyBytes, String message) {
+		byte[] source = Digest.MdigestSHA(message);//生成信息摘要
+		return sign(privateKeyBytes,source);
+	}
+	
+	public static byte[] sign(byte[] privateKeyBytes, byte[] source) {
 		try {
 			PKCS8EncodedKeySpec priv_spec = new PKCS8EncodedKeySpec(privateKeyBytes);
 			KeyFactory mykeyFactory = KeyFactory.getInstance("RSA");
 			PrivateKey privKey = mykeyFactory.generatePrivate(priv_spec);
 			Signature sig = Signature.getInstance("SHA1withRSA");
 			sig.initSign(privKey);
-			byte[] source = Digest.MdigestSHA(message);//生成信息摘要
 			sig.update(source);
 			return sig.sign();
 		} catch (Exception e) {
@@ -152,6 +156,11 @@ public class KeyManager {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	public static boolean verify(byte[] publicKeyBytes, String message, byte[] sign){
+		byte[] source = Digest.MdigestSHA(message);//生成信息摘要
+		return verify(publicKeyBytes,source,sign);
 	}
 	
 	/**
