@@ -6,6 +6,9 @@ package com.ipay.client;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.ipay.client.ui.base.BaseActivity;
+import com.ipay.client.ui.base.BaseListActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author tangym
  *
  */
-public class ShoppingCartActivity  extends Activity{
+public class ShoppingCartActivity  extends BaseActivity{
 	private static final String TAG = "ShoppingCartActivity";
 	
 	private ListView list;
@@ -67,6 +70,23 @@ public class ShoppingCartActivity  extends Activity{
 				startActivity(i);
 			}
 		});
+	}
+
+	
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	protected void doRetrive() {
+
+		
+	}
+
+	protected void bindItemOnClickListener() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
