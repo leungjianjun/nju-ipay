@@ -239,7 +239,7 @@ var result_get_marketInfo = {
 var get_market_specialProducts = {}
 
 var result_get_market_specialProducts = {
-		specialsProducts:[{name:"",oldPrice:12.5,newPrice:8.5,adWords:"",pid:123,minImgUrl:""},
+		specialProducts:[{name:"",oldPrice:12.5,newPrice:8.5,adWords:"",id:123,minImgUrl:""},
 		                  {},//分别是：商品名，原价，现价，广告语，商品id（不是特价商品id），图像地址
 		                  {}]
 }
@@ -383,7 +383,7 @@ var result_search_product = {
  * url https://xxx.xxx.xxx.xxx:8443/client/getEncryptPrivateKey
  * 方法 get
  * 说明：1.将获取一个即时生成的文件，然后就像下载文件一样下载，其实就是byte流 
- *       2.文件大小是656字节，使用aes 256加密的私钥。把下载的文件保存在一个地方。
+ *       2.文件大小是656字节，使用aes 256加密的私钥。把下载的文件保存在一个地方。公钥大小162
  *       3.只要下载一次就行了，不需要每次用的时候又下载。
  *       4.私钥已经加密过了，保存的时候不要再加密了，用私钥的时候要先解密
  * 
@@ -410,6 +410,36 @@ var send_order = {
 	        {},
 	        //商品id，商品的数量
 	        ]	
+}
+
+/*
+ * 返回的结果有信息和签名，签名是证明信息是从银行发出的，
+ * 你需要使用银行的公钥验证签名和信息是否符合。source是一个string化的json，sign是签名的byte数组
+ */
+var result_send_order = {
+	source:"{\"tranId\":32344,\"amount\":2343.4}",
+	sign:"VrSoodiVPiw+hkCCiT7qBTMSL77mLQh34LTJRzRBUPDAEnIVtjdiLKx1K9XvhJSXpAmEWzKQH5w4e+vCHJI2aIhgzNDOoLpv4E+C+8R+YmykieKBh8HdS+Q/NubWmk7HVwasgSs9H2mI/CxOYuOdSEh65Htt/a7jSgvrshIFBaU="
+}
+
+/**
+ * 支付
+ */
+var pay_request = {
+	encryptOI:"",
+	encryptPI:"",
+	OIMD:"",
+	PIMD:"",
+	DS:""
+}
+
+var result_pay_request = {
+	bankResult:"",
+	sign:"byte[]"
+}
+
+var error_pay_request = {
+	bankResult:"",
+	sign:"byte[]"
 }
 
 /*
