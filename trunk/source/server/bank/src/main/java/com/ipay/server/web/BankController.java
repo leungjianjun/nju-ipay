@@ -41,6 +41,8 @@ import com.ipay.server.service.ServiceException;
 @Controller
 public class BankController {
 	
+	private ObjectMapper mapper = new ObjectMapper();
+	
 	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
 	
 	private ICreditCardService<CreditCard> creditCardService;
@@ -71,7 +73,6 @@ public class BankController {
 	public @ResponseBody PayResponse getPayRequest(@RequestBody PayRequest payRequest,HttpServletResponse response) throws TransactionException{
 		byte[] data = KeyManager.decryptByRSA(KeyManager.getBankPrivatekey(), payRequest.getEncryptData());
 		try {
-			ObjectMapper mapper = new ObjectMapper();
 			Map<String,Object> contents = Maps.newHashMap(); 
 			contents = mapper.readValue(data,0,data.length, contents.getClass());
 			String cardnum = (String) contents.get("cardnum");
@@ -91,7 +92,7 @@ public class BankController {
 				String source = "{\"tranId\":"+transaction.getId()+",\"amount\":"+total+"}";
 				payResponse.setSource(source);
 				payResponse.setSign(KeyManager.sign(KeyManager.getBankPrivatekey(), source));
-				throw new TransactionException(ExceptionMessage.MESSAGE_VERIFY_ERROR,400);
+				return payResponse;
 			}
 		} catch (UnsupportedEncodingException e) {
 			throw new TransactionException(ExceptionMessage.UNSUPORT_ENCODING_TYPE,400);
