@@ -19,39 +19,30 @@
 		>
 
 
-			<RelativeLayout
+			<!-- <RelativeLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				
 			>
-				<!-- 商场图片 -->
+				商场图片
 				<ImageView 
-					android:id="@+id/market_image"
+					android:id="@+id/market_info_image"
 					android:layout_width="48dp" 
 					android:layout_height="48dp"
 					android:layout_alignParentLeft="true"
 					android:layout_marginRight="10dp"
 					android:src="@drawable/goods_image_example"
-				/>
+				/> -->
 
 				<TextView
-					android:id="@+id/market_name_text"
+					android:id="@+id/market_info_name"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@id/market_image" 
-					android:text="Market Name"
+				
 					style="@style/LinkText.Bold.Huge" 
 				/>
-				<TextView 
-					android:id="@+id/profilename"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_toRightOf="@id/market_image"
-					android:layout_below="@id/market_name_text"
-					android:layout_marginTop="5dp"
-					android:text="Description" />
-
-			</RelativeLayout>
+			<!-- 	android:layout_toRightOf="@id/market_info_image"  -->
+			<!-- </RelativeLayout> -->
 			
 			<!-- 商场信息 1 -->
 			<TextView
@@ -60,14 +51,14 @@
 				android:layout_marginTop="10dp"
 				android:layout_marginBottom="5dp"
 				android:layout_marginLeft="5dp"
-				android:text="商场信息1"
+				android:text="@string/market_info_location"
 			/>
 			<TextView 
+				android:id="@+id/market_info_location"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:padding="10dp"
-				android:background="@drawable/bg_panel"
-				android:text="示例详细描述" />
+				android:background="@drawable/bg_panel"/>
 			<!-- 商场信息 2 -->	
 			<TextView
 				android:layout_width="fill_parent"
@@ -75,15 +66,16 @@
 				android:layout_marginTop="10dp"
 				android:layout_marginBottom="5dp"
 				android:layout_marginLeft="5dp"
-				android:text="商场信息2"
+				android:text="@string/market_info_intro"
 			/>
 			
 			<TextView 
+				android:id="@+id/market_info_intro"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:padding="10dp"
 				android:background="@drawable/bg_panel"
-				android:text="示例，稍长的详细描述。这是内容内容内容内容内容内容内容内容内容内容" />
+			/>
 			<!-- 商场信息 3 -->	
 			<TextView
 				android:layout_width="fill_parent"
@@ -91,15 +83,16 @@
 				android:layout_marginTop="10dp"
 				android:layout_marginBottom="5dp"
 				android:layout_marginLeft="5dp"
-				android:text="商场信息3"
+				android:text="@string/market_info_service_phone"
 			/>
 	
 			<TextView 
+				android:id="@+id/market_info_service_phone"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:padding="10dp"
 				android:background="@drawable/bg_panel"
-				android:text="THIS IS A LONG DESCRIPTION. TO SEE WHAT WILL HAPPEN. CONTENT CONTENT CONTENT CONTENT CONTENT CONTENT" />
+			/>
 
 			<!-- 商场信息 4 -->	
 			<TextView
@@ -108,15 +101,34 @@
 				android:layout_marginTop="10dp"
 				android:layout_marginBottom="5dp"
 				android:layout_marginLeft="5dp"
-				android:text="商场信息4"
+				android:text="@string/market_info_complain_phone"
 			/>
 	
-			<TextView 
+			<TextView
+				android:id="@+id/market_info_complain_phone"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:padding="10dp"
 				android:background="@drawable/bg_panel"
-				android:text="THIS IS A LONG DESCRIPTION. TO SEE WHAT WILL HAPPEN. CONTENT CONTENT CONTENT CONTENT CONTENT CONTENT" />
+			/>
+			
+			<!-- 商场信息 4 -->	
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="5dp"
+				android:layout_marginLeft="5dp"
+				android:text="@string/market_info_create_date"
+			/>
+	
+			<TextView 
+				android:id="@+id/market_info_create_date"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:padding="10dp"
+				android:background="@drawable/bg_panel"
+			/>
 			
 		</LinearLayout>
 		

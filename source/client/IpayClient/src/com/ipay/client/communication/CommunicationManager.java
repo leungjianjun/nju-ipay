@@ -79,11 +79,11 @@ public class CommunicationManager {
 
 	public static final String TAG = "CommunicationManager";
 	
-	public static final String BASE_URL="http://192.168.1.106:8080";
+	public static final String BASE_URL="http://192.168.1.101:8080";
 //	public static final String BASE_IMAGE_URL="http://192.168.1.105:8080/images";
 
 	//用户相关
-	public static final String LOGIN_URL ="https://192.168.1.103:8443/j_spring_security_check";
+	public static final String LOGIN_URL ="https://192.168.1.101:8443/j_spring_security_check";
 	public static final String LOGOUT_URL = "http://192.168.0.1:8080/client/logout";
 	public static final String USER_INFO_URL = "https://xxx.xxx.xxx.xxx:8443/client/GetInfo";
 	public static final String SET_USER_INFO_URL = "https://xxx.xxx.xxx.xxx:8443/client/SetInfo";
@@ -91,14 +91,14 @@ public class CommunicationManager {
 	
 	//进入商店
 	public static final String SEARCH_MARKET_URL = "http://xxx.xxx.xxx.xxx:8080/client/searchMarket?";	
-	public static final String MARKET_ID_URL = "http://192.168.1.106:8080/client/findMarketId";
-	public static final String MARKET_INFO_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketInfo?";
-	public static final String SPECIAL_PRODUCT_URL = "http://192.168.1.106:8080/client/MarketSpecialProducts?";
+	public static final String MARKET_ID_URL = "http://192.168.1.101:8080/client/findMarketId";
+	public static final String MARKET_INFO_URL = "http://192.168.1.101:8080/client/MarketInfo?";
+	public static final String SPECIAL_PRODUCT_URL = "http://192.168.1.101:8080/client/MarketSpecialProducts?";
 	public static final String HOT_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/MarketHotProducts?";
 	
 	//扫描商品
-	public static final String PRODUCT_INFO_BY_BARCODE_URL = "http://192.168.1.106:8080/client/ProductInfoByCode?";
-	public static final String PRODUCT_INFO_BY_ID_URL = "http://192.168.1.106:8080/client/ProductInfoById?";
+	public static final String PRODUCT_INFO_BY_BARCODE_URL = "http://192.168.1.101:8080/client/ProductInfoByCode?";
+	public static final String PRODUCT_INFO_BY_ID_URL = "http://192.168.1.101:8080/client/ProductInfoById?";
 	public static final String PRODUCT_ID_URL = "http://xxx.xxx.xxx.xxx:8080/client/ProductIdByCode?";
 	//搜索商品
 	public static final String SEARCH_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/SearchProduct?";
@@ -397,19 +397,20 @@ public class CommunicationManager {
 	 * @return
 	 */
 	public MarketInfo getMarketInfo(int MarketId){
-		HttpGet get = new HttpGet(MARKET_INFO_URL+marketId);
+		HttpGet get = new HttpGet(MARKET_INFO_URL+"mid="+marketId);
 		get.setHeader(HTTP.CONTENT_TYPE,"application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
 			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				JSONObject result = getJsonResult(response);
+				Log.d(TAG,"获取商场信息："+result.toString());
 				MarketInfo marketInfo = new MarketInfo(marketId);
 				marketInfo.setName(result.getString(MarketInfo.NAME));
 				marketInfo.setLocation(result.getString(MarketInfo.LOCATION));
 				marketInfo.setIntroduction(result.getString(MarketInfo.INTRODUCTION));
 				marketInfo.setServicePhone(result.getString(MarketInfo.SERVICE_PHONE));
-				marketInfo.setServicePhone(result.getString(MarketInfo.COMPLAIN_PHONE));
-				marketInfo.setServicePhone(result.getString(MarketInfo.CREATE_DATE));
+				marketInfo.setComplainPhone(result.getString(MarketInfo.COMPLAIN_PHONE));
+				marketInfo.setCreateDate(result.getString(MarketInfo.CREATE_DATE));
 				return marketInfo;
 			}
 		} catch (ClientProtocolException e) {
