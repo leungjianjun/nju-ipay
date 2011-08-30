@@ -1,5 +1,6 @@
 package com.ipay.server.web;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.ipay.server.bankproxy.BankServerProxy;
 import com.ipay.server.entity.Market;
 import com.ipay.server.entity.SpecialProduct;
 import com.ipay.server.service.IMarketService;
@@ -117,6 +123,24 @@ public class MarketController {
 			contents.add(temp);
 		}
 		return Collections.singletonMap("specialProducts", contents);
+	}
+	
+	@RequestMapping(value = "/client/getMarketPublickey", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getEncryptPrivateKey(@RequestParam int mid){
+		String cardnum = marketService.find(Market.class, mid).getCardnum();
+		byte[] publicKey = BankServerProxy.getPublcKey(cardnum);
+		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("public.key",publicKey.length);
+		return new ResponseEntity<byte[]>(publicKey,httpHeaders,HttpStatus.OK);
+	}
+	
+	public static HttpHeaders httpHeaderPrivateKeyAttachment(final String fileName,final int fileSize) {
+	    String encodedFileName = fileName.replace('"', ' ').replace(' ', '_');
+	    HttpHeaders responseHeaders = new HttpHeaders();
+	    responseHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	    responseHeaders.setContentLength(fileSize);
+	    responseHeaders.set("Content-Disposition", "attachment");
+	    responseHeaders.add("Content-Disposition", "filename=\"" + encodedFileName + '\"');
+	    return responseHeaders;
 	}
 	
 	

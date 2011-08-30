@@ -3,7 +3,6 @@ package com.ipay.server.security;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -96,13 +95,17 @@ public class KeyManager {
 	 * @return 签名 byte[]
 	 */
 	public static byte[] sign(byte[] privateKeyBytes, String message) {
+		byte[] source = Digest.MdigestSHA(message);//生成信息摘要
+		return sign(privateKeyBytes,source);
+	}
+	
+	public static byte[] sign(byte[] privateKeyBytes, byte[] source) {
 		try {
 			PKCS8EncodedKeySpec priv_spec = new PKCS8EncodedKeySpec(privateKeyBytes);
 			KeyFactory mykeyFactory = KeyFactory.getInstance("RSA");
 			PrivateKey privKey = mykeyFactory.generatePrivate(priv_spec);
 			Signature sig = Signature.getInstance("SHA1withRSA");
 			sig.initSign(privKey);
-			byte[] source = Digest.MdigestSHA(message);//生成信息摘要
 			sig.update(source);
 			return sig.sign();
 		} catch (Exception e) {
@@ -136,6 +139,11 @@ public class KeyManager {
 		}
 	}
 	
+	public static boolean verify(byte[] publicKeyBytes, String message, byte[] sign){
+		byte[] source = Digest.MdigestSHA(message);//生成信息摘要
+		return verify(publicKeyBytes,source,sign);
+	}
+	
 	/**
 	 * 使用RSA公钥加密数据
 	 * 
@@ -156,6 +164,10 @@ public class KeyManager {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public static byte[] encryptByRSA(byte[] publicKeyBytes, String message) {
+		return encryptByRSA(publicKeyBytes,message.getBytes());
 	}
 
 	/**
@@ -179,6 +191,10 @@ public class KeyManager {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public static String decryptByRSAInString(byte[] privateKeyBytes, byte[] data) {
+		return new String(decryptByRSA(privateKeyBytes,data));
 	}
 
 }
