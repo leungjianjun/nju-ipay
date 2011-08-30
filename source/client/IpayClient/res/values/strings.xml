@@ -161,18 +161,28 @@
   </string-array>
   
   <!-- 购物车（shopping cart）部分 -->
-  <string name="shopping_cart_pay" >Pay</string>
-  <string name="shopping_cart_money">Money</string>
-  <string name="shopping_cart_quantity">There are ? goods in cart</string>
+  <string name="shopping_cart_pay" >支付</string>
+  <string name="shopping_cart_money">金额：</string>
+  <string name="shopping_cart_refresh">刷新</string>
+  <string name="shopping_cart_clear">清空</string>
+  <string name="shopping_cart_quantity">数量：</string>
   
   <!-- 商场信息 -->
+  <string name="market_info_name">名称</string>
   <string name="market_info_location">地址</string>
   <string name="market_info_intro">简介</string>
   <string name="market_info_service_phone">服务电话</string>
   <string name="market_info_complain_phone">投诉电话</string>
   <string name="market_info_create_date">注册时间</string>
-  <!-- 商品信息（goods info）部分 -->
   
+  <!-- 商品信息（goods info）部分 -->
+  <string name="goods_info_name">名称：</string>
+  <string name="goods_info_price">单价: </string>
+  <string name="goods_info_quantity">数量: </string>
+  <string name="goods_info_producer">生产商: </string>
+  <string name="goods_info_intro">简介: </string>
+  <string name="goods_info_add_to_cart">装入购物车</string>
+  <string name="goods_info_remove">移除</string>
   <!-- 设置（preferences）部分 -->
   
   <!-- 关于（about） 部分 -->
