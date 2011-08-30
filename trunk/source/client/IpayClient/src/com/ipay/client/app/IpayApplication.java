@@ -14,6 +14,7 @@ public class IpayApplication extends Application {
 	
 	public static CommunicationManager communicationManager;
 	
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub

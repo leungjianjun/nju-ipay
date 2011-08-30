@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.ipay.client.app.IpayApplication;
@@ -87,7 +88,7 @@ public class GoodsInfoActivity extends BaseActivity {
 		taskListener = new GetProductTaskListener();
 
 		getProduct();
-		
+
 	}
 
 	/**
@@ -123,8 +124,8 @@ public class GoodsInfoActivity extends BaseActivity {
 			}
 
 		} else {
-			
-//			getProductByBarcode("838374833");
+
+			// getProductByBarcode("838374833");
 			getProductById(pid);
 		}
 
@@ -178,10 +179,10 @@ public class GoodsInfoActivity extends BaseActivity {
 		productPriceTxt.setText("价格：" + product.getPrice());
 		productBrandTxt.setText("厂商：" + product.getBanner());
 		productAttrsTxt.setText("简介：" + '\n');
-		HashMap<String, String> attrs=product.getAttributes();
-		Set<String> keySet=attrs.keySet();
-		for(String key:keySet){
-			productAttrsTxt.append(key+": "+attrs.get(key));
+		HashMap<String, String> attrs = product.getAttributes();
+		Set<String> keySet = attrs.keySet();
+		for (String key : keySet) {
+			productAttrsTxt.append(key + ": " + attrs.get(key));
 		}
 
 	}
@@ -239,8 +240,17 @@ public class GoodsInfoActivity extends BaseActivity {
 				return TaskResult.FAILED;
 			}
 			if (pid > 0) {
-				product = IpayApplication.communicationManager
-						.getProductInfo(pid);
+				try {
+					product = IpayApplication.communicationManager
+							.getProductInfo(pid);
+				} catch (HttpResponseException e1) {
+					e1.printStackTrace();
+					return TaskResult.FAILED;
+				} catch (IOException e1) {
+
+					e1.printStackTrace();
+					return TaskResult.FAILED;
+				}
 
 				if (product != null) {
 					String imageURL = CommunicationManager.BASE_URL
@@ -253,9 +263,9 @@ public class GoodsInfoActivity extends BaseActivity {
 						imageBitmap = BitmapFactory
 								.decodeStream(new BufferedInputStream(is));
 					} catch (IOException e) {
-						
+
 						e.printStackTrace();
-						Log.d(TAG,"获取图片失败");
+						Log.d(TAG, "获取图片失败");
 					}
 
 				}
@@ -278,7 +288,7 @@ public class GoodsInfoActivity extends BaseActivity {
 			// 获取pid
 			try {
 				barcode = params[0].getString(PRODUCT_BARCODE);
-				Log.d(TAG,"条形码为: " +barcode);
+				Log.d(TAG, "条形码为: " + barcode);
 				publishProgress(40);
 			} catch (ParamsNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -286,13 +296,24 @@ public class GoodsInfoActivity extends BaseActivity {
 				Log.d(TAG, "pid not found");
 				return TaskResult.FAILED;
 			}
+
 			if (barcode != null) {
-				product = IpayApplication.communicationManager
-						.getProductInfo(barcode);
-				Log.d(TAG,"商品名称: "+product.getName());
+
+				try {
+					product = IpayApplication.communicationManager
+							.getProductInfo(barcode);
+				} catch (HttpResponseException e) {
+					e.printStackTrace();
+					return TaskResult.FAILED;
+				} catch (IOException e) {
+					e.printStackTrace();
+					return TaskResult.FAILED;
+				}
+				
+				Log.d(TAG, "商品名称: " + product.getName());
 				publishProgress(80);
 			}
-			
+
 			if (product != null) {
 				String imageURL = CommunicationManager.BASE_URL
 						+ product.getMidImgUrl();
@@ -304,13 +325,13 @@ public class GoodsInfoActivity extends BaseActivity {
 					imageBitmap = BitmapFactory
 							.decodeStream(new BufferedInputStream(is));
 				} catch (IOException e) {
-					
+
 					e.printStackTrace();
-					Log.d(TAG,"获取图片失败");
+					Log.d(TAG, "获取图片失败");
 				}
 
 			}
-			
+
 			if (product != null)
 				return TaskResult.OK;
 			else

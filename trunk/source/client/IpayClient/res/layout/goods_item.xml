@@ -24,7 +24,7 @@
 	  		android:id="@+id/goods_image"
 	  		android:layout_width="fill_parent"
 	  		android:layout_height="fill_parent"
-	  		android:src="@drawable/goods_image_example"/>
+	  	/>
 	  	<!-- 图片圆角边框 -->
 	  	<ImageView 
 	  		android:background="@drawable/images_border_radius"
@@ -54,7 +54,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				style="@style/LinkText.Bold.Big"
-				android:text="Goods NO.1"
 			/>
 			<!-- 显示商品简要信息的TextView TODO：用自定义的TextView -->
   			<!-- 测试 -->
@@ -64,7 +63,6 @@
   				android:layout_height="wrap_content"
   				android:layout_marginTop="2dp"
 				android:textColor="@color/goods_item_meta_text"
-				android:text="Goods meta"
   			/>
   		</LinearLayout>
 		<!-- NOTE: 不能使用Button, 否则ListView的点击事件会失效 -->
@@ -81,7 +79,7 @@
 			android:textSize="14sp"
 			android:layout_marginTop="5dip"
 			android:layout_marginRight="5dip"
-			android:text="移除"
+			android:text="@string/goods_info_remove"
 		/>
   </RelativeLayout>
      

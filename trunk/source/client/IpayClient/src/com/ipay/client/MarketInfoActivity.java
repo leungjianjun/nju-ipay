@@ -3,6 +3,10 @@
  */
 package com.ipay.client;
 
+import java.io.IOException;
+
+import org.apache.http.client.HttpResponseException;
+
 import com.ipay.client.app.IpayApplication;
 import com.ipay.client.model.MarketInfo;
 import com.ipay.client.task.GenericTask;
@@ -85,7 +89,15 @@ public class MarketInfoActivity extends BaseActivity {
 		@Override
 		protected TaskResult doInBackground(TaskParams... params) {
 			Log.d(TAG,"开始获取商场信息");
-			marketInfo = IpayApplication.communicationManager.getMarketInfo();
+			try {
+				marketInfo = IpayApplication.communicationManager.getMarketInfo();
+			} catch (HttpResponseException e) {
+				e.printStackTrace();
+				return TaskResult.FAILED;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return TaskResult.FAILED;
+			}
 			publishProgress(60);
 
 			if (marketInfo != null) {
