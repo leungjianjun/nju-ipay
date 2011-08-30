@@ -3,7 +3,6 @@ package com.ipay.client.security;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -44,10 +43,11 @@ public class KeyManager {
 	}
 	
 	/**
-	 * 鐢熸垚RSA瀵嗙爜�?�涔熷氨鏄叕閽ュ拰绉侀�?
+	 * 生成RSA密码对,也就是公钥和私钥
 	 * 
 	 * @return
-	 * 		瀵嗙爜�?�?	 */
+	 * 		密码对
+	 */
 	public static KeyPair generatorKeypair(){
 		KeyPair myPair;
 		long mySeed;
@@ -65,15 +65,15 @@ public class KeyManager {
 	}
 	
 	/**
-	 * 浣跨敤aes-256 鍔犲瘑绉�?��
+	 * 使用aes-256 加密私钥
 	 * @param privateKey
-	 * 			绉侀�?
+	 * 			私钥
 	 * @param rawPass
-	 * 			鍘熷�?嗙爜
+	 * 			原始密码
 	 * @param salt
-	 * 			鐩愬�?
+	 * 			盐值
 	 * @return
-	 * 			鍔犲瘑鐨勭閽�
+	 * 			加密的私钥
 	 */
 	public static byte[] encryptPrivateKey(PrivateKey privateKey,String rawPass,String salt){
 		BytesEncryptor be = Encryptors.standard(rawPass, String.valueOf(Hex.encode(salt.getBytes())));
@@ -86,20 +86,26 @@ public class KeyManager {
 	}
 	
 	/**
-	 * 浣跨敤绉�?��鍔犲瘑鏁版嵁 鐢ㄤ竴涓凡鎵撳寘鎴恇yte[]褰㈠紡鐨勭閽ュ姞�?嗘暟鎹紝鍗虫暟瀛楃鍚�?	 * 
+	 * 使用私钥加密数据 用一个已打包成byte[]形式的私钥加密数据，即数字签名
+	 * 
 	 * @param privateKeyBytes
-	 *            鎵撳寘鎴恇yte[]鐨勭�?���?	 * @param message
-	 *            瑕佺鍚嶇殑鏁版�?
-	 * @return 绛惧�?byte[]
+	 *            打包成byte[]的私钥
+	 * @param message
+	 *            要签名的数据
+	 * @return 签名 byte[]
 	 */
 	public static byte[] sign(byte[] privateKeyBytes, String message) {
+		byte[] source = Digest.MdigestSHA(message);//生成信息摘要
+		return sign(privateKeyBytes,source);
+	}
+	
+	public static byte[] sign(byte[] privateKeyBytes, byte[] source) {
 		try {
 			PKCS8EncodedKeySpec priv_spec = new PKCS8EncodedKeySpec(privateKeyBytes);
 			KeyFactory mykeyFactory = KeyFactory.getInstance("RSA");
 			PrivateKey privKey = mykeyFactory.generatePrivate(priv_spec);
 			Signature sig = Signature.getInstance("SHA1withRSA");
 			sig.initSign(privKey);
-			byte[] source = Digest.MdigestSHA(message);//鐢熸垚淇℃伅鎽樿�?
 			sig.update(source);
 			return sig.sign();
 		} catch (Exception e) {
@@ -108,14 +114,16 @@ public class KeyManager {
 	}
 	
 	/**
-	 * 瀵圭鍚嶈繘琛岄獙璇�?	 * 
+	 * 对签名进行验证
+	 * 
 	 * @param publicKeyBytes
-	 * 			鍏�?
+	 * 			公钥
 	 * @param source
-	 * 			鍘熸暟鎹�?	 * @param sign
-	 * 			绛惧悕鏁版嵁
+	 * 			原数据
+	 * @param sign
+	 * 			签名数据
 	 * @return
-	 * 			楠岃瘉缁撴灉
+	 * 			验证结果
 	 */
 	public static boolean verify(byte[] publicKeyBytes, byte[] source, byte[] sign) {
 		try {
@@ -131,14 +139,19 @@ public class KeyManager {
 		}
 	}
 	
+	public static boolean verify(byte[] publicKeyBytes, String message, byte[] sign){
+		byte[] source = Digest.MdigestSHA(message);//生成信息摘要
+		return verify(publicKeyBytes,source,sign);
+	}
+	
 	/**
-	 * 浣跨敤RSA鍏挜鍔犲瘑鏁版�?
+	 * 使用RSA公钥加密数据
 	 * 
 	 * @param publicKeyBytes
-	 *            鎵撳寘鐨刡yte[]褰㈠紡鍏挜
+	 *            打包的byte[]形式公钥
 	 * @param data
-	 *            瑕佸姞�?嗙殑鏁版�?
-	 * @return 鍔犲瘑鏁版嵁
+	 *            要加密的数据
+	 * @return 加密数据
 	 */
 	public static byte[] encryptByRSA(byte[] publicKeyBytes, byte[] data) {
 		try {
@@ -152,15 +165,19 @@ public class KeyManager {
 			return null;
 		}
 	}
+	
+	public static byte[] encryptByRSA(byte[] publicKeyBytes, String message) {
+		return encryptByRSA(publicKeyBytes,message.getBytes());
+	}
 
 	/**
-	 * 鐢≧SA绉侀挜瑙ｅ瘑
+	 * 用RSA私钥解密
 	 * 
 	 * @param privateKeyBytes
-	 *            绉侀挜鎵撳寘鎴恇yte[]褰㈠�?
+	 *            私钥打包成byte[]形式
 	 * @param data
-	 *            瑕佽В瀵嗙殑鏁版嵁
-	 * @return 瑙ｅ瘑鏁版嵁
+	 *            要解密的数据
+	 * @return 解密数据
 	 */
 	public static byte[] decryptByRSA(byte[] privateKeyBytes, byte[] data) {
 		try {
@@ -174,6 +191,10 @@ public class KeyManager {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public static String decryptByRSAInString(byte[] privateKeyBytes, byte[] data) {
+		return new String(decryptByRSA(privateKeyBytes,data));
 	}
 
 }
