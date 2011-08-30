@@ -422,25 +422,45 @@ var result_send_order = {
 }
 
 /**
+ * url http://xxx.xxx.xxx.xxx:8080/client/getMarketPublickey?mid={market id}
+ * 
+ * 返回market的公钥
+ */
+var get_market_publicKey = {}
+
+
+
+/**
  * 支付
+ * 
+ * url https://xxx.xxx.xxx.xxx:8443/client/PayRequest
+ * 
+ * OI:"{\tranId\":123}"
+ * PI:"{\tranId\":123}"
  */
 var pay_request = {
-	encryptOI:"",
-	encryptPI:"",
-	OIMD:"",
-	PIMD:"",
-	DS:""
+	mid:12,
+	encryptOI:"",//商场公钥
+	encryptPI:"",//银行公钥
+	OIMD:"",//客户端私钥对encryptOI的sign
+	PIMD:"",//客户端私钥私钥sign
 }
 
+/*
+ * statusCode为0就是成功，如果是其他的话就是失败，具体代码再定义吧
+ */
 var result_pay_request = {
-	bankResult:"",
-	sign:"byte[]"
+	bankResult:"{\"tranId\":123,\"statusCode\":0}",
+	sign:"fdsafdsaf8709df0ds98ufudsifuds90fuds"
 }
 
 var error_pay_request = {
-	bankResult:"",
-	sign:"byte[]"
+	bankResult:"{\"tranId\":123,\"statusCode\":0}",
+	sign:"fdsafdsaf8709df0ds98ufudsifuds90fuds"
 }
+
+//////////////////////////////////////////////
+//废弃
 
 /*
  * 商场服务器向银行申请支付订单
@@ -473,6 +493,8 @@ var pay_order = {
 var result_pay_order = {
 	MI:""
 }
+//
+//////////////////////////////////////////////
 
 /*
  * 客户端根据结果提示用户下一步此操作
