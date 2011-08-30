@@ -184,6 +184,10 @@ public class KeyManager {
 			return null;
 		}
 	}
+	
+	public static byte[] encryptByRSA(byte[] publicKeyBytes, String message) {
+		return encryptByRSA(publicKeyBytes,message.getBytes());
+	}
 
 	/**
 	 * 用RSA私钥解密
@@ -206,6 +210,10 @@ public class KeyManager {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public static String decryptByRSAInString(byte[] privateKeyBytes, byte[] data) {
+		return new String(decryptByRSA(privateKeyBytes,data));
 	}
 
 }
