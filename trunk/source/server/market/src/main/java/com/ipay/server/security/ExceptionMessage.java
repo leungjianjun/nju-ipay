@@ -21,5 +21,7 @@ public final class ExceptionMessage {
 	public static final String PAYRESPONSE_SIGN_ERROR = "银行返回支付请求没有通过签名";
 	
 	public static final String TRANSACTION_ID_NOT_CORRECT = "交易号不正确";
+	
+	public static final String DATA_FORMATE_ERROR = "数据格式错误";
 
 }
