@@ -672,7 +672,7 @@ public class CommunicationManager {
 		}		
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param session
