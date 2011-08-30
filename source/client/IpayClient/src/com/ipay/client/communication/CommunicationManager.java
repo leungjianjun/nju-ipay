@@ -104,6 +104,7 @@ public class CommunicationManager {
 	public static final String SEARCH_PRODUCT_URL = "http://xxx.xxx.xxx.xxx:8080/client/SearchProduct?";
 	
 	//支付
+	public static final String SENT_ORDER_URT = "https://xxx.xxx.xxx.xxx:8443/client/SendOrder";
 	public static final String GET_KEY_URL = "https://xxx.xxx.xxx.xxx:8443/client/getEncryptPrivateKey";
 	public static final String PAY_URL = "";
 		
@@ -671,6 +672,7 @@ public class CommunicationManager {
 		}		
 		return false;
 	}
+	
 	/**
 	 * 
 	 * @param session
