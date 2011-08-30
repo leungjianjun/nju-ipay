@@ -29,6 +29,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.ipay.client.app.IpayApplication;
 import com.ipay.client.communication.CommunicationManager;
 import com.ipay.client.model.Product;
+import com.ipay.client.model.ShoppingCart;
 import com.ipay.client.task.GenericTask;
 import com.ipay.client.task.ParamsNotFoundException;
 import com.ipay.client.task.TaskListener;
@@ -51,6 +52,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author tangym
@@ -164,7 +166,20 @@ public class GoodsInfoActivity extends BaseActivity {
 	/**
 	 * 添加到购物车
 	 */
-	private void addToCart() {
+	private boolean addToCart() {
+
+		ShoppingCart cart = ShoppingCart.getInstance();
+		if (cart.add(product)) {
+			Toast.makeText(this, R.string.goods_info_add_success,
+					Toast.LENGTH_SHORT).show();
+			return true;
+		}
+
+		else {
+			Toast.makeText(this, R.string.goods_info_add_fail,
+					Toast.LENGTH_SHORT).show();
+			return false;
+		}
 
 	}
 
@@ -309,7 +324,7 @@ public class GoodsInfoActivity extends BaseActivity {
 					e.printStackTrace();
 					return TaskResult.FAILED;
 				}
-				
+
 				Log.d(TAG, "商品名称: " + product.getName());
 				publishProgress(80);
 			}
@@ -345,7 +360,8 @@ public class GoodsInfoActivity extends BaseActivity {
 		@Override
 		public void onClick(View v) {
 			if (product != null) {
-				addToCart();
+				if (addToCart())
+					finish();
 			}
 		}
 

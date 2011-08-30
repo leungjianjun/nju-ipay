@@ -34,17 +34,17 @@ public class ShoppingCart {
 		return list.get(index);
 	}
 
-	public void add(Product product) {
-		list.add(product);
+	public boolean add(Product product) {
+		return list.add(product);
 	}
 
-	public void remove(int index) {
-		list.remove(index);
+	public Product remove(int index) {
+		return list.remove(index);
 	}
 
-	public void remove(Product product) {
+	public Product remove(Product product) {
 		int index = list.indexOf(product);
-		list.remove(index);
+		return list.remove(index);
 	}
 
 	public void clear() {
