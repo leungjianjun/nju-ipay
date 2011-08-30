@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ipay.server.bankproxy.PayRequestSign;
 import com.ipay.server.bankproxy.PayResponse;
+import com.ipay.server.bankproxy.PayResponseAdapter;
 import com.ipay.server.security.KeyManager;
 import com.ipay.server.util.ControllerTest;
 import com.ipay.server.util.PrincipalImpl;
@@ -40,7 +41,7 @@ public class TransactionControllerTest extends ControllerTest<TransactionControl
 		orders.add(order1);
 		param.put("orders", orders);
 		Principal principal = new PrincipalImpl("ljj");
-		PayResponse payResponse = (PayResponse) controller.sendOrder(param,principal,response);
+		PayResponseAdapter payResponse = (PayResponseAdapter) controller.sendOrder(param,principal,response);
 		if(!KeyManager.verify(KeyManager.getBankPublickey(), payResponse.getSource(), payResponse.getSign())){
 			//验证错误
 			System.out.println("验证错误");
