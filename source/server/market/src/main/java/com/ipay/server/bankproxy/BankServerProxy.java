@@ -19,6 +19,15 @@ public class BankServerProxy {
 		}
 	}
 	
+	public static byte[] getBankPublickey(){
+		try {
+			return HttpConnection.doGet(Configure.BankPublicKey(), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static byte[] getPublcKey(String cardnum){
 		Map<String, Object> paramMap = Maps.newHashMap();
 		paramMap.put("cardnum", cardnum);

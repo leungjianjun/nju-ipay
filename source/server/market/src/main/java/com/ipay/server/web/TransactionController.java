@@ -28,6 +28,7 @@ import com.ipay.server.bankproxy.BankProxyServerException;
 import com.ipay.server.bankproxy.BankServerProxy;
 import com.ipay.server.bankproxy.PayRequestSign;
 import com.ipay.server.bankproxy.PayResponse;
+import com.ipay.server.bankproxy.PayResponseAdapter;
 import com.ipay.server.entity.Client;
 import com.ipay.server.entity.Market;
 import com.ipay.server.entity.Order;
@@ -117,12 +118,13 @@ public class TransactionController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/client/SendOrder", method = RequestMethod.POST)
-	public @ResponseBody Object sendOrder(@RequestBody Map<String, Object> param,Principal principal,HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+	public @ResponseBody PayResponseAdapter sendOrder(@RequestBody Map<String, Object> param,Principal principal,HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		int mid = (Integer) param.get("mid");
 		List<Map<String,Integer>> orders = (List<Map<String, Integer>>) param.get("orders");
 		double total = 0;
 		Record record = new Record();
-		record.setClient(clientService.getClientByAccount(principal.getName()));
+		Client client = clientService.getClientByAccount(principal.getName());
+		record.setClient(client);
 		record.setCreateDate(new Date());
 		record.setEffective(false);
 		record.setMarket(marketService.find(Market.class, mid));
@@ -131,7 +133,6 @@ public class TransactionController {
 			if(product.getMarket().getId()!= mid){//检查每个商品是否在同一商场购买
 				throw new ControllerException(ExceptionMessage.PRODUCT_NOT_IN_THE_SAME_MARKET,400);
 			}
-			System.out.println();
 			//创建订单
 			Order o = new Order();
 			double cost = product.getPrice()*order.get("quantity");
@@ -153,7 +154,7 @@ public class TransactionController {
 			record.setTotal(total);
 			record.setTransId((Integer) source.get("tranId"));
 			recordService.create(record);
-			return payresponse;
+			return new PayResponseAdapter(payresponse,client.getCardnum());
 		} catch (BankProxyServerException e) {
 			e.printStackTrace();
 			throw new ControllerException(ExceptionMessage.PAYREQUEST_BANK_ERROR,400);
