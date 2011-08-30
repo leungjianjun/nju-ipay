@@ -1,9 +1,5 @@
 package com.ipay.client.security;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -22,47 +18,6 @@ import com.ipay.client.security.tool.encrypt.Encryptors;
 import com.ipay.client.security.tool.util.Digest;
 
 public class KeyManager {
-	
-	private final static String BANK_PUBLIC_KEY_LOCATION = Thread.currentThread().getContextClassLoader().getResource("bank_public.key").getPath();
-	
-	public static byte[] getBankPublickey(){
-		File file = new File(BANK_PUBLIC_KEY_LOCATION);
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(file);
-			byte[] publickey = new byte[162];
-			fis.read(publickey);
-			return publickey;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/**
-	 * 生成RSA密码对,也就是公钥和私钥
-	 * 
-	 * @return
-	 * 		密码对
-	 */
-	public static KeyPair generatorKeypair(){
-		KeyPair myPair;
-		long mySeed;
-		mySeed = System.currentTimeMillis();
-		try {
-			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-			SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-			random.setSeed(mySeed);
-			keyGen.initialize(1024, random);
-			myPair = keyGen.generateKeyPair();
-		} catch (Exception e1) {
-			return null;
-		}
-		return myPair;
-	}
 	
 	/**
 	 * 使用aes-256 加密私钥
