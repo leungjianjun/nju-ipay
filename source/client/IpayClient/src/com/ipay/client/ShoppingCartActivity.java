@@ -63,7 +63,7 @@ public class ShoppingCartActivity extends BaseActivity {
 	private TextView quantityTxt;
 	private TextView totalTxt;
 	private ShoppingCartArrayAdapter adapter;
-	private ShoppingCart cart = ShoppingCart.getInstance();
+	private ShoppingCart cart=IpayApplication.shoppingCart;
 	private Feedback feedback;
 
 	@Override
@@ -100,7 +100,6 @@ public class ShoppingCartActivity extends BaseActivity {
 	}
 
 	public void update() {
-
 		totalTxt.setText("" + cart.getTotalPrice());
 		quantityTxt.setText("" + cart.getQuantity());
 	}
@@ -217,8 +216,12 @@ public class ShoppingCartActivity extends BaseActivity {
 
 		@Override
 		public void onPostExecute(TaskResult result) {
-			if (result == TaskResult.OK)
+			//如果成功，则清空购物车
+			if (result == TaskResult.OK){
 				feedback.succeed("");
+				cart.clear();
+				adapter.notifyDataSetChanged();
+			}
 			else
 				feedback.fail("失败");
 		}
