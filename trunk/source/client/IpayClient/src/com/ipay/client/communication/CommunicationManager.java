@@ -8,8 +8,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
@@ -42,7 +40,6 @@ import android.util.Log;
 
 import com.ipay.client.model.Market;
 import com.ipay.client.model.MarketInfo;
-import com.ipay.client.model.Order;
 import com.ipay.client.model.Product;
 import com.ipay.client.model.Session;
 import com.ipay.client.model.ShoppingCart;
@@ -746,11 +743,8 @@ public class CommunicationManager {
 
 	/**
 	 * 
-	 * @param session
-	 * @param payPassword
-	 *            支付密码
-	 * @param key
-	 *            证书,在调用此方法前需先调用getEncryptPrivateKey获得证书
+	 * @param payPassword           支付密码
+	 * @param context 因为需要读取和保存密钥
 	 * @return int status code
 	 * @throws IOException
 	 */
