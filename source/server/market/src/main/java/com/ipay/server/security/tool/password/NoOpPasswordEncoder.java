@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.server.security.tool.password;
+package com.ipay.client.security.tool.password;
 
 /**
  * A password encoder that does nothing.

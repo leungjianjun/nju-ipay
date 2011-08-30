@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.server.security.tool.password;
+package com.ipay.client.security.tool.password;
 
-import static com.ipay.server.security.tool.util.EncodingUtils.concatenate;
-import static com.ipay.server.security.tool.util.EncodingUtils.subArray;
+import static com.ipay.client.security.tool.util.EncodingUtils.concatenate;
+import static com.ipay.client.security.tool.util.EncodingUtils.subArray;
 
-import com.ipay.server.security.tool.codec.Hex;
-import com.ipay.server.security.tool.codec.Utf8;
-import com.ipay.server.security.tool.keygen.BytesKeyGenerator;
-import com.ipay.server.security.tool.keygen.KeyGenerators;
+import com.ipay.client.security.tool.codec.Hex;
+import com.ipay.client.security.tool.codec.Utf8;
+import com.ipay.client.security.tool.keygen.BytesKeyGenerator;
+import com.ipay.client.security.tool.keygen.KeyGenerators;
 
 /**
  * A standard {@code PasswordEncoder} implementation that uses SHA-256 hashing with 1024 iterations and a
