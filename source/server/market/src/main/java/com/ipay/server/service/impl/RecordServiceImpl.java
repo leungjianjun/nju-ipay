@@ -22,4 +22,22 @@ public class RecordServiceImpl<T extends Record> extends ServiceImpl<T> implemen
 
 	}
 
+	public boolean checkTransactionEffective(int tranId,int cid) {
+		T record = dao.findUniqueBy("from Record as record where record.transId =? and record.client.id =?", tranId,cid);
+		if(record== null){
+			return false;
+		}else{
+			return !record.isEffective();
+		}
+	}
+
+	public boolean checktransactionDone(int tranId) {
+		T record = dao.findUniqueBy("from Record as record where record.transId =?", tranId);
+		if(record==null){
+			return false;
+		}else {
+			return record.isEffective();
+		}
+	}
+
 }

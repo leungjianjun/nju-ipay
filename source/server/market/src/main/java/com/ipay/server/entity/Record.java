@@ -21,6 +21,10 @@ import com.google.common.collect.Sets;
 @Entity
 public class Record extends BaseEntity {
 	
+	private boolean effective;
+	
+	private int transId;
+	
 	/**
 	 * 客户
 	 */
@@ -91,6 +95,26 @@ public class Record extends BaseEntity {
 
 	public void setTotal(double total) {
 		this.total = total;
+	}
+
+	public boolean isEffective() {
+		return effective;
+	}
+
+	public void setEffective(boolean effective) {
+		this.effective = effective;
+	}
+	
+	public void addOrder(Order order){
+		orders.add(order);
+	}
+
+	public int getTransId() {
+		return transId;
+	}
+
+	public void setTransId(int transId) {
+		this.transId = transId;
 	}
 
 }

@@ -33,7 +33,7 @@ public class BankServerProxy {
 		final String message = "{\"total\":"+total+",\"cardnum\":\""+cardnum+"\"}";
 		PayRequest payRequest = new PayRequest();
 		payRequest.setEncryptData(KeyManager.encryptByRSA(KeyManager.getBankPublickey(), message.getBytes()));
-		payRequest.setSignData(KeyManager.sign(PrivateKeyEncryptor.decrypt(encryptPrivateKeyBytes), message));
+		payRequest.setSignData(KeyManager.sign(PrivateKeyEncryptor.decrypt(encryptPrivateKeyBytes), payRequest.getEncryptData()));
 		return HttpConnection.doJsonPost(Configure.PayRequest(), payRequest);
 	}
 

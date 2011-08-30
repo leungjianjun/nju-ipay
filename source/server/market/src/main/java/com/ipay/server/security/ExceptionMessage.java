@@ -15,5 +15,11 @@ public final class ExceptionMessage {
 	public static final String PRODUCT_NOT_IN_THE_SAME_MARKET = "商品不是在同一个商场";
 	
 	public static final String BANK_SERVER_NETWORK_ERROR = "银行服务器链接异常";
+	
+	public static final String PAYREQUEST_BANK_ERROR = "银行服务器返回数据错误";
+	
+	public static final String PAYRESPONSE_SIGN_ERROR = "银行返回支付请求没有通过签名";
+	
+	public static final String TRANSACTION_ID_NOT_CORRECT = "交易号不正确";
 
 }
