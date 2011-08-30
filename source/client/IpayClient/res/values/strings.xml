@@ -146,10 +146,10 @@
   <string name="app_name">iPay</string>
   
   <!-- 登录(login)部分 -->
-  <string name="login_text_username">Account</string>
-  <string name="login_text_password">Password</string>
-  <string name="login_button_login">Login</string>
-  <string name="login_text_learn_more">Learn more...</string>
+  <string name="login_text_username">账户</string>
+  <string name="login_text_password">密码</string>
+  <string name="login_button_login">登录</string>
+  <string name="login_text_learn_more">了解更多</string>
   <string name="login_text_null_username_or_password">用户名或密码为空</string>
   <string name="login_text_status_logining">登录中...</string>
   
@@ -162,10 +162,11 @@
   
   <!-- 购物车（shopping cart）部分 -->
   <string name="shopping_cart_pay" >支付</string>
-  <string name="shopping_cart_money">金额：</string>
+  <string name="shopping_cart_money">总金额：</string>
   <string name="shopping_cart_refresh">刷新</string>
   <string name="shopping_cart_clear">清空</string>
   <string name="shopping_cart_quantity">数量：</string>
+  <string name="shopping_cart_currency_unit">元</string>
   
   <!-- 商场信息 -->
   <string name="market_info_name">名称</string>
@@ -188,7 +189,10 @@
   <!-- 关于（about） 部分 -->
   
   <!-- 提示部分 -->
-  
+  <string name="notice_title">提示</string>
+  <string name="notice_question">确定要这么做吗?</string>
+  <string name="notice_sure">确定</string>
+  <string name="notice_cancel">取消</string>
   
  
   

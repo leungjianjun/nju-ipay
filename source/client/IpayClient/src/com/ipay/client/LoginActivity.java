@@ -109,11 +109,11 @@ public class LoginActivity extends Activity {
 		if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
 			progressText.setText(R.string.login_text_null_username_or_password);
 		} else {
-			loginTask = new LoginTask();
-			loginTask.execute(username, password);
-//			Intent intent = new Intent(LoginActivity.this, MainTabsActivity.class);
-//			startActivity(intent);
-//			finish();
+//			loginTask = new LoginTask();
+		//	loginTask.execute(username, password);
+			Intent intent = new Intent(LoginActivity.this, MainTabsActivity.class);
+			startActivity(intent);
+			finish();
 		}
 	}
 
@@ -177,11 +177,9 @@ public class LoginActivity extends Activity {
 					return TaskResult.FAILED;
 				}
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return TaskResult.FAILED;

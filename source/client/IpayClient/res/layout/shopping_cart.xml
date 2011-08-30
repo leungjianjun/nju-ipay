@@ -26,28 +26,20 @@
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
     			android:textSize="14sp"
-    			android:text="WILL BUY"
+    			android:text="@string/shopping_cart_quantity"
     		/>
-    		<TextView 
+    		<TextView
+    			android:id="@+id/cart_quantity"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
     			android:layout_marginLeft="5dp"
     			android:layout_marginRight="5dp"
-    			android:text="20"
-    			
     			style="@style/LinkText.Bold.Huge"
-    		/>
-    		<TextView 
-    			android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"
-    			android:textSize="14sp"
-    			android:text="GOODS"
     		/>
     	
     	</LinearLayout>
     	
     	<LinearLayout
-    		android:id="@+id/cart_total_text"
     		android:orientation="horizontal"
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content" 
@@ -59,21 +51,21 @@
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
     			android:textSize="14sp"
-    			android:text="TOTAL"
+    			android:text="@string/shopping_cart_money"
     		/>
     		<TextView 
+    			android:id="@+id/cart_total"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
     			android:layout_marginLeft="5dp"
     			android:layout_marginRight="5dp"
-    			android:text="100"
     			style="@style/LinkText.Bold.Huge"
     		/>
     		<TextView 
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
     			android:textSize="14sp"
-    			android:text="YUAN"
+    			android:text="@string/shopping_cart_currency_unit"
     		/>
     	</LinearLayout>
     	
@@ -84,7 +76,7 @@
 			android:layout_alignParentRight="true"
 			android:layout_margin="10.0dip"
 			android:textSize="20sp"
-			android:text="PAY"
+			android:text="@string/shopping_cart_pay"
 			style="@style/blue_button"
 		/>
     	
