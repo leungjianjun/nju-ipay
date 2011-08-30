@@ -435,8 +435,8 @@ var get_market_publicKey = {}
  * 
  * url https://xxx.xxx.xxx.xxx:8443/client/PayRequest
  * 
- * OI:"{\tranId\":123}"
- * PI:"{\tranId\":123}"
+ * OI:"{\"tranId\":123}"
+ * PI:"{\"tranId\":123,\"cardnum\":\"23432fdfd\"}"
  */
 var pay_request = {
 	mid:12,
