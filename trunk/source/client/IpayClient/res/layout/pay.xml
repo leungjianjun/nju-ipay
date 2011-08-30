@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  <TextView 
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="@string/shopping_cart_pay_will_pay"
+  />
+  <TextView
+  	android:id="@+id/pay_money"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:textSize="24sp"
+  	android:gravity="center"
+  />
+  <TextView 
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="@string/shopping_cart_enter_pin"
+  />
+  <EditText
+  	android:id="@+id/pay_pin" 
+  	android:singleLine="true"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  />
+    
+</LinearLayout>

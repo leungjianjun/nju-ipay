@@ -20,8 +20,8 @@ public class DialogFeedback extends Feedback {
 	}
 
 	@Override
-	public void update(int progress) {
-		progressDialog.setMessage("" + progress);
+	public void update(Object progress) {
+		progressDialog.setMessage((String)progress);
 	}
 
 	@Override

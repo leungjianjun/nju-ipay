@@ -165,8 +165,18 @@
   <string name="shopping_cart_money">总金额：</string>
   <string name="shopping_cart_refresh">刷新</string>
   <string name="shopping_cart_clear">清空</string>
-  <string name="shopping_cart_quantity">数量：</string>
+  <string name="shopping_cart_quantity">总商品数：</string>
   <string name="shopping_cart_currency_unit">元</string>
+  <string name="shopping_cart_pay_title">结算</string>
+  <string name="shopping_cart_pay_will_pay">您将为购物车中的商品支付：</string>
+  <string name="shopping_cart_enter_pin">请输入支付密码!</string>
+  <string name="shopping_cart_pay_sure">确定</string>
+  <string name="shopping_cart_pay_cancel">取消</string>
+  <string name="shopping_cart_pay_pin_null">支付密码不能为空，请重试</string>
+  
+  
+  
+  
   
   <!-- 商场信息 -->
   <string name="market_info_name">名称</string>
@@ -184,13 +194,16 @@
   <string name="goods_info_intro">简介: </string>
   <string name="goods_info_add_to_cart">装入购物车</string>
   <string name="goods_info_remove">移除</string>
+  <string name="goods_info_add_success">添加成功</string>
+  <string name="goods_info_add_fail">添加失败</string>
+  
   <!-- 设置（preferences）部分 -->
   
   <!-- 关于（about） 部分 -->
   
   <!-- 提示部分 -->
   <string name="notice_title">提示</string>
-  <string name="notice_question">确定要这么做吗?</string>
+  <string name="notice_do_you_sure">确定要这么做吗?</string>
   <string name="notice_sure">确定</string>
   <string name="notice_cancel">取消</string>
   

@@ -107,7 +107,7 @@ public class ShoppingCartArrayAdapter extends BaseAdapter {
 
 	private void remove(final Product product) {
 		Builder diaBuilder = new AlertDialog.Builder(context).setTitle(
-				R.string.notice_title).setMessage(R.string.notice_question);
+				R.string.notice_title).setMessage(R.string.notice_do_you_sure);
 		diaBuilder.setPositiveButton(R.string.notice_sure,
 				new DialogInterface.OnClickListener() {
 

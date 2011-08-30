@@ -25,7 +25,7 @@ public abstract class Feedback {
 	 * 更新进度
 	 * @param progress 
 	 */
-	public abstract void update(int progress);
+	public abstract void update(Object progress);
 	
 	/**任务成功
 	 * 

@@ -26,9 +26,9 @@ public class ProgressBarFeedback extends Feedback{
 	}
 
 	@Override
-	public void update(int progress) {
+	public void update(Object progress) {
 		Log.d(TAG, "update progress: "+ progress);
-		progressBar.setProgress(progress);
+		progressBar.setProgress((Integer)progress);
 		
 	}
 
