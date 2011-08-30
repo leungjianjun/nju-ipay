@@ -161,17 +161,29 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value = "/client/PayRequest", method = RequestMethod.POST)
-	public @ResponseBody Object payRequest(@RequestBody PayRequestSign payRequestSign,Principal principal,HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+	public @ResponseBody Object payRequest(@RequestBody PayRequestSign payRequestSign,Principal principal,HttpServletResponse response) {
 		//检查请求是否合法
 		byte[] marketPrivateKey = PrivateKeyEncryptor.decrypt(
 					marketService.find(Market.class, payRequestSign.getMid()).getEncryptPrivateKey());
 		String message = KeyManager.decryptByRSAInString(marketPrivateKey, payRequestSign.getEncryptOI());
 		Map<String,Object> source = Maps.newHashMap();
-		source = mapper.readValue(message, source.getClass());
+		try {
+			source = mapper.readValue(message, source.getClass());
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+			throw new ControllerException(ExceptionMessage.DATA_FORMATE_ERROR,400);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			throw new ControllerException(ExceptionMessage.DATA_FORMATE_ERROR,400);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new ControllerException(ExceptionMessage.DATA_FORMATE_ERROR,400);
+		}
 		int tranId = (Integer) source.get("tranId");
 		if(!recordService.checkTransactionEffective(tranId,clientService.getClientByAccount(principal.getName()).getId())){
 			throw new ControllerException(ExceptionMessage.TRANSACTION_ID_NOT_CORRECT,400);
 		}
+		//检查签名
 		
 		//把请求交给银行
 		
