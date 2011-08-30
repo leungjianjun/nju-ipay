@@ -168,7 +168,7 @@ public class GoodsInfoActivity extends BaseActivity {
 	 */
 	private boolean addToCart() {
 
-		ShoppingCart cart = ShoppingCart.getInstance();
+		ShoppingCart cart = IpayApplication.shoppingCart;
 		if (cart.add(product)) {
 			Toast.makeText(this, R.string.goods_info_add_success,
 					Toast.LENGTH_SHORT).show();

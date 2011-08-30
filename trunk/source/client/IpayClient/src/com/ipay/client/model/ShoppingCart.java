@@ -76,5 +76,13 @@ public class ShoppingCart {
 	public int getSize(){
 		return list.size();
 	}
+	
+	public String toString(){
+		String s="";
+		for(Product p:list){
+			s+=p.getPrice();
+		}
+		return s;
+	}
 
 }

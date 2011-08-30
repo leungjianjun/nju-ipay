@@ -53,7 +53,7 @@ public class ShoppingCartArrayAdapter extends BaseAdapter {
 			}
 
 		};
-		shoppingCart = ShoppingCart.getInstance();
+		shoppingCart = IpayApplication.shoppingCart;
 	}
 
 	@Override
