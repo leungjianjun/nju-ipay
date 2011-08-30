@@ -417,6 +417,7 @@ var send_order = {
  * 你需要使用银行的公钥验证签名和信息是否符合。source是一个string化的json，sign是签名的byte数组
  */
 var result_send_order = {
+	cardnum:"2342342453dfk",
 	source:"{\"tranId\":32344,\"amount\":2343.4}",
 	sign:"VrSoodiVPiw+hkCCiT7qBTMSL77mLQh34LTJRzRBUPDAEnIVtjdiLKx1K9XvhJSXpAmEWzKQH5w4e+vCHJI2aIhgzNDOoLpv4E+C+8R+YmykieKBh8HdS+Q/NubWmk7HVwasgSs9H2mI/CxOYuOdSEh65Htt/a7jSgvrshIFBaU="
 }
