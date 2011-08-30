@@ -109,14 +109,34 @@ public class BankController {
 	
 	@RequestMapping(value = "/bank/getPayRequestSign", method = RequestMethod.POST)
 	public @ResponseBody PayResponse getPayRequestSign(@RequestBody PayRequestSign payRequestSign,HttpServletResponse response) throws TransactionException{
+		PayResponse payResponse = new PayResponse();
 		String message = KeyManager.decryptByRSAInString(KeyManager.getBankPrivatekey(), payRequestSign.getEncryptPI());
 		Map<String,Object> contents = Maps.newHashMap();
 		try {
 			contents = mapper.readValue(message, contents.getClass());
 			int tranId = (Integer) contents.get("tranId");
 			//验证请求是否合法
-			
-			
+			if(!transactionService.checkTransactionEffectivable(tranId)){
+				throw new TransactionException(ExceptionMessage.DATA_FORMAT_ERROR,400);
+			}
+			//检查余额
+			Transaction transaction = transactionService.find(Transaction.class, tranId);
+			CreditCard payer = creditCardService.getCreditCardByNum((String) contents.get("cardnum"));
+			if(payer.getBalance()<transaction.getAmount()+transaction.getFee()){
+				String source = "{\"tranId\":"+transaction.getId()+",\"statusCode\":"+ExceptionMessage.BANLANCE_NOT_ENOUGH_CODE+"}";
+				payResponse.setSource(source);
+				byte[] sign = KeyManager.sign(KeyManager.getBankPrivatekey(), source);
+				payResponse.setSign(sign);
+				return payResponse;
+			}else{
+				transaction.setPayerCard(payer);
+				
+				String source = "{\"tranId\":"+transaction.getId()+",\"statusCode\":0}";
+				payResponse.setSource(source);
+				byte[] sign = KeyManager.sign(KeyManager.getBankPrivatekey(), source);
+				payResponse.setSign(sign);
+				return payResponse;
+			}
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 			throw new TransactionException(ExceptionMessage.DATA_FORMAT_ERROR,400);
@@ -127,8 +147,6 @@ public class BankController {
 			e.printStackTrace();
 			throw new TransactionException(ExceptionMessage.DATA_FORMAT_ERROR,400);
 		}
-		
-		return null;
 	}
 	
 	public static HttpHeaders httpHeaderPrivateKeyAttachment(final String fileName,final int fileSize) {
