@@ -428,6 +428,14 @@ var result_send_order = {
  */
 var get_market_publicKey = {}
 
+/**
+ * url http://xxx.xxx.xxx.xxx:8080/client//client/getBankPublickey
+ * 
+ * 返回银行公钥
+ * 
+ */
+var get_bank_publicKey = {}
+
 
 
 /**
@@ -436,7 +444,7 @@ var get_market_publicKey = {}
  * url https://xxx.xxx.xxx.xxx:8443/client/PayRequest
  * 
  * OI:"{\"tranId\":123}"
- * PI:"{\"tranId\":123,\"cardnum\":\"23432fdfd\"}"
+ * PI:"{\"tranId\":123}"
  */
 var pay_request = {
 	mid:12,
