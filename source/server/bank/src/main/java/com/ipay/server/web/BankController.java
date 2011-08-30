@@ -109,8 +109,25 @@ public class BankController {
 	
 	@RequestMapping(value = "/bank/getPayRequestSign", method = RequestMethod.POST)
 	public @ResponseBody PayResponse getPayRequestSign(@RequestBody PayRequestSign payRequestSign,HttpServletResponse response) throws TransactionException{
-		KeyManager.encryptByRSA(KeyManager.getBankPrivatekey(), payRequestSign.getEncryptPI());
+		String message = KeyManager.decryptByRSAInString(KeyManager.getBankPrivatekey(), payRequestSign.getEncryptPI());
 		Map<String,Object> contents = Maps.newHashMap();
+		try {
+			contents = mapper.readValue(message, contents.getClass());
+			int tranId = (Integer) contents.get("tranId");
+			//验证请求是否合法
+			
+			
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+			throw new TransactionException(ExceptionMessage.DATA_FORMAT_ERROR,400);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			throw new TransactionException(ExceptionMessage.DATA_FORMAT_ERROR,400);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new TransactionException(ExceptionMessage.DATA_FORMAT_ERROR,400);
+		}
+		
 		return null;
 	}
 	

@@ -22,4 +22,9 @@ public class TransactionServiceImpl<T extends Transaction> extends ServiceImpl<T
 
 	}
 
+	public boolean checkTransactionEffectivable(int tranId) {
+		dao.findUniqueBy("from Transaction as tran where tran.id =?", tranId);
+		return false;
+	}
+
 }
