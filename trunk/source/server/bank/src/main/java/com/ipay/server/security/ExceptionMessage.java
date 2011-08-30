@@ -19,5 +19,7 @@ public final class ExceptionMessage {
 	public static final String SERVER_INTERNAL_ERROR = "内部服务器错误";
 	
 	public static final String MESSAGE_VERIFY_ERROR = "验证错误";
+	
+	public static final int BANLANCE_NOT_ENOUGH_CODE = 1;
 
 }

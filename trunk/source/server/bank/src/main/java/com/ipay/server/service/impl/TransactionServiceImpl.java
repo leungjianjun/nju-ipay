@@ -23,8 +23,12 @@ public class TransactionServiceImpl<T extends Transaction> extends ServiceImpl<T
 	}
 
 	public boolean checkTransactionEffectivable(int tranId) {
-		dao.findUniqueBy("from Transaction as tran where tran.id =?", tranId);
-		return false;
+		T transaction = dao.findUniqueBy("from Transaction as tran where tran.id =?", tranId);
+		if(transaction==null){
+			return false;
+		}else{
+			return !transaction.isEffective();
+		}
 	}
 
 }
