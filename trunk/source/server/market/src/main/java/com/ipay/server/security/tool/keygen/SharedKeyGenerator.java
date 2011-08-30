@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.server.security.tool.keygen;
+package com.ipay.client.security.tool.keygen;
 
 /**
  * Key generator that simply returns the same key every time.

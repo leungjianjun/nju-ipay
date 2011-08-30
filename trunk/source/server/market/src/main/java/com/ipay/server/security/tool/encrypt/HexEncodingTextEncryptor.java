@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.server.security.tool.encrypt;
+package com.ipay.client.security.tool.encrypt;
 
-import com.ipay.server.security.tool.codec.Hex;
-import com.ipay.server.security.tool.codec.Utf8;
+import com.ipay.client.security.tool.codec.Hex;
+import com.ipay.client.security.tool.codec.Utf8;
 
 /**
  * Delegates to an {@link BytesEncryptor} to encrypt text strings.
