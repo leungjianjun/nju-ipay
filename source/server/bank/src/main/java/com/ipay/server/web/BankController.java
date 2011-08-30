@@ -33,6 +33,7 @@ import com.ipay.server.security.ExceptionMessage;
 import com.ipay.server.security.KeyManager;
 import com.ipay.server.security.TransactionException;
 import com.ipay.server.security.model.PayRequest;
+import com.ipay.server.security.model.PayRequestSign;
 import com.ipay.server.security.model.PayResponse;
 import com.ipay.server.service.ICreditCardService;
 import com.ipay.server.service.ITransactionService;
@@ -77,8 +78,9 @@ public class BankController {
 			contents = mapper.readValue(data,0,data.length, contents.getClass());
 			String cardnum = (String) contents.get("cardnum");
 			double total = (Double) contents.get("total");
+			logger.info("pay request "+total +" "+cardnum);
 			CreditCard creditCard = creditCardService.getCreditCardByNum(cardnum);
-			if(!KeyManager.verify(creditCard.getPublicKey(), data, payRequest.getSignData())){
+			if(!KeyManager.verify(creditCard.getPublicKey(), payRequest.getEncryptData(), payRequest.getSignData())){
 				throw new TransactionException(ExceptionMessage.MESSAGE_VERIFY_ERROR,400);
 			}else{
 				Transaction transaction = new Transaction();
@@ -103,6 +105,13 @@ public class BankController {
 		} catch (IOException e) {
 			throw new TransactionException(ExceptionMessage.SERVER_INTERNAL_ERROR,500);
 		}
+	}
+	
+	@RequestMapping(value = "/bank/getPayRequestSign", method = RequestMethod.POST)
+	public @ResponseBody PayResponse getPayRequestSign(@RequestBody PayRequestSign payRequestSign,HttpServletResponse response) throws TransactionException{
+		KeyManager.encryptByRSA(KeyManager.getBankPrivatekey(), payRequestSign.getEncryptPI());
+		Map<String,Object> contents = Maps.newHashMap();
+		return null;
 	}
 	
 	public static HttpHeaders httpHeaderPrivateKeyAttachment(final String fileName,final int fileSize) {
