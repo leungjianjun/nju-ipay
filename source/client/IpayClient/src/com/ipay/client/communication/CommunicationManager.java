@@ -752,6 +752,7 @@ public class CommunicationManager {
 		int statusCode = -1;
 		// 第一步：发送订单send order
 		JSONObject result = sendOrder(context);
+		Log.d(TAG,"*******支付结果"+result.toString());
 		
 		//pay
 		if (result != null) {
@@ -835,6 +836,7 @@ public class CommunicationManager {
 			e.printStackTrace();
 		}
 
+		Log.d(TAG,"*******源数据"+data.toString());
 		// post
 		JSONObject orderResult = null;
 		try {
