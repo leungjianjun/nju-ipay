@@ -63,6 +63,7 @@ public class GoodsInfoActivity extends BaseActivity {
 	private static final String TAG = "GoodsInfoActivitys";
 	private static final String PRODUCT_ID = "pid";
 	private static final String PRODUCT_BARCODE = "barcode";
+	
 
 	// views
 	private ImageView productImageView;
@@ -268,7 +269,7 @@ public class GoodsInfoActivity extends BaseActivity {
 				}
 
 				if (product != null) {
-					String imageURL = CommunicationManager.BASE_URL
+					String imageURL = CommunicationManager.HTTP_BASE
 							+ product.getMidImgUrl();
 					Log.d(TAG, "mid image url: " + imageURL);
 					try {
@@ -330,7 +331,7 @@ public class GoodsInfoActivity extends BaseActivity {
 			}
 
 			if (product != null) {
-				String imageURL = CommunicationManager.BASE_URL
+				String imageURL = CommunicationManager.HTTP_BASE
 						+ product.getMidImgUrl();
 				Log.d(TAG, "mid image url: " + imageURL);
 				try {
