@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.client.security.tool.encrypt;
+package com.ipay.security.tool.encrypt;
 
 /**
- * Service interface for symmetric data encryption.
+ * Service interface for symmetric encryption of text strings.
+ *
  * @author Keith Donald
  */
-public interface BytesEncryptor {
+public interface TextEncryptor {
 
     /**
-     * Encrypt the byte array.
+     * Encrypt the raw text string.
      */
-    byte[] encrypt(byte[] byteArray);
+    String encrypt(String text);
 
     /**
-     * Decrypt the byte array.
+     * Decrypt the encrypted text string.
      */
-    byte[] decrypt(byte[] encryptedByteArray);
+    String decrypt(String encryptedText);
 
 }

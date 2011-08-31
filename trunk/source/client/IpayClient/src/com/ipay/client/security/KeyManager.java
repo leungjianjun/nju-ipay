@@ -12,10 +12,10 @@ import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
-import com.ipay.client.security.tool.codec.Hex;
-import com.ipay.client.security.tool.encrypt.BytesEncryptor;
-import com.ipay.client.security.tool.encrypt.Encryptors;
-import com.ipay.client.security.tool.util.Digest;
+import com.ipay.security.tool.codec.Hex;
+import com.ipay.security.tool.encrypt.BytesEncryptor;
+import com.ipay.security.tool.encrypt.Encryptors;
+import com.ipay.security.tool.util.Digest;
 
 public class KeyManager {
 	

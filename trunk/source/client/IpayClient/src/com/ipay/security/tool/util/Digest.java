@@ -1,4 +1,4 @@
-package com.ipay.client.security.tool.util;
+package com.ipay.security.tool.util;
 
 import java.security.*;
 

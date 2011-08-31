@@ -13,25 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.client.security.tool.keygen;
-
-import com.ipay.client.security.tool.codec.Hex;
+package com.ipay.security.tool.encrypt;
 
 /**
- * A StringKeyGenerator that generates hex-encoded String keys.
- * Delegates to a {@link BytesKeyGenerator} for the actual key generation.
+ * Service interface for symmetric data encryption.
  * @author Keith Donald
  */
-final class HexEncodingStringKeyGenerator implements StringKeyGenerator {
+public interface BytesEncryptor {
 
-    private final BytesKeyGenerator keyGenerator;
+    /**
+     * Encrypt the byte array.
+     */
+    byte[] encrypt(byte[] byteArray);
 
-    public HexEncodingStringKeyGenerator(BytesKeyGenerator keyGenerator) {
-        this.keyGenerator = keyGenerator;
-    }
-
-    public String generateKey() {
-        return new String(Hex.encode(keyGenerator.generateKey()));
-    }
+    /**
+     * Decrypt the byte array.
+     */
+    byte[] decrypt(byte[] encryptedByteArray);
 
 }
