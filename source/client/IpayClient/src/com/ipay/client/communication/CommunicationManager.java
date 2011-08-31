@@ -108,10 +108,12 @@ public class CommunicationManager {
 	public static final String SEND_ORDER_URT = HTTPS_BASE+"client/SendOrder";
 	public static final String GET_BANK_PRIVATE_KEY_URL = HTTPS_BASE+"client/getEncryptPrivateKey";
 	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE+"client/getBankPublickey";
-	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"client/getMarketPublickey";
+	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"client/getMarketPublickey?";
 	public static final String PAY_URL = HTTPS_BASE+"client/PayRequest";
-	public static final String PUBLIC_KEY = "public";
-	public static final String PRIVATE_KEY = "private";
+	private static final String PUBLIC_KEY = "public";
+	private static final String PRIVATE_KEY = "private";
+	private static final int KEY_SIZE = 162;
+	private static final int ENCRYPT_KEY_SIZE = 656;
 
 	/**
 	 * 
@@ -377,11 +379,16 @@ public class CommunicationManager {
 	 * @throws IOException
 	 * @throws HttpResponseException
 	 */
-	public byte[] getBankKey(String type, Context context,int size)
+	public byte[] getBankKey(String type, Context context)
 			throws HttpResponseException, IOException {
 		// 查找本地key
-		byte[] key = new byte[size];
-
+		byte[] key;
+		if(type.equals(PUBLIC_KEY)){
+			key = new byte[KEY_SIZE];
+		}else{
+			key = new byte[ENCRYPT_KEY_SIZE];
+		}
+		 
 		try {
 			
 			FileInputStream inputStream = context.openFileInput(session
@@ -394,9 +401,9 @@ public class CommunicationManager {
 			// 未找到，需要下载
 			Log.d(TAG,"本地没有，尝试下载key");
 			if (type.equals(PRIVATE_KEY)) {
-				key = downloadKey(GET_BANK_PRIVATE_KEY_URL,656);
+				key = downloadKey(GET_BANK_PRIVATE_KEY_URL);
 			} else if (type.equals(PUBLIC_KEY)) {
-				key = downloadKey(GET_BANK_PUBLIC_KEY_URL,162);
+				key = downloadKey(GET_BANK_PUBLIC_KEY_URL);
 			} else {
 				// wrong
 			}
@@ -430,21 +437,17 @@ public class CommunicationManager {
 	 * @return
 	 * @throws IOException
 	 */
-	private byte[] downloadKey(String url, int size) throws HttpResponseException,
+	private byte[] downloadKey(String url) throws HttpResponseException,
 			IOException {
 		HttpGet get = new HttpGet(url);
 		Log.d(TAG,"**********bank key url: "+url);
 //	get.setHeader(HTTP.CONTENT_TYPE, "application/json");
-		byte[] key = new byte[size];
+		
 		try {
 			HttpResponse response = httpClient.execute(get);
 			Log.d(TAG,"*******download key"+response.getEntity().toString()+'\n'+"status code:" +response.getStatusLine().getStatusCode());
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				InputStream inputStream = response.getEntity().getContent();
-				BufferedInputStream bis=new BufferedInputStream(inputStream);
-				bis.read(key);
-				//inputStream.read(key);
-				inputStream.close();
+				byte[] key = EntityUtils.toByteArray(response.getEntity());
 				return key;
 			} else {
 				throw new HttpResponseException(response.getStatusLine()
@@ -770,12 +773,11 @@ public class CommunicationManager {
 			try {
 				JSONObject source = new JSONObject(result.getString("source"));
 				int tranId = source.getInt("tranId");
-//				int amount = result.getInt("amount");
 				String cardnum = result.getString("cardnum");
-				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"?mid="+marketId, 162);
-				byte[] bankPublicKey = getBankKey(PUBLIC_KEY, context, 162);
+				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"mid="+marketId);
+				byte[] bankPublicKey = getBankKey(PUBLIC_KEY, context);
 				byte[] bankPrivateKey = KeyManager.decryptPrivatekey(
-						getBankKey(PRIVATE_KEY, context,656), payPassword, cardnum);
+						getBankKey(PRIVATE_KEY, context), payPassword, cardnum);
 				
 				//准备支付信息
 				data.put("mid", marketId);
@@ -808,7 +810,7 @@ public class CommunicationManager {
 				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 					String bankResult = result2.getString("bankResult");
 					byte[] sign = (byte[]) result2.get("sign");
-					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context,162), bankResult, sign);
+					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context), bankResult, sign);
 					if(verify == true){
 						JSONObject payResult = new JSONObject(bankResult);
 						statusCode = payResult.getInt("statusCode");
@@ -830,6 +832,7 @@ public class CommunicationManager {
 			IOException {
 		JSONObject data = new JSONObject();
 		JSONArray products = new JSONArray();
+		int myAmount = 0;
 		try {
 			data.put("mid", marketId);
 
@@ -841,6 +844,9 @@ public class CommunicationManager {
 				jProduct.put("pid", product.getId());
 				jProduct.put("quantity", product.getQuantity());
 				products.put(jProduct);
+				
+				//算我的总额
+				myAmount += product.getQuantity() * product.getPrice();
 			}
 			data.put("orders", products);
 		} catch (JSONException e) {
@@ -855,13 +861,16 @@ public class CommunicationManager {
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				String source = result.getString("source");
+				JSONObject jSource = new JSONObject(source);
+				int amount = jSource.getInt("amount");
 				byte[] sign = (byte[]) result.get("sign");
 				Log.d(TAG,"*****source: " +source);
 				Log.d(TAG,"*****sign: " +new String(sign));
-				byte[] publicKey = getBankKey(PUBLIC_KEY, context,656);
+				byte[] publicKey = getBankKey(PUBLIC_KEY, context);
 				Log.d(TAG,"*****public key: " +new String(publicKey));
 				boolean verify = KeyManager.verify(publicKey, source, sign);
-				if (verify == true) {
+				
+				if (verify == true || amount == myAmount) {	
 					Log.d(TAG,"********verify OK");
 					return result;
 				}
@@ -907,8 +916,7 @@ public class CommunicationManager {
 	}
 
 	private JSONObject getJsonResult(HttpResponse response) {
-		JSONObject result = null;
-		
+		JSONObject result = null;		
 		try {
 			String retSrc = EntityUtils.toString(response.getEntity());
 
