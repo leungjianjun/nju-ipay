@@ -59,13 +59,13 @@ public class InitDatabase {
 	 * @throws IOException
 	 */
 	public void init() throws IOException{
-		//System.out.println("Init User");
-		//initUser();
-		//System.out.println("InitClient");
-		//initClient();
-		//System.out.println("InitMarket");
-		//initMarket();
-		//System.out.println("InitProduct");
+		System.out.println("Init User");
+		initUser();
+		System.out.println("InitClient");
+		initClient();
+		System.out.println("InitMarket");
+		initMarket();
+		System.out.println("InitProduct");
 		initProduct();
 		//initMarket();
 	}
@@ -122,13 +122,14 @@ public class InitDatabase {
 		//String flag="book";
 		//String flag="book";
 
-		String flag="book";
+		String flag="food";
 		if(flag=="food")
 		{
-			Market market1=marketService.find(Market.class, 101);
-			Market market2=marketService.find(Market.class, 102);
-			Market market3=marketService.find(Market.class, 103);
-			for(int i=7;i<16;i++)
+			
+			Market market1=marketService.find(Market.class, 31);
+			Market market2=marketService.find(Market.class, 32);
+			Market market3=marketService.find(Market.class, 33);
+			for(int i=1;i<2;i++)
 			{
 				Jsoup.connect(baseurl+i).timeout(200000);
 				Document html=Jsoup.connect(baseurl+i).get();
@@ -235,7 +236,7 @@ public class InitDatabase {
 		if(flag=="book")
 		{
 			int i=1;
-			for(i=3;i<12;i++)
+			for(i=1;i<2;i++)
 			{
 				//main.Download(marketService,productService,baseurl, i, 3, product, productinfo, flag);
 				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
@@ -316,11 +317,11 @@ public class InitDatabase {
 						product.setQuantity(100);
 						product.setProductInfo(temp_productinfo[m]);
 						if(i<10)
-						 {product.setMarket(marketService.find(Market.class, 1));}
+						 {product.setMarket(marketService.find(Market.class, 31));}
 						 if(i>=10&& i<15)
-						 {product.setMarket(marketService.find(Market.class, 2));}
+						 {product.setMarket(marketService.find(Market.class, 32));}
 						 if(i>=15)
-						 {product.setMarket(marketService.find(Market.class, 3));}
+						 {product.setMarket(marketService.find(Market.class, 33));}
 						 
 						
 						productService.create(product);
@@ -328,7 +329,7 @@ public class InitDatabase {
 								
 			}
 			
-			for(i=15;i<40;i++)
+			/*for(i=15;i<40;i++)
 			{
 				//main.Download(marketService,productService,baseurl, i, 3, product, productinfo, flag);
 				//productService.create(main.Download(baseurl, i, 3, product, productinfo, flag));
@@ -385,17 +386,7 @@ public class InitDatabase {
 						productinfo.setBarcode(barcode);
 					productService.createProductInfo(productinfo);
 					temp_productinfo[k]=productinfo;
-					/* if(i<10)
-					 {product.setMarket(marketService.find(Market.class, 1));}
-					 if(i>=10&& i<15)
-					 {product.setMarket(marketService.find(Market.class, 2));}
-					 if(i>=15)
-					 {product.setMarket(marketService.find(Market.class, 3));}
-					 
-					 product.setProductInfo(productService.getProductInfo(banner));
-					  
-					  productService.create(product);
-					  System.out.println("insert");*/
+					
 				  }	
 				 for(int m=startindex;m<length;m++)
 					{
@@ -418,16 +409,16 @@ public class InitDatabase {
 						product.setQuantity(100);
 						product.setProductInfo(temp_productinfo[m]);
 						if(i<10)
-						 {product.setMarket(marketService.find(Market.class, 1));}
+						 {product.setMarket(marketService.find(Market.class, 31));}
 						 if(i>=10&& i<15)
-						 {product.setMarket(marketService.find(Market.class, 2));}
+						 {product.setMarket(marketService.find(Market.class, 32));}
 						 if(i>=15)
-						 {product.setMarket(marketService.find(Market.class, 3));}
+						 {product.setMarket(marketService.find(Market.class, 33));}
 						 
 						
 						productService.create(product);
 					}
-			}
+			}*/
 		}
 	}
 	
@@ -442,6 +433,10 @@ public class InitDatabase {
 		//Element detail=details.get(17);
 		//System.out.println(detail.text());
 		Element temp_element;
+		Element originImg=detailHtml.select("td#prodImageCell").first();
+		Element originImg_img=originImg.getElementsByTag("img").first();
+		String href=originImg_img.attr("src");
+		System.out.println(href);
 		for(int i=0;i<details.size();i++)
 		{			
 			if(details.get(i).text().equals("基本信息"))
@@ -512,7 +507,7 @@ public class InitDatabase {
 		auth=userService.getAuthority("client");
 		
 		
-		for(int i=0;i<100;i++)
+		for(int i=0;i<30;i++)
 		{
 			Client client = new Client();			
 			ClientInfo clientInfo = new ClientInfo();
@@ -522,6 +517,7 @@ public class InitDatabase {
 			client.setAccount("Client"+i);
 			client.setPassword(sha.encodePassword("Client"+i, "Client"+i));
 			client.setCardnum("622848 208149873"+(4000+i));
+			client.setPaypass(sha.encodePassword("paypass"+i, client.getAccount()));
 			client.setPaypass("paypass"+i);
 			
 			client.getAuthorityList().add(auth);			
