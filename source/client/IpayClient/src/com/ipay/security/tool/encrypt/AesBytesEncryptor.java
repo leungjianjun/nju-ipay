@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.client.security.tool.encrypt;
+package com.ipay.security.tool.encrypt;
 
-import static com.ipay.client.security.tool.encrypt.CipherUtils.doFinal;
-import static com.ipay.client.security.tool.encrypt.CipherUtils.initCipher;
-import static com.ipay.client.security.tool.encrypt.CipherUtils.newCipher;
-import static com.ipay.client.security.tool.encrypt.CipherUtils.newSecretKey;
-import static com.ipay.client.security.tool.util.EncodingUtils.concatenate;
-import static com.ipay.client.security.tool.util.EncodingUtils.subArray;
+import static com.ipay.security.tool.encrypt.CipherUtils.doFinal;
+import static com.ipay.security.tool.encrypt.CipherUtils.initCipher;
+import static com.ipay.security.tool.encrypt.CipherUtils.newCipher;
+import static com.ipay.security.tool.encrypt.CipherUtils.newSecretKey;
+import static com.ipay.security.tool.util.EncodingUtils.concatenate;
+import static com.ipay.security.tool.util.EncodingUtils.subArray;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -28,8 +28,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.ipay.client.security.tool.codec.Hex;
-import com.ipay.client.security.tool.keygen.BytesKeyGenerator;
+import com.ipay.security.tool.codec.Hex;
+import com.ipay.security.tool.keygen.BytesKeyGenerator;
 
 /**
  * Encryptor that uses 256-bit AES encryption.

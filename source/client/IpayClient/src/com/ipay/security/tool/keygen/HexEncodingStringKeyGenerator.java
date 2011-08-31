@@ -13,29 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.client.security.tool.keygen;
+package com.ipay.security.tool.keygen;
+
+import com.ipay.security.tool.codec.Hex;
 
 /**
- * Key generator that simply returns the same key every time.
- *
+ * A StringKeyGenerator that generates hex-encoded String keys.
+ * Delegates to a {@link BytesKeyGenerator} for the actual key generation.
  * @author Keith Donald
- * @author Annabelle Donald
- * @author Corgan Donald
  */
-final class SharedKeyGenerator implements BytesKeyGenerator {
+final class HexEncodingStringKeyGenerator implements StringKeyGenerator {
 
-    private byte[] sharedKey;
+    private final BytesKeyGenerator keyGenerator;
 
-    public SharedKeyGenerator(byte[] sharedKey) {
-        this.sharedKey = sharedKey;
+    public HexEncodingStringKeyGenerator(BytesKeyGenerator keyGenerator) {
+        this.keyGenerator = keyGenerator;
     }
 
-    public int getKeyLength() {
-        return sharedKey.length;
-    }
-
-    public byte[] generateKey() {
-        return sharedKey;
+    public String generateKey() {
+        return new String(Hex.encode(keyGenerator.generateKey()));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ipay.client.security.tool.codec;
+package com.ipay.security.tool.codec;
 
 /**
  * Hex data encoder. Converts byte arrays (such as those obtained from message digests)

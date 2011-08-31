@@ -13,23 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.client.security.tool.encrypt;
+package com.ipay.security.tool.keygen;
 
 /**
- * Service interface for symmetric encryption of text strings.
+ * Key generator that simply returns the same key every time.
  *
  * @author Keith Donald
+ * @author Annabelle Donald
+ * @author Corgan Donald
  */
-public interface TextEncryptor {
+final class SharedKeyGenerator implements BytesKeyGenerator {
 
-    /**
-     * Encrypt the raw text string.
-     */
-    String encrypt(String text);
+    private byte[] sharedKey;
 
-    /**
-     * Decrypt the encrypted text string.
-     */
-    String decrypt(String encryptedText);
+    public SharedKeyGenerator(byte[] sharedKey) {
+        this.sharedKey = sharedKey;
+    }
+
+    public int getKeyLength() {
+        return sharedKey.length;
+    }
+
+    public byte[] generateKey() {
+        return sharedKey;
+    }
 
 }

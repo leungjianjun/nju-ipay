@@ -1,4 +1,4 @@
-package com.ipay.client.security.tool.codec;
+package com.ipay.security.tool.codec;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
