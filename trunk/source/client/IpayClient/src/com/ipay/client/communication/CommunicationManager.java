@@ -79,36 +79,36 @@ public class CommunicationManager {
 
 	public static final String TAG = "CommunicationManager";
 
-	public static final String HTTP_BASE = "http://192.168.1.101:8080/client/";
-	public static final String HTTPS_BASE = "https://192.168.1.101:8443/client/";
+	public static final String HTTP_BASE = "http://192.168.1.101:8080/";
+	public static final String HTTPS_BASE = "https://192.168.1.101:8443/";
 
 	// 用户相关
-	public static final String LOGIN_URL = HTTPS_BASE+"j_spring_security_check";
-	public static final String LOGOUT_URL = HTTP_BASE+"logout";
-	public static final String USER_INFO_URL = HTTPS_BASE+"GetInfo";
-	public static final String SET_USER_INFO_URL = HTTPS_BASE+"SetInfo";
-	public static final String SET_PASSWORD_URL = HTTPS_BASE+"SetInfo";
+	public static final String LOGIN_URL = HTTPS_BASE+"client/j_spring_security_check";
+	public static final String LOGOUT_URL = HTTP_BASE+"client/logout";
+	public static final String USER_INFO_URL = HTTPS_BASE+"client/GetInfo";
+	public static final String SET_USER_INFO_URL = HTTPS_BASE+"client/SetInfo";
+	public static final String SET_PASSWORD_URL = HTTPS_BASE+"client/SetInfo";
 
 	// 进入商店
-	public static final String SEARCH_MARKET_URL = HTTP_BASE+"searchMarket?";
-	public static final String MARKET_ID_URL = HTTP_BASE+"findMarketId";
-	public static final String MARKET_INFO_URL = HTTP_BASE+"MarketInfo?";
-	public static final String SPECIAL_PRODUCT_URL = HTTP_BASE+"MarketSpecialProducts?";
-	public static final String HOT_PRODUCT_URL = HTTP_BASE+"MarketHotProducts?";
+	public static final String SEARCH_MARKET_URL = HTTP_BASE+"client/searchMarket?";
+	public static final String MARKET_ID_URL = HTTP_BASE+"client/findMarketId";
+	public static final String MARKET_INFO_URL = HTTP_BASE+"client/MarketInfo?";
+	public static final String SPECIAL_PRODUCT_URL = HTTP_BASE+"client/MarketSpecialProducts?";
+	public static final String HOT_PRODUCT_URL = HTTP_BASE+"client/MarketHotProducts?";
 
 	// 扫描商品
-	public static final String PRODUCT_INFO_BY_BARCODE_URL = HTTP_BASE+"ProductInfoByCode?";
-	public static final String PRODUCT_INFO_BY_ID_URL = HTTP_BASE+"ProductInfoById?";
-	public static final String PRODUCT_ID_URL = HTTP_BASE+"ProductIdByCode?";
+	public static final String PRODUCT_INFO_BY_BARCODE_URL = HTTP_BASE+"client/ProductInfoByCode?";
+	public static final String PRODUCT_INFO_BY_ID_URL = HTTP_BASE+"client/ProductInfoById?";
+	public static final String PRODUCT_ID_URL = HTTP_BASE+"client/ProductIdByCode?";
 	// 搜索商品
-	public static final String SEARCH_PRODUCT_URL = HTTP_BASE+"SearchProduct?";
+	public static final String SEARCH_PRODUCT_URL = HTTP_BASE+"client/SearchProduct?";
 
 	// 支付
-	public static final String SEND_ORDER_URT = HTTPS_BASE+"SendOrder";
-	public static final String GET_BANK_PRIVATE_KEY_URL = HTTPS_BASE+"getEncryptPrivateKey";
-	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE+"getMarketPublickey";
-	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"getBankPublickey";
-	public static final String PAY_URL = HTTPS_BASE+"PayRequest";
+	public static final String SEND_ORDER_URT = HTTPS_BASE+"client/SendOrder";
+	public static final String GET_BANK_PRIVATE_KEY_URL = HTTPS_BASE+"client/getEncryptPrivateKey";
+	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE+"client/getMarketPublickey";
+	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"client/getBankPublickey";
+	public static final String PAY_URL = HTTPS_BASE+"client/PayRequest";
 	public static final String PUBLIC_KEY = "public";
 	public static final String PRIVATE_KEY = "private";
 
