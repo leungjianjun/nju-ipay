@@ -82,7 +82,7 @@ public class ShoppingCartArrayAdapter extends BaseAdapter {
 		String imageUrl = product.getMinImgUrl();
 		if (!TextUtils.isEmpty(imageUrl)) {
 			holder.goodsImage.setImageBitmap(IpayApplication.imageLoader.get(
-					CommunicationManager.BASE_URL + imageUrl, callback));
+					CommunicationManager.HTTP_BASE+ imageUrl, callback));
 		}
 
 		holder.goodsName.setText(product.getName());

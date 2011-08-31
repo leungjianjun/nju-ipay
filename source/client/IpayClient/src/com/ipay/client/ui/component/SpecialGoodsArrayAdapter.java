@@ -68,7 +68,7 @@ public class SpecialGoodsArrayAdapter extends ArrayAdapter<SpecialProduct> {
 		String imageUrl=product.getMinImgUrl();
 		//Log.d(TAG,"image url"+imageUrl);
 		if(!TextUtils.isEmpty(imageUrl)){
-			holder.goodsImage.setImageBitmap(IpayApplication.imageLoader.get(CommunicationManager.BASE_URL+imageUrl, callback));
+			holder.goodsImage.setImageBitmap(IpayApplication.imageLoader.get(CommunicationManager.HTTP_BASE+imageUrl, callback));
 		}
 
 		holder.goodsName.setText(product.getName());
