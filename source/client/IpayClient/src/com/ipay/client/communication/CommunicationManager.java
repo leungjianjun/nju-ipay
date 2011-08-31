@@ -768,7 +768,8 @@ public class CommunicationManager {
 		if (result != null) {
 			JSONObject data = new JSONObject();
 			try {
-				int tranId = result.getInt("tranId");
+				JSONObject source = new JSONObject(result.getString("source"));
+				int tranId = source.getInt("tranId");
 //				int amount = result.getInt("amount");
 				String cardnum = result.getString("cardnum");
 				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"?mid="+marketId, 162);
@@ -778,6 +779,7 @@ public class CommunicationManager {
 				
 				//准备支付信息
 				data.put("mid", marketId);
+				
 				// OI
 				JSONObject oi = new JSONObject();
 				oi.put("tranId", tranId);
@@ -793,7 +795,7 @@ public class CommunicationManager {
 
 				// OIMD PIMD
 				data.put("OIMD", KeyManager.sign(bankPrivateKey, oi.toString()));
-				data.put("PIMD", pi.toString());
+				data.put("PIMD", KeyManager.sign(bankPrivateKey, pi.toString()));
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -805,7 +807,7 @@ public class CommunicationManager {
 				JSONObject result2 = getJsonResult(response);
 				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 					String bankResult = result2.getString("bankResult");
-					byte[] sign = result2.getString("sign").getBytes();
+					byte[] sign = (byte[]) result2.get("sign");
 					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context,162), bankResult, sign);
 					if(verify == true){
 						JSONObject payResult = new JSONObject(bankResult);
@@ -848,13 +850,12 @@ public class CommunicationManager {
 
 		Log.d(TAG,"*******源数据"+data.toString());
 		// post
-		JSONObject orderResult = null;
 		try {
 			HttpResponse response = doPost(SEND_ORDER_URT, data);
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				String source = result.getString("source");
-				byte[] sign = result.get("sign");
+				byte[] sign = (byte[]) result.get("sign");
 				Log.d(TAG,"*****source: " +source);
 				Log.d(TAG,"*****sign: " +new String(sign));
 				byte[] publicKey = getBankKey(PUBLIC_KEY, context,656);
@@ -862,7 +863,7 @@ public class CommunicationManager {
 				boolean verify = KeyManager.verify(publicKey, source, sign);
 				if (verify == true) {
 					Log.d(TAG,"********verify OK");
-					orderResult = new JSONObject(source);
+					return result;
 				}
 			} else {
 				String error = result.getString("error");
@@ -877,7 +878,7 @@ public class CommunicationManager {
 			Log.d(TAG,"JSON excep");
 			e.printStackTrace();
 		}
-		return orderResult;
+		return null;
 	}
 
 	/**
@@ -907,7 +908,7 @@ public class CommunicationManager {
 
 	private JSONObject getJsonResult(HttpResponse response) {
 		JSONObject result = null;
-		JSONO
+		
 		try {
 			String retSrc = EntityUtils.toString(response.getEntity());
 
