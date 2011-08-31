@@ -1,5 +1,6 @@
 package com.ipay.client.communication;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -106,8 +107,8 @@ public class CommunicationManager {
 	// 支付
 	public static final String SEND_ORDER_URT = HTTPS_BASE+"client/SendOrder";
 	public static final String GET_BANK_PRIVATE_KEY_URL = HTTPS_BASE+"client/getEncryptPrivateKey";
-	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE+"client/getMarketPublickey";
-	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"client/getBankPublickey";
+	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE+"client/getBankPublickey";
+	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"client/getMarketPublickey";
 	public static final String PAY_URL = HTTPS_BASE+"client/PayRequest";
 	public static final String PUBLIC_KEY = "public";
 	public static final String PRIVATE_KEY = "private";
@@ -376,22 +377,26 @@ public class CommunicationManager {
 	 * @throws IOException
 	 * @throws HttpResponseException
 	 */
-	public byte[] getBankKey(String type, Context context)
+	public byte[] getBankKey(String type, Context context,int size)
 			throws HttpResponseException, IOException {
 		// 查找本地key
-		byte[] key = new byte[656];
+		byte[] key = new byte[size];
 
 		try {
+			
 			FileInputStream inputStream = context.openFileInput(session
 					.getUsername() + type + ".key");
+			Log.d(TAG,"本地已找到key");
 			inputStream.read(key);
 			inputStream.close();
+			
 		} catch (FileNotFoundException e1) {
 			// 未找到，需要下载
+			Log.d(TAG,"本地没有，尝试下载key");
 			if (type.equals(PRIVATE_KEY)) {
-				key = downloadKey(GET_BANK_PRIVATE_KEY_URL);
+				key = downloadKey(GET_BANK_PRIVATE_KEY_URL,656);
 			} else if (type.equals(PUBLIC_KEY)) {
-				key = downloadKey(GET_BANK_PUBLIC_KEY_URL);
+				key = downloadKey(GET_BANK_PUBLIC_KEY_URL,162);
 			} else {
 				// wrong
 			}
@@ -425,16 +430,20 @@ public class CommunicationManager {
 	 * @return
 	 * @throws IOException
 	 */
-	private byte[] downloadKey(String url) throws HttpResponseException,
+	private byte[] downloadKey(String url, int size) throws HttpResponseException,
 			IOException {
 		HttpGet get = new HttpGet(url);
-		get.setHeader(HTTP.CONTENT_TYPE, "application/json");
-		byte[] key = new byte[656];
+		Log.d(TAG,"**********bank key url: "+url);
+//	get.setHeader(HTTP.CONTENT_TYPE, "application/json");
+		byte[] key = new byte[size];
 		try {
 			HttpResponse response = httpClient.execute(get);
+			Log.d(TAG,"*******download key"+response.getEntity().toString()+'\n'+"status code:" +response.getStatusLine().getStatusCode());
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream inputStream = response.getEntity().getContent();
-				inputStream.read(key);
+				BufferedInputStream bis=new BufferedInputStream(inputStream);
+				bis.read(key);
+				//inputStream.read(key);
 				inputStream.close();
 				return key;
 			} else {
@@ -752,7 +761,8 @@ public class CommunicationManager {
 		int statusCode = -1;
 		// 第一步：发送订单send order
 		JSONObject result = sendOrder(context);
-		Log.d(TAG,"*******支付结果"+result.toString());
+		Log.d(TAG,"*******支付结果**********"+result.toString());
+	//	Log.d(TAG,"*******支付source"+result.);
 		
 		//pay
 		if (result != null) {
@@ -761,10 +771,10 @@ public class CommunicationManager {
 				int tranId = result.getInt("tranId");
 //				int amount = result.getInt("amount");
 				String cardnum = result.getString("cardnum");
-				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"?mid="+marketId);
-				byte[] bankPublicKey = getBankKey(PUBLIC_KEY, context);
+				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"?mid="+marketId, 162);
+				byte[] bankPublicKey = getBankKey(PUBLIC_KEY, context, 162);
 				byte[] bankPrivateKey = KeyManager.decryptPrivatekey(
-						getBankKey(PRIVATE_KEY, context), payPassword, cardnum);
+						getBankKey(PRIVATE_KEY, context,656), payPassword, cardnum);
 				
 				//准备支付信息
 				data.put("mid", marketId);
@@ -796,7 +806,7 @@ public class CommunicationManager {
 				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 					String bankResult = result2.getString("bankResult");
 					byte[] sign = result2.getString("sign").getBytes();
-					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context), bankResult, sign);
+					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context,162), bankResult, sign);
 					if(verify == true){
 						JSONObject payResult = new JSONObject(bankResult);
 						statusCode = payResult.getInt("statusCode");
@@ -828,7 +838,7 @@ public class CommunicationManager {
 				JSONObject jProduct = new JSONObject();
 				jProduct.put("pid", product.getId());
 				jProduct.put("quantity", product.getQuantity());
-				products.put(product);
+				products.put(jProduct);
 			}
 			data.put("orders", products);
 		} catch (JSONException e) {
@@ -844,10 +854,14 @@ public class CommunicationManager {
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				String source = result.getString("source");
-				byte[] sign = result.getString("sign").getBytes();
-				byte[] publicKey = getBankKey(PUBLIC_KEY, context);
+				byte[] sign = result.get("sign");
+				Log.d(TAG,"*****source: " +source);
+				Log.d(TAG,"*****sign: " +new String(sign));
+				byte[] publicKey = getBankKey(PUBLIC_KEY, context,656);
+				Log.d(TAG,"*****public key: " +new String(publicKey));
 				boolean verify = KeyManager.verify(publicKey, source, sign);
 				if (verify == true) {
+					Log.d(TAG,"********verify OK");
 					orderResult = new JSONObject(source);
 				}
 			} else {
@@ -856,9 +870,11 @@ public class CommunicationManager {
 						.getStatusCode(), error);
 			}
 		} catch (ClientProtocolException e) {
+			Log.d(TAG,"ClientProtocol");
 			e.printStackTrace();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
+			Log.d(TAG,"JSON excep");
 			e.printStackTrace();
 		}
 		return orderResult;
@@ -891,6 +907,7 @@ public class CommunicationManager {
 
 	private JSONObject getJsonResult(HttpResponse response) {
 		JSONObject result = null;
+		JSONO
 		try {
 			String retSrc = EntityUtils.toString(response.getEntity());
 
