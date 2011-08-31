@@ -16,14 +16,14 @@ import java.util.Observable;
  * 
  */
 public class ShoppingCart {
-	private static ShoppingCart instance;
+	private static ShoppingCart instance=null;
 	private ArrayList<Product> list;
 
 	public static ShoppingCart getInstance() {
-		if (instance != null)
-			return instance;
-		else
-			return new ShoppingCart();
+		if(instance==null){
+			instance=new ShoppingCart();
+		}
+		return instance;
 	}
 
 	private ShoppingCart() {

@@ -63,7 +63,7 @@ public class ShoppingCartActivity extends BaseActivity {
 	private TextView quantityTxt;
 	private TextView totalTxt;
 	private ShoppingCartArrayAdapter adapter;
-	private ShoppingCart cart=IpayApplication.shoppingCart;
+	private ShoppingCart cart;
 	private Feedback feedback;
 
 	@Override
@@ -89,7 +89,7 @@ public class ShoppingCartActivity extends BaseActivity {
 		});
 		adapter = new ShoppingCartArrayAdapter(this);
 		listView.setAdapter(adapter);
-
+		cart=ShoppingCart.getInstance();
 		feedback = new FeedbackFactory().create(FeedbackType.DIALOG, this);
 	}
 
