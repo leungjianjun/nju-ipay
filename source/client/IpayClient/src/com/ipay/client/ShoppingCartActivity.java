@@ -195,7 +195,7 @@ public class ShoppingCartActivity extends BaseActivity {
 				return TaskResult.FAILED;
 			}
 
-			if (statusCode == 200)
+			if (statusCode == 0)
 				return TaskResult.OK;
 			else
 				return TaskResult.FAILED;
