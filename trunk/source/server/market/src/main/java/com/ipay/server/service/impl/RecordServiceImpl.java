@@ -1,5 +1,7 @@
 package com.ipay.server.service.impl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import com.ipay.server.service.ServiceException;
 @Transactional
 public class RecordServiceImpl<T extends Record> extends ServiceImpl<T> implements IRecordService<T> {
 
+	public final int QUANTITY_PER_PAGE = 10;
+	
 	@Override
 	public void create(T baseBean) {
 		dao.persist(baseBean);
@@ -51,6 +55,11 @@ public class RecordServiceImpl<T extends Record> extends ServiceImpl<T> implemen
 		}else{
 			return record;
 		}
+	}
+
+	public List<T> getRecords(int client, int page) {
+		int firstResult = (page-1)*QUANTITY_PER_PAGE;
+		return dao.list("from Record as record where record.client.id =? ordre by record.createDate desc", firstResult, firstResult+QUANTITY_PER_PAGE , client);
 	}
 
 }
