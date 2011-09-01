@@ -30,6 +30,7 @@ import android.app.Dialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -65,6 +66,7 @@ public class ShoppingCartActivity extends BaseActivity {
 	private ShoppingCartArrayAdapter adapter;
 	private ShoppingCart cart;
 	private Feedback feedback;
+	private GenericTask task;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,9 @@ public class ShoppingCartActivity extends BaseActivity {
 		update();
 	}
 
+	/**
+	 * 初始化界面
+	 */
 	private void initViews() {
 		setContentView(R.layout.shopping_cart);
 		listView = (ListView) findViewById(R.id.cart_goods_list);
@@ -89,7 +94,8 @@ public class ShoppingCartActivity extends BaseActivity {
 		});
 		adapter = new ShoppingCartArrayAdapter(this);
 		listView.setAdapter(adapter);
-		cart=ShoppingCart.getInstance();
+		// 获取购物车实例
+		cart = ShoppingCart.getInstance();
 		feedback = new FeedbackFactory().create(FeedbackType.DIALOG, this);
 	}
 
@@ -118,6 +124,9 @@ public class ShoppingCartActivity extends BaseActivity {
 		});
 	}
 
+	/**
+	 * 自定义对话框，用户输入支付密码，支付
+	 */
 	private void pay() {
 		final LayoutInflater inflater = getLayoutInflater();
 		final View view = inflater.inflate(R.layout.pay, null);
@@ -159,9 +168,14 @@ public class ShoppingCartActivity extends BaseActivity {
 		dialog.show();
 	}
 
+	/**
+	 * 支付
+	 * 
+	 * @param pin
+	 *            支付密码
+	 */
 	private void doPay(String pin) {
-		Log.d(TAG, "支付" + pin);
-		GenericTask task = new PayTask();
+		task = new PayTask();
 		TaskListener taskListener = new PayTaskListener();
 		task.setTaskListener(taskListener);
 		TaskParams params = new TaskParams();
@@ -185,8 +199,8 @@ public class ShoppingCartActivity extends BaseActivity {
 			CommunicationManager cm = CommunicationManager.instance();
 			int statusCode = 0;
 			try {
-				statusCode = cm.pay(pin, ShoppingCartActivity.this);
 				publishProgress(60);
+				statusCode = cm.pay(pin, ShoppingCartActivity.this);
 			} catch (HttpResponseException e) {
 				e.printStackTrace();
 				return TaskResult.FAILED;
@@ -211,24 +225,38 @@ public class ShoppingCartActivity extends BaseActivity {
 
 		@Override
 		public void onProgressUpdate(Integer... values) {
-			feedback.update("等待处理");
+			if (values[0] == 60) {
+				feedback.update("请耐心等待处理");
+			}
 		}
 
 		@Override
 		public void onPostExecute(TaskResult result) {
-			//如果成功，则清空购物车
-			if (result == TaskResult.OK){
-				feedback.succeed("");
+
+			// 如果成功，则清空购物车,更新界面,反之得给出失败提示
+
+			if (result == TaskResult.OK) {
+				feedback.succeed(getString(R.string.shopping_cart_pay_success));
 				cart.clear();
 				adapter.notifyDataSetChanged();
-			}
-			else
-				feedback.fail("失败");
+				update();
+			} else
+				feedback.fail(getString(R.string.shopping_cart_pay_fail));
 		}
 
 		@Override
 		public void onCancelled() {
 			feedback.cancel();
+		}
+
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		super.onDestroy();
+		if (task != null && task.getStatus() == Status.RUNNING) {
+			task.cancel(true);
 		}
 
 	}

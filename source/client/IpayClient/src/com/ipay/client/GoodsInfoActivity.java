@@ -45,6 +45,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -63,7 +64,6 @@ public class GoodsInfoActivity extends BaseActivity {
 	private static final String TAG = "GoodsInfoActivitys";
 	private static final String PRODUCT_ID = "pid";
 	private static final String PRODUCT_BARCODE = "barcode";
-	
 
 	// views
 	private ImageView productImageView;
@@ -89,9 +89,19 @@ public class GoodsInfoActivity extends BaseActivity {
 		imageBitmap = ImageCache.defaultBitmap;
 		feedback = new FeedbackFactory().create(FeedbackType.PROGRESSBAR, this);
 		taskListener = new GetProductTaskListener();
-
+		// update();
 		getProduct();
 
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		super.onDestroy();
+
+		if (task != null && task.getStatus() == Status.RUNNING) {
+			task.cancel(true);
+		}
 	}
 
 	/**
@@ -222,7 +232,7 @@ public class GoodsInfoActivity extends BaseActivity {
 				feedback.succeed("");
 				update();
 			} else {
-				feedback.fail("失败");
+				feedback.fail(getString(R.string.goods_info_get_fail));
 			}
 		}
 
@@ -271,19 +281,14 @@ public class GoodsInfoActivity extends BaseActivity {
 				if (product != null) {
 					String imageURL = CommunicationManager.HTTP_BASE
 							+ product.getMidImgUrl();
-					Log.d(TAG, "mid image url: " + imageURL);
+					Log.d(TAG, "download mid image: " + imageURL);
 					try {
-						URL url = new URL(imageURL);
-						url.getContent();
-						InputStream is = (InputStream) url.getContent();
-						imageBitmap = BitmapFactory
-								.decodeStream(new BufferedInputStream(is));
+						imageBitmap = CommunicationManager.instance()
+								.getBitmap(imageURL);
 					} catch (IOException e) {
-
+						Log.d(TAG, "download mid image failed");
 						e.printStackTrace();
-						Log.d(TAG, "获取图片失败");
 					}
-
 				}
 
 				publishProgress(80);

@@ -26,7 +26,7 @@ public class DialogFeedback extends Feedback {
 
 	@Override
 	public void succeed(String msg) {
-		progressDialog.setMessage(msg);
+		showMessage(msg);
 		progressDialog.dismiss();
 
 	}
