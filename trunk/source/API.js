@@ -514,7 +514,7 @@ var result_pay_order = {
 //购买记录
 
 /**
- * url https://xxx.xxx.xxx.xxx:8443/client/getRecords
+ * url https://xxx.xxx.xxx.xxx:8443/client/getRecords?page={page num}
  * 
  * 方法：get
  * 
