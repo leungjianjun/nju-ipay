@@ -10,5 +10,7 @@ public interface IRecordService<T extends Record> extends IService<T> {
 	public boolean checkTransactionEffective(int tranId,int cid);
 	
 	public boolean checktransactionDone(int tranId);
+	
+	public T getRecordByTranId(int tranId);
 
 }

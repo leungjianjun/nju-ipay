@@ -119,6 +119,7 @@ public class TransactionController {
 	 */
 	@RequestMapping(value = "/client/SendOrder", method = RequestMethod.POST)
 	public @ResponseBody PayResponseAdapter sendOrder(@RequestBody Map<String, Object> param,Principal principal,HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		logger.info("client send order");
 		int mid = (Integer) param.get("mid");
 		List<Map<String,Integer>> orders = (List<Map<String, Integer>>) param.get("orders");
 		double total = 0;
@@ -162,11 +163,13 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value = "/client/PayRequest", method = RequestMethod.POST)
-	public @ResponseBody Object payRequest(@RequestBody PayRequestSign payRequestSign,Principal principal,HttpServletResponse response) {
+	public @ResponseBody PayResponse payRequest(@RequestBody Map<String,Object> param,Principal principal,HttpServletResponse response) {
+		logger.info("client pay request ");
+		PayRequestSign payRequestSign = new PayRequestSign(param);
 		//检查请求是否合法
 		byte[] marketPrivateKey = PrivateKeyEncryptor.decrypt(
 					marketService.find(Market.class, payRequestSign.getMid()).getEncryptPrivateKey());
-		String message = KeyManager.decryptByRSAInString(marketPrivateKey, payRequestSign.getEncryptOI());
+		String message = KeyManager.decryptByRSAInString(marketPrivateKey, payRequestSign.getEncryptOIBytes());
 		Map<String,Object> source = Maps.newHashMap();
 		try {
 			source = mapper.readValue(message, source.getClass());
@@ -187,9 +190,32 @@ public class TransactionController {
 		//检查签名
 		
 		//把请求交给银行
+		PayResponse payResponse;
+		try {
+			payResponse = BankServerProxy.getPayResponseSign(payRequestSign);
+		} catch (BankProxyServerException e) {
+			e.printStackTrace();
+			throw new ControllerException(ExceptionMessage.BANK_TRANSZCTION_FORMATE_ERROR,400);
+		}
+		//检查银行签名
 		
-		return response;
+		//检查银行结果
+		Map<String,Object> result = Maps.newHashMap();
+		try {
+			result = mapper.readValue(payResponse.getSource(), result.getClass());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ControllerException(ExceptionMessage.BANK_INTERNAL_ERROR,500);
+		}
+		if(tranId != (Integer)result.get("tranId")){
+			throw new ControllerException(ExceptionMessage.BANK_INTERNAL_ERROR,500);
+		}
 		
+		//应用更改
+		Record record = recordService.getRecordByTranId(tranId);
+		record.setEffective(true);
+		recordService.update(record);
+		return payResponse;
 	}
 	
 	/**

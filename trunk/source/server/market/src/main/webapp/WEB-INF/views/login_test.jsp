@@ -41,6 +41,10 @@ $(document).ready(function(){
 	$.postJSON("<c:url value="/j_spring_security_check"/>",{"account":"ljj","password":"123456"},function(data){
 		alert(data)
 	})
+	
+	$.postJSON("<c:url value="/client/PayRequest"/>",{"mid":"2","encryptOI":"123456","encryptPI":"dsfads","OIMD":"","PIMD":""},function(data){
+		alert(data)
+	})
 
 })
 

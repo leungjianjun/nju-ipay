@@ -64,10 +64,10 @@ public class TransactionControllerTest extends ControllerTest<TransactionControl
 		byte[] OIMD = KeyManager.sign(KeyManager.decryptPrivatekey(encryptPrivateKey, rawPass, salt), encryptOI);
 		byte[] PIMD = KeyManager.sign(KeyManager.decryptPrivatekey(encryptPrivateKey, rawPass, salt), encryptPI);
 		PayRequestSign payRequestSign = new PayRequestSign();
-		payRequestSign.setEncryptOI(encryptOI);
-		payRequestSign.setEncryptPI(encryptPI);
-		payRequestSign.setOIMD(OIMD);
-		payRequestSign.setPIMD(PIMD);
+		//payRequestSign.setEncryptOI(encryptOI);
+		//payRequestSign.setEncryptPI(encryptPI);
+		//payRequestSign.setOIMD(OIMD);
+		//payRequestSign.setPIMD(PIMD);
 		
 	}
 	

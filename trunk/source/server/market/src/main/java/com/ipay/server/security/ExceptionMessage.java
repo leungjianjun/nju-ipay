@@ -23,5 +23,13 @@ public final class ExceptionMessage {
 	public static final String TRANSACTION_ID_NOT_CORRECT = "交易号不正确";
 	
 	public static final String DATA_FORMATE_ERROR = "数据格式错误";
+	
+	public static final String ENCRYPT_PRIVATEKEY_NOT_FOUND = "找不到加密的私钥";
+	
+	public static final String PUBLICKEY_NOT_FOUND = "无法获取公钥";
+	
+	public static final String BANK_TRANSZCTION_FORMATE_ERROR = "银行数据内容错误";
+	
+	public static final String BANK_INTERNAL_ERROR = "银行服务器出现错误";
 
 }
