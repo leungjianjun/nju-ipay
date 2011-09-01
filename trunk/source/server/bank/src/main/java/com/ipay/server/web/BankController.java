@@ -72,6 +72,7 @@ public class BankController {
 
 	@RequestMapping(value = "/bank/getPayRequest", method = RequestMethod.POST)
 	public @ResponseBody PayResponse getPayRequest(@RequestBody PayRequest payRequest,HttpServletResponse response) throws TransactionException{
+		logger.info("pay request");
 		byte[] data = KeyManager.decryptByRSA(KeyManager.getBankPrivatekey(), payRequest.getEncryptData());
 		try {
 			Map<String,Object> contents = Maps.newHashMap(); 
@@ -108,9 +109,11 @@ public class BankController {
 	}
 	
 	@RequestMapping(value = "/bank/getPayRequestSign", method = RequestMethod.POST)
-	public @ResponseBody PayResponse getPayRequestSign(@RequestBody PayRequestSign payRequestSign,HttpServletResponse response) throws TransactionException{
+	public @ResponseBody PayResponse getPayRequestSign(@RequestBody Map<String,Object> param,HttpServletResponse response) throws TransactionException{
+		logger.info("pay request sign");
+		PayRequestSign payRequestSign = new PayRequestSign(param);
 		PayResponse payResponse = new PayResponse();
-		String message = KeyManager.decryptByRSAInString(KeyManager.getBankPrivatekey(), payRequestSign.getEncryptPI());
+		String message = KeyManager.decryptByRSAInString(KeyManager.getBankPrivatekey(), payRequestSign.getEncryptPIBytes());
 		Map<String,Object> contents = Maps.newHashMap();
 		try {
 			contents = mapper.readValue(message, contents.getClass());
@@ -130,7 +133,13 @@ public class BankController {
 				return payResponse;
 			}else{
 				transaction.setPayerCard(payer);
-				
+				transaction.setEffective(true);
+				payer.setBalance(payer.getBalance()-transaction.getAmount()-transaction.getFee());
+				CreditCard payee = transaction.getPayeeCard();
+				payee.setBalance(payee.getBalance()+transaction.getAmount());
+				transactionService.update(transaction);
+				creditCardService.update(payee);
+				creditCardService.update(payer);
 				String source = "{\"tranId\":"+transaction.getId()+",\"statusCode\":0}";
 				payResponse.setSource(source);
 				byte[] sign = KeyManager.sign(KeyManager.getBankPrivatekey(), source);

@@ -11,14 +11,14 @@ public class Transaction extends BaseEntity {
 	/**
 	 * 支出卡
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 	private CreditCard payerCard;
 	
 	/**
 	 * 收款卡
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 	private CreditCard payeeCard;
 	
