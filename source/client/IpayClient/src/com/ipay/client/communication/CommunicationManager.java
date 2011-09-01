@@ -1016,8 +1016,13 @@ public class CommunicationManager {
 		HttpGet request = new HttpGet(url);
 		HttpResponse response = httpClient.execute(request);
 		InputStream is = response.getEntity().getContent();
-		BitmapFactory.decodeStream(new BufferedInputStream(is));
-		return bitmap;
+		bitmap=BitmapFactory.decodeStream(new BufferedInputStream(is));
+		if(bitmap==null){
+			throw new IOException();
+		}else{
+			return bitmap;
+		}
+		
 	}
 	
 	public HttpResponse get(String url) throws IOException{
