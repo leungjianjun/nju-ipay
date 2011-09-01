@@ -16,6 +16,8 @@ public class Configure {
 	
 	public static final String PAYREQUESTSIGN = "/bank/getPayRequestSign";
 	
+	public static final String GETCARDINFO  = "/bank/getCardInfo";
+	
 	public static String BasicWebsite(){
 		return DOMAIN+":"+PORT;
 	}
@@ -38,6 +40,10 @@ public class Configure {
 	
 	public static String PayRequestSign(){
 		return "http://"+BasicWebsite()+PAYREQUESTSIGN;
+	}
+	
+	public static String CardInfo(){
+		return  "http://"+BasicWebsite()+GETCARDINFO;
 	}
 
 }

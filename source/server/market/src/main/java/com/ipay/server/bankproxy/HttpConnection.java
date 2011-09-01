@@ -56,13 +56,14 @@ public class HttpConnection {
 			os.close();
 			
 			InputStream is = conn.getInputStream();
-			PayResponse payResponse = new PayResponse();
-			return mapper.readValue(is, payResponse.getClass());
+			PayResponse payResponse = mapper.readValue(is, PayResponse.class);
+			return payResponse;
 		} catch (MalformedURLException e) {
 			throw new BankProxyServerException(ExceptionMessage.BANK_SERVER_NETWORK_ERROR);
 		} catch (IOException e) {
 			throw new BankProxyServerException("发送数据错误");
-			
+		} finally {
+			conn.disconnect();
 		}
 	}
 	
@@ -80,13 +81,14 @@ public class HttpConnection {
 			os.close();
 			
 			InputStream is = conn.getInputStream();
-			PayResponse payResponse = new PayResponse();
-			return mapper.readValue(is, payResponse.getClass());
-		}  catch (MalformedURLException e) {
+			PayResponse payResponse = mapper.readValue(is, PayResponse.class);
+			return payResponse;
+		} catch (MalformedURLException e) {
 			throw new BankProxyServerException(ExceptionMessage.BANK_SERVER_NETWORK_ERROR);
 		} catch (IOException e) {
 			throw new BankProxyServerException("发送数据错误");
-			
+		} finally {
+			conn.disconnect();
 		}
 		
 	}
@@ -109,7 +111,23 @@ public class HttpConnection {
         conn.connect();
         byte[] contents = new byte[conn.getContentLength()];
         conn.getInputStream().read(contents);
+        conn.disconnect();
         return contents;
+	}
+	
+	public static Object doJsonGet(String urlStr,Map<String,Object> paramMap) throws IOException{
+		String paramStr = prepareParam(paramMap);
+        if(paramStr != null && paramStr.trim().length()>0){
+            urlStr +="?"+paramStr;
+        }
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod(SERVLET_GET);
+        conn.connect();
+        
+        InputStream is = conn.getInputStream();
+        Map<String,Object> result = mapper.readValue(is, Map.class);
+        return result;
 	}
 
 }

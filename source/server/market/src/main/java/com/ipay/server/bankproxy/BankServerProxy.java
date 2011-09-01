@@ -51,5 +51,16 @@ public class BankServerProxy {
 	public static PayResponse getPayResponseSign(PayRequestSign payRequestSign) throws BankProxyServerException{
 		return HttpConnection.doPayRequestSignPost(Configure.PayRequestSign(), payRequestSign);
 	}
+	
+	public static Object getCardInfo(String cardnum) throws BankProxyServerException{
+		Map<String, Object> paramMap = Maps.newHashMap();
+		paramMap.put("cardnum", cardnum);
+		try {
+			return HttpConnection.doJsonGet(Configure.CardInfo(), paramMap);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new BankProxyServerException(ExceptionMessage.BANK_INTERNAL_ERROR);
+		}
+	}
 
 }

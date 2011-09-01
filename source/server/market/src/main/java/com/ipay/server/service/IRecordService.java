@@ -1,5 +1,7 @@
 package com.ipay.server.service;
 
+import java.util.List;
+
 import com.ipay.server.entity.Record;
 
 /**
@@ -12,5 +14,7 @@ public interface IRecordService<T extends Record> extends IService<T> {
 	public boolean checktransactionDone(int tranId);
 	
 	public T getRecordByTranId(int tranId);
+	
+	public List<T> getRecords(int client,int page);
 
 }

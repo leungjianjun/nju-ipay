@@ -88,6 +88,16 @@ public class ClientController {
 		return Collections.singletonMap("status", true);
 	}
 	
+	@RequestMapping(value = "/client/getCardInfo", method = RequestMethod.POST)
+	public @ResponseBody Object getCardInfo(Principal principal) {
+		try {
+			return BankServerProxy.getCardInfo(clientService.getClientByAccount(principal.getName()).getCardnum());
+		} catch (BankProxyServerException e) {
+			e.printStackTrace();
+			throw new ControllerException(e.getMessage(),500);
+		}
+	}
+	
 	@RequestMapping(value = "/client/getEncryptPrivateKey", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getEncryptPrivateKey(Principal principal){
 		logger.info("client get encrypt privatekey");
