@@ -2,6 +2,10 @@ package com.ipay.client.model;
 
 import java.util.HashMap;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Product {
 	public static final String ID="id";
 	public static final String NAME="name";
@@ -108,6 +112,23 @@ public class Product {
 	public HashMap<String, String> getAttributes() {
 		return attributes;
 	}
-	
+	public static Product parseJSONObect(JSONObject object) throws JSONException{
+		Product product = new Product();
+		product.setId(object.getInt(ID));
+		product.setName(object.getString(NAME));
+		product.setBanner(object.getString(BANNER));
+		product.setBarcode(object.getString(BARCADE));
+		product.setMidImgUrl(object.getString(MID_IMG_URL));
+		product.setMinImgUrl(object.getString(MIN_IMG_URL));
+		product.setPrice(object.getDouble(PRICE));
+		product.setQuantity(object.getInt(QUANTITY));
+		JSONArray attrs = object.getJSONArray(ATTRIBUTES);
+		for (int i = 0; i < attrs.length(); i++) {
+			JSONObject attr = attrs.getJSONObject(i);
+			product.putAttr(attr.getString("key"),
+					attr.getString("value"));
+		}
+		return product;
+	}
 	
 }

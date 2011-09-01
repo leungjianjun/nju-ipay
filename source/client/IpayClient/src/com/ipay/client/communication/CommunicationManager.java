@@ -1,6 +1,5 @@
 package com.ipay.client.communication;
 
-import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,12 +8,12 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -37,8 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
 import android.util.Log;
@@ -46,6 +43,8 @@ import android.util.Log;
 import com.ipay.client.model.Market;
 import com.ipay.client.model.MarketInfo;
 import com.ipay.client.model.Product;
+import com.ipay.client.model.Record;
+import com.ipay.client.model.RecordDetail;
 import com.ipay.client.model.Session;
 import com.ipay.client.model.ShoppingCart;
 import com.ipay.client.model.SpecialProduct;
@@ -88,51 +87,41 @@ public class CommunicationManager {
 	public static final String HTTPS_BASE = "https://192.168.1.101:8443/";
 
 	// 用户相关
-	public static final String LOGIN_URL = HTTPS_BASE
-			+ "client/j_spring_security_check";
-	public static final String LOGOUT_URL = HTTP_BASE + "client/logout";
-	public static final String USER_INFO_URL = HTTPS_BASE + "client/GetInfo";
-	public static final String SET_USER_INFO_URL = HTTPS_BASE
-			+ "client/SetInfo";
-	public static final String SET_PASSWORD_URL = HTTPS_BASE + "client/SetInfo";
+	public static final String LOGIN_URL = HTTPS_BASE+"client/j_spring_security_check";
+	public static final String LOGOUT_URL = HTTP_BASE+"client/logout";
+	public static final String USER_INFO_URL = HTTPS_BASE+"client/GetInfo";
+	public static final String SET_USER_INFO_URL = HTTPS_BASE+"client/SetInfo";
+	public static final String SET_PASSWORD_URL = HTTPS_BASE+"client/SetInfo";
 
 	// 进入商店
-	public static final String SEARCH_MARKET_URL = HTTP_BASE
-			+ "client/searchMarket?";
-	public static final String MARKET_ID_URL = HTTP_BASE
-			+ "client/findMarketId";
-	public static final String MARKET_INFO_URL = HTTP_BASE
-			+ "client/MarketInfo?";
-	public static final String SPECIAL_PRODUCT_URL = HTTP_BASE
-			+ "client/MarketSpecialProducts?";
-	public static final String HOT_PRODUCT_URL = HTTP_BASE
-			+ "client/MarketHotProducts?";
+	public static final String SEARCH_MARKET_URL = HTTP_BASE+"client/searchMarket?";
+	public static final String MARKET_ID_URL = HTTP_BASE+"client/findMarketId";
+	public static final String MARKET_INFO_URL = HTTP_BASE+"client/MarketInfo?";
+	public static final String SPECIAL_PRODUCT_URL = HTTP_BASE+"client/MarketSpecialProducts?";
+	public static final String HOT_PRODUCT_URL = HTTP_BASE+"client/MarketHotProducts?";
 
 	// 扫描商品
-	public static final String PRODUCT_INFO_BY_BARCODE_URL = HTTP_BASE
-			+ "client/ProductInfoByCode?";
-	public static final String PRODUCT_INFO_BY_ID_URL = HTTP_BASE
-			+ "client/ProductInfoById?";
-	public static final String PRODUCT_ID_URL = HTTP_BASE
-			+ "client/ProductIdByCode?";
+	public static final String PRODUCT_INFO_BY_BARCODE_URL = HTTP_BASE+"client/ProductInfoByCode?";
+	public static final String PRODUCT_INFO_BY_ID_URL = HTTP_BASE+"client/ProductInfoById?";
+	public static final String PRODUCT_ID_URL = HTTP_BASE+"client/ProductIdByCode?";
 	// 搜索商品
-	public static final String SEARCH_PRODUCT_URL = HTTP_BASE
-			+ "client/SearchProduct?";
+	public static final String SEARCH_PRODUCT_URL = HTTP_BASE+"client/SearchProduct?";
 
 	// 支付
-	public static final String SEND_ORDER_URL = HTTPS_BASE + "client/SendOrder";
-	public static final String GET_BANK_PRIVATE_KEY_URL = HTTPS_BASE
-			+ "client/getEncryptPrivateKey";
-	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE
-			+ "client/getBankPublickey";
-	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE
-			+ "client/getMarketPublickey?";
-	public static final String PAY_URL = HTTPS_BASE + "client/PayRequest";
+	public static final String SEND_ORDER_URL = HTTPS_BASE+"client/SendOrder";
+	public static final String GET_BANK_PRIVATE_KEY_URL = HTTPS_BASE+"client/getEncryptPrivateKey";
+	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE+"client/getBankPublickey";
+	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"client/getMarketPublickey?";
+	public static final String PAY_URL = HTTPS_BASE+"client/PayRequest";
 	private static final String PUBLIC_KEY = "public";
 	private static final String PRIVATE_KEY = "private";
 	private static final int KEY_SIZE = 162;
 	private static final int ENCRYPT_KEY_SIZE = 656;
-
+	
+	//购买记录
+	public static final String GET_RECORDS_URL = HTTPS_BASE + "client/getRecords?";
+	public static final String GET_RECORDS_DETAILS_URL = HTTPS_BASE + "client/getRecordDetail?";
+	
 	/**
 	 * 
 	 * @param session
@@ -152,8 +141,7 @@ public class CommunicationManager {
 			data.put("account", username);
 			data.put("password", password);
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+				e1.printStackTrace();
 		}
 
 		Log.d(TAG, "********user json=" + data.toString());
@@ -225,8 +213,7 @@ public class CommunicationManager {
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
 		if (status == true) {
 			session = new Session();
@@ -249,10 +236,7 @@ public class CommunicationManager {
 			HttpResponse response = httpClient.execute(get);
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				UserInfo info = new UserInfo();
-				info.setAccount(result.getString(UserInfo.ACCOUNT));
-				info.setRealname(result.getString(UserInfo.REAL_NAME));
-				info.setPhone(result.getString(UserInfo.PHONE_NUM));
+				UserInfo info = UserInfo.parseJSONObject(result);
 				return info;
 			} else {
 				String error = result.getString("error");
@@ -262,8 +246,7 @@ public class CommunicationManager {
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 		}
 		return null;
 	}
@@ -283,10 +266,8 @@ public class CommunicationManager {
 			jInfo.put(UserInfo.ACCOUNT, info.getAccount());
 			jInfo.put(UserInfo.PHONE_NUM, info.getPhone());
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		try {
 			HttpResponse response = doPost(SET_USER_INFO_URL, jInfo);
 			JSONObject result = getJsonResult(response);
@@ -300,8 +281,7 @@ public class CommunicationManager {
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 		}
 		return status;
 	}
@@ -320,8 +300,7 @@ public class CommunicationManager {
 			data.put("oldPassword", oldPassword);
 			data.put("newPassword", newPassword);
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+				e1.printStackTrace();
 		}
 
 		boolean status = false;
@@ -338,7 +317,6 @@ public class CommunicationManager {
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return status;
@@ -365,11 +343,8 @@ public class CommunicationManager {
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				JSONArray jMarkets = result.getJSONArray("markets");
 				for (int i = 0; i < jMarkets.length(); i++) {
-					Market market = new Market();
-					JSONObject jMarket = jMarkets.getJSONObject(i);
-					market.setId(jMarket.getInt("id"));
-					market.setName(jMarket.getString(MarketInfo.NAME));
-					market.setLocation(jMarket.getString(MarketInfo.LOCATION));
+					Market market = Market.parseJSONObect(jMarkets.getJSONObject(i));
+					markets.add(market);
 				}
 			} else {
 				String error = result.getString("error");
@@ -377,10 +352,8 @@ public class CommunicationManager {
 						.getStatusCode(), error);
 			}
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return markets;
@@ -401,23 +374,22 @@ public class CommunicationManager {
 			throws HttpResponseException, IOException {
 		// 查找本地key
 		byte[] key;
-		if (type.equals(PUBLIC_KEY)) {
+		if(type.equals(PUBLIC_KEY)){
 			key = new byte[KEY_SIZE];
-		} else {
+		}else{
 			key = new byte[ENCRYPT_KEY_SIZE];
 		}
-
-		try {
-
+		 
+		try {			
 			FileInputStream inputStream = context.openFileInput(session
 					.getUsername() + type + ".key");
-			Log.d(TAG, "本地已找到key");
+			Log.d(TAG,"本地已找到key");
 			inputStream.read(key);
 			inputStream.close();
-
+			
 		} catch (FileNotFoundException e1) {
 			// 未找到，需要下载
-			Log.d(TAG, "本地没有，尝试下载key");
+			Log.d(TAG,"本地没有，尝试下载key");
 			if (type.equals(PRIVATE_KEY)) {
 				key = downloadKey(GET_BANK_PRIVATE_KEY_URL, ENCRYPT_KEY_SIZE);
 			} else if (type.equals(PUBLIC_KEY)) {
@@ -434,17 +406,14 @@ public class CommunicationManager {
 					outputStream.write(key);
 					outputStream.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						e.printStackTrace();
 				}
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 		}
 		return key;
 	}
@@ -455,29 +424,21 @@ public class CommunicationManager {
 	 * @return
 	 * @throws IOException
 	 */
-	private byte[] downloadKey(String url, int size)
-			throws HttpResponseException, IOException {
+	private byte[] downloadKey(String url, int size) throws HttpResponseException,
+			IOException {
 		HttpGet get = new HttpGet(url);
-		Log.d(TAG, "********** down load key url: " + url);
-		// get.setHeader(HTTP.CONTENT_TYPE, "application/json");
-		// byte[] key = new byte[size];
+		Log.d(TAG,"********** down load key url: "+url);
 		try {
 			HttpResponse response = httpClient.execute(get);
-			Log.d(TAG, "status code:"
-					+ response.getStatusLine().getStatusCode());
+			Log.d(TAG,"status code:" +response.getStatusLine().getStatusCode());
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				byte[] key = EntityUtils.toByteArray(response.getEntity());
-				// InputStream inputStream = response.getEntity().getContent();
-				// BufferedInputStream bis=new BufferedInputStream(inputStream);
-				// bis.read(key);
-				// inputStream.close();
 				return key;
 			} else {
 				throw new HttpResponseException(response.getStatusLine()
 						.getStatusCode(), "error");
 			}
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -499,17 +460,7 @@ public class CommunicationManager {
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				Log.d(TAG, "获取商场信息：" + result.toString());
-				MarketInfo marketInfo = new MarketInfo(marketId);
-				marketInfo.setName(result.getString(MarketInfo.NAME));
-				marketInfo.setLocation(result.getString(MarketInfo.LOCATION));
-				marketInfo.setIntroduction(result
-						.getString(MarketInfo.INTRODUCTION));
-				marketInfo.setServicePhone(result
-						.getString(MarketInfo.SERVICE_PHONE));
-				marketInfo.setComplainPhone(result
-						.getString(MarketInfo.COMPLAIN_PHONE));
-				marketInfo.setCreateDate(result
-						.getString(MarketInfo.CREATE_DATE));
+				MarketInfo marketInfo = MarketInfo.parseJSONObject(result);
 				return marketInfo;
 			} else {
 				String error = result.getString("error");
@@ -517,11 +468,9 @@ public class CommunicationManager {
 						.getStatusCode(), error);
 			}
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 		}
 		return null;
 	}
@@ -567,9 +516,9 @@ public class CommunicationManager {
 					product.setId(jProduct.getInt(Product.ID));
 					product.setName(jProduct.getString(Product.NAME));
 					product.setPrice(jProduct
+							.getDouble(SpecialProduct.PRICE));
+					product.setOldPrice(jProduct
 							.getDouble(SpecialProduct.OLD_PRICE));
-					product.setSpecialPrice(jProduct
-							.getDouble(SpecialProduct.New_PRICE));
 					product.setMinImgUrl(jProduct
 							.getString(Product.MIN_IMG_URL));
 					product.setAdWords(jProduct
@@ -582,10 +531,8 @@ public class CommunicationManager {
 						.getStatusCode(), error);
 			}
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -632,7 +579,6 @@ public class CommunicationManager {
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -656,21 +602,7 @@ public class CommunicationManager {
 			HttpResponse response = httpClient.execute(get);
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				Product product = new Product();
-				product.setId(result.getInt(Product.ID));
-				product.setName(result.getString(Product.NAME));
-				product.setBanner(result.getString(Product.BANNER));
-				product.setBarcode(barcode);
-				product.setMidImgUrl(result.getString(Product.MID_IMG_URL));
-				product.setMinImgUrl(result.getString(Product.MIN_IMG_URL));
-				product.setPrice(result.getDouble(Product.PRICE));
-				product.setQuantity(result.getInt(Product.QUANTITY));
-				JSONArray attrs = result.getJSONArray(Product.ATTRIBUTES);
-				for (int i = 0; i < attrs.length(); i++) {
-					JSONObject attr = attrs.getJSONObject(i);
-					product.putAttr(attr.getString("key"),
-							attr.getString("value"));
-				}
+				Product product = Product.parseJSONObect(result);
 				return product;
 			} else {
 				String error = result.getString("error");
@@ -678,11 +610,9 @@ public class CommunicationManager {
 						.getStatusCode(), error);
 			}
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
 		return null;
 	}
@@ -703,21 +633,7 @@ public class CommunicationManager {
 			HttpResponse response = httpClient.execute(get);
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				Product product = new Product();
-				product.setId(result.getInt(Product.ID));
-				product.setName(result.getString(Product.NAME));
-				product.setBanner(result.getString(Product.BANNER));
-				product.setBarcode(result.getString(Product.BARCADE));
-				product.setMidImgUrl(result.getString(Product.MID_IMG_URL));
-				product.setMinImgUrl(result.getString(Product.MIN_IMG_URL));
-				product.setPrice(result.getDouble(Product.PRICE));
-				product.setQuantity(result.getInt(Product.QUANTITY));
-				JSONArray attrs = result.getJSONArray(Product.ATTRIBUTES);
-				for (int i = 0; i < attrs.length(); i++) {
-					JSONObject attr = attrs.getJSONObject(i);
-					product.putAttr(attr.getString("key"),
-							attr.getString("value"));
-				}
+				Product product = Product.parseJSONObect(result);
 				return product;
 			} else {
 				String error = result.getString("error");
@@ -725,11 +641,9 @@ public class CommunicationManager {
 						.getStatusCode(), error);
 			}
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
 		return null;
 	}
@@ -749,38 +663,35 @@ public class CommunicationManager {
 	 * 用于获得商场id 每一次客户端成功连接到商场网络时，必须调用此方法
 	 * 
 	 * @return
+	 * @throws IOException 
 	 */
-	public boolean initConnection() {
+	public int getMarketId() throws HttpResponseException,IOException {
 		HttpGet get = new HttpGet(MARKET_ID_URL);
 		get.setHeader(HTTP.CONTENT_TYPE, "application/json");
 		try {
 			HttpResponse response = httpClient.execute(get);
-			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				String retSrc = EntityUtils.toString(response.getEntity());
-				JSONObject result = new JSONObject(retSrc);
+			JSONObject result = getJsonResult(response);
+			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {		
 				marketId = result.getInt("id");
-				return true;
+				return marketId;
+			}else {
+				String error = result.getString("error");
+				throw new HttpResponseException(response.getStatusLine()
+						.getStatusCode(), error);
 			}
 
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
-		return false;
+		return marketId;
 	}
 
 	/**
 	 * 
-	 * @param payPassword
-	 *            支付密码
-	 * @param context
-	 *            因为需要读取和保存密钥
+	 * @param payPassword           支付密码
+	 * @param context 因为需要读取和保存密钥
 	 * @return int status code
 	 * @throws IOException
 	 */
@@ -789,88 +700,67 @@ public class CommunicationManager {
 		int statusCode = -1;
 		// 第一步：发送订单send order
 		JSONObject result = sendOrder(context);
-		Log.d(TAG, "*******支付结果**********" + result.toString());
-
-		// pay
+		Log.d(TAG,"*******支付结果**********"+result.toString());
+		
+		//pay
 		if (result != null) {
 			JSONObject data = new JSONObject();
 			try {
 				JSONObject source = new JSONObject(result.getString("source"));
 				int tranId = source.getInt("tranId");
 				String cardnum = result.getString("cardnum");
-				Log.d(TAG, "开始下载market publick key");
-				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL
-						+ "mid=" + marketId, KEY_SIZE);
-				Log.d(TAG, "开始获取bank publick key");
+				Log.d(TAG,"开始下载market publick key");
+				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"mid="+marketId, KEY_SIZE);
+				Log.d(TAG,"开始获取bank publick key");
 				byte[] bankPublicKey = getBankKey(PUBLIC_KEY, context);
-				Log.d(TAG, "解密私钥....");
+				Log.d(TAG,"解密私钥....");
 				byte[] bankPrivateKey = KeyManager.decryptPrivatekey(
 						getBankKey(PRIVATE_KEY, context), payPassword, cardnum);
-
-				// 准备支付信息
+				
+				//准备支付信息
 				data.put("mid", marketId);
-
+				
 				// OI
 				JSONObject oi = new JSONObject();
 				oi.put("tranId", tranId);
-				data.put(
-						"encryptOI",
-						Base64.encodeToString(
-								KeyManager.encryptByRSA(marketPublicKey,
-										oi.toString()), Base64.DEFAULT));
+				data.put("encryptOI",
+						Base64.encodeToString(KeyManager.encryptByRSA(marketPublicKey, oi.toString()),Base64.DEFAULT));
 
 				// pi
 				JSONObject pi = new JSONObject();
 				pi.put("tranId", tranId);
 				pi.put("cardnum", cardnum);
-				data.put(
-						"encryptPI",
-						Base64.encodeToString(
-								KeyManager.encryptByRSA(bankPublicKey,
-										pi.toString()), Base64.DEFAULT));
+				data.put("encryptPI",
+						Base64.encodeToString(KeyManager.encryptByRSA(bankPublicKey, pi.toString()),Base64.DEFAULT));
 
 				// OIMD PIMD
-				data.put("OIMD", Base64.encodeToString(
-						KeyManager.sign(bankPrivateKey, oi.toString()),
-						Base64.DEFAULT));
-				data.put("PIMD", Base64.encodeToString(
-						KeyManager.sign(bankPrivateKey, pi.toString()),
-						Base64.DEFAULT));
-				Log.d(TAG, "*****给银行的OIMD：" + data.getString("OIMD"));
-				Log.d(TAG, "*****给银行的PIMD：" + data.getString("PIMD"));
-				Log.d(TAG, "*****给银行的encryptOI：" + data.getString("encryptOI"));
-				Log.d(TAG, "*****给银行的pi：" + pi.toString());
-				Log.d(TAG, "*****给银行的oi：" + oi.toString());
+				data.put("OIMD", Base64.encodeToString(KeyManager.sign(bankPrivateKey, oi.toString()),Base64.DEFAULT));
+				data.put("PIMD", Base64.encodeToString(KeyManager.sign(bankPrivateKey, pi.toString()),Base64.DEFAULT));
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+							e.printStackTrace();
 			}
-
-			// 第二步：支付
-			try {
-				Log.d(TAG, "开始支付。。。。。。");
+			
+			//第二步：支付
+			try{
+				Log.d(TAG,"开始支付。。。。。。");
 				HttpResponse response = doPost(PAY_URL, data);
 				JSONObject result2 = getJsonResult(response);
-				Log.d(TAG, "支付获得的结果:" + result2.toString() + '\n' + "状态码: "
-						+ response.getStatusLine().getStatusCode());
-				if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				Log.d(TAG,"支付获得的结果:"+result2.toString()+'\n'+"状态码: "+response.getStatusLine().getStatusCode());
+				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 					String source = result2.getString("source");
-					byte[] sign = Base64.decode(result2.getString("sign"),
-							Base64.DEFAULT);
-					boolean verify = KeyManager.verify(
-							getBankKey(PUBLIC_KEY, context), source, sign);
-					if (verify == true) {
+					byte[] sign = Base64.decode(result2.getString("sign"),Base64.DEFAULT);
+					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context), source, sign);
+					if(verify == true){
 						JSONObject payResult = new JSONObject(source);
 						statusCode = payResult.getInt("statusCode");
-
+						
 					}
 				}
-			} catch (ClientProtocolException e) {
+			}catch (ClientProtocolException e) {
 				e.printStackTrace();
-			} catch (JSONException e) {
+			}catch (JSONException e) {
 				e.printStackTrace();
-			}
-
+			}		
 		}
 		return statusCode;
 	}
@@ -891,17 +781,16 @@ public class CommunicationManager {
 				jProduct.put("pid", product.getId());
 				jProduct.put("quantity", product.getQuantity());
 				products.put(jProduct);
-
-				// 算我的总额
+				
+				//算我的总额
 				myAmount += product.getQuantity() * product.getPrice();
 			}
 			data.put("orders", products);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 		}
 
-		Log.d(TAG, "*******源数据" + data.toString());
+		Log.d(TAG,"*******源数据"+data.toString());
 		// post
 		try {
 			HttpResponse response = doPost(SEND_ORDER_URL, data);
@@ -910,21 +799,16 @@ public class CommunicationManager {
 				String source = result.getString("source");
 				JSONObject jSource = new JSONObject(source);
 				int amount = jSource.getInt("amount");
-				byte[] sign = Base64.decode(result.getString("sign"),
-						Base64.DEFAULT);
-				/*
-				 * for(int i=0;i<sign.length;i++){
-				 * Log.d(TAG,"-----print sign : "+sign[i]); }
-				 */
-
-				Log.d(TAG, "*****source: " + source);
-				Log.d(TAG, "*****sign: " + new String(sign));
+				byte[] sign = Base64.decode(result.getString("sign"),Base64.DEFAULT);
+				
+				Log.d(TAG,"*****source: " +source);
+				Log.d(TAG,"*****sign: " +new String(sign));
 				byte[] publicKey = getBankKey(PUBLIC_KEY, context);
-				Log.d(TAG, "*****public key: " + new String(publicKey));
+				Log.d(TAG,"*****public key: " +new String(publicKey));
 				boolean verify = KeyManager.verify(publicKey, source, sign);
-
-				if (verify == true || amount == myAmount) {
-					Log.d(TAG, "********verify OK");
+				
+				if (verify == true || amount == myAmount) {	
+					Log.d(TAG,"********verify OK");
 					return result;
 				}
 			} else {
@@ -933,16 +817,67 @@ public class CommunicationManager {
 						.getStatusCode(), error);
 			}
 		} catch (ClientProtocolException e) {
-			Log.d(TAG, "ClientProtocol");
+			Log.d(TAG,"ClientProtocol");
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Log.d(TAG, "JSON excep");
+					Log.d(TAG,"JSON excep");
 			e.printStackTrace();
 		}
 		return null;
 	}
-
+	/**
+	 * 获得消费简要消费记录列表
+	 * @return
+	 * @throws HttpResponseException
+	 * @throws IOException
+	 */
+	public ArrayList<Record> getRecords(int pageNum) throws HttpResponseException,
+	IOException{
+		ArrayList<Record> records = new ArrayList<Record>();
+		HttpGet get = new HttpGet(GET_RECORDS_URL+"page="+pageNum);
+		get.setHeader(HTTP.CONTENT_TYPE, "application/json");
+		try{
+			HttpResponse response = httpClient.execute(get);
+			JSONObject result = getJsonResult(response);
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+				JSONArray jRecords = result.getJSONArray("records");
+				for(int i = 0; i < jRecords.length(); i++){
+					JSONObject jRecord = jRecords.getJSONObject(i);
+					Record record = Record.parseJSONObect(jRecord);
+					records.add(record);
+				}
+			}else{
+				String error = result.getString("error");
+				throw new HttpResponseException(response.getStatusLine().getStatusCode(), error);
+			}
+		}catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+					e.printStackTrace();
+		}
+		return records;
+	}
+	
+	public RecordDetail getRecordDetail(int recordId) throws IOException{
+		HttpGet get = new HttpGet(GET_RECORDS_DETAILS_URL+"rid="+ recordId);
+		get.setHeader(HTTP.CONTENT_TYPE, "application/json");
+		RecordDetail detail = null;
+		try {
+			HttpResponse response = httpClient.execute(get);
+			JSONObject result = getJsonResult(response);
+			if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+				detail = RecordDetail.parseJSONObect(result);				
+			}else{
+				String error = result.getString("error");
+				throw new HttpResponseException(response.getStatusLine().getStatusCode(), error);
+			}
+		} catch (ClientProtocolException e) {
+					e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return detail;
+	}
 	/**
 	 * https连接时使用
 	 * 
@@ -969,20 +904,15 @@ public class CommunicationManager {
 	}
 
 	private JSONObject getJsonResult(HttpResponse response) {
-		JSONObject result = null;
+		JSONObject result = null;		
 		try {
 			String retSrc = EntityUtils.toString(response.getEntity());
-
-			Log.d(TAG, "********Result-----" + retSrc);
 			result = new JSONObject(retSrc);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -1001,32 +931,12 @@ public class CommunicationManager {
 		try {
 			url = new URL(address);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 			return null;
 		}
 		Object content = url.getContent();
 		InputStream is = (InputStream) content;
 		Drawable d = Drawable.createFromStream(is, "src");
 		return d;
-	}
-
-	public Bitmap getBitmap(String url) throws IOException {
-		Bitmap bitmap = null;
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = httpClient.execute(request);
-		InputStream is = response.getEntity().getContent();
-		bitmap=BitmapFactory.decodeStream(new BufferedInputStream(is));
-		if(bitmap==null){
-			throw new IOException();
-		}else{
-			return bitmap;
-		}
-		
-	}
-	
-	public HttpResponse get(String url) throws IOException{
-		HttpGet request = new HttpGet(url);
-		return  httpClient.execute(request);
 	}
 }

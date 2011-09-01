@@ -1,39 +1,50 @@
 package com.ipay.client.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-
-/**
- * 一次消费产生的清单
- * @author tianming
- *
- */
 public class Order {
-	private String dateStr;
-	private HashMap<Product, Integer> products;
-	private double sum;
-	public Order(HashMap<Product, Integer> products){
-		this.products = products;
-		Calendar calendar = Calendar.getInstance();
-		Date date = calendar.getTime();
-		dateStr = date.toLocaleString();
+	public String getProductName() {
+		return productName;
 	}
-	public String getDateStr() {
-		return dateStr;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	public HashMap<Product, Integer> getProducts() {
-		return products;
+	public int getQuantity() {
+		return quantity;
 	}
-	@Override
-	public boolean equals(Object o) {
-		return super.equals(o);
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
-	@Override
-	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+	public double getCost() {
+		return cost;
 	}
-	
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+	public int getProductId() {
+		return productId;
+	}
+	private int productId;
+	private String productName;
+	private int quantity;
+	private double cost;
+	public static Order parseJSONObject(JSONObject object){
+	Order order = new Order();
+	try {
+		order.setProductId(object.getInt("prodectId"));
+		order.setProductName(object.getString("productName"));
+		order.setQuantity(object.getInt("quantity"));
+		order.setCost(object.getDouble("cost"));
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return order;
 }
+}
+
+
