@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Maps;
 import com.ipay.server.entity.CreditCard;
 import com.ipay.server.security.ExceptionMessage;
 import com.ipay.server.security.TransactionException;
@@ -47,6 +48,21 @@ public class CreditCardController {
 		CreditCard creditCard = creditCardService.getCreditCardByNum(cardnum);
 		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",162);
 		return new ResponseEntity<byte[]>(creditCard.getPublicKey(),httpHeaders,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/bank/getCardInfo", method = RequestMethod.GET)
+	public @ResponseBody Object getCardInfo(@RequestParam String cardnum){
+		CreditCard creditCard = creditCardService.getCreditCardByNum(cardnum);
+		Map<String,Object> result = Maps.newHashMap();
+		result.put("cardnum", cardnum);
+		result.put("balance", creditCard.getBalance());
+		if(creditCard.isEnable()){
+			result.put("state", "可用");
+		}else{
+			result.put("state", "不可用");
+		}
+		
+		return result;
 	}
 	
 	public static HttpHeaders httpHeaderPrivateKeyAttachment(final String fileName,final int fileSize) {
