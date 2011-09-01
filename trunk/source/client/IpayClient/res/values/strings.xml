@@ -211,6 +211,18 @@
 	<string name="goods_info_get_success">获取成功</string>
 	<string name="goods_info_get_fail">获取失败</string>
 
+	<!-- 账户页面 -->
+	<string name="account_basic_info">基本信息</string>
+	<string name="account_name">姓名：</string>
+	<string name="account_account">帐号：</string>
+	<string name="account_phone_num">电话：</string>
+	
+	<string name="account_see_history">查看交易历史</string>
+	<string name="account_modify_account">修改账户资料</string>
+	<string name="account_see_money">查看账户余额</string>
+	
+	<string name="account_get_fail">获取账户信息失败</string>
+	
 	<!-- 设置（preferences）部分 -->
 
 	<!-- 关于（about） 部分 -->
@@ -224,22 +236,24 @@
 
 
 	<!-- context menu -->
-	<string name="cmenu_add_to_cart">Add to cart</string>
-	<string name="cmenu_detail">Detail</string>
-	<string name="cmenu_delete">Delete</string>
+	<string name="cmenu_add_to_cart">加入购物车</string>
+	<string name="cmenu_detail">详细信息</string>
+	<string name="cmenu_delete">移除</string>
+	<string name="cmenu_change_quantity">更改数量</string>
+	<string name="cmenu_cancel">取消</string>
 
 	<!-- options menu -->
-	<string name="omenu_quit">Quit</string>
-	<string name="omenu_logout">Logout</string>
-	<string name="omenu_setting">Setting</string>
-	<string name="omenu_about">About</string>
+	<string name="omenu_quit">退出</string>
+	<string name="omenu_logout">注销</string>
+	<string name="omenu_setting">设置</string>
+	<string name="omenu_about">关于</string>
 
 	<!-- menu bar -->
-	<string name="menu_bar_item_home">Home</string>
+	<string name="menu_bar_item_home">首页</string>
 	<string name="menu_bar_item_scanner">Scanner</string>
-	<string name="menu_bar_item_cart">Cart</string>
-	<string name="menu_bar_item_account">Account</string>
-	<string name="menu_bar_item_more">More</string>
+	<string name="menu_bar_item_cart">购物车</string>
+	<string name="menu_bar_item_account">账户</string>
+	<string name="menu_bar_item_more">更多</string>
 
 
 
