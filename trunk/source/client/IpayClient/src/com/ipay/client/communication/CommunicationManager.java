@@ -14,6 +14,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.util.Log;
 
 import com.ipay.client.model.Market;
@@ -105,7 +107,7 @@ public class CommunicationManager {
 	public static final String SEARCH_PRODUCT_URL = HTTP_BASE+"client/SearchProduct?";
 
 	// 支付
-	public static final String SEND_ORDER_URT = HTTPS_BASE+"client/SendOrder";
+	public static final String SEND_ORDER_URL = HTTPS_BASE+"client/SendOrder";
 	public static final String GET_BANK_PRIVATE_KEY_URL = HTTPS_BASE+"client/getEncryptPrivateKey";
 	public static final String GET_BANK_PUBLIC_KEY_URL = HTTP_BASE+"client/getBankPublickey";
 	public static final String GET_MARKET_PUBLIC_KEY_URL = HTTP_BASE+"client/getMarketPublickey?";
@@ -401,9 +403,9 @@ public class CommunicationManager {
 			// 未找到，需要下载
 			Log.d(TAG,"本地没有，尝试下载key");
 			if (type.equals(PRIVATE_KEY)) {
-				key = downloadKey(GET_BANK_PRIVATE_KEY_URL);
+				key = downloadKey(GET_BANK_PRIVATE_KEY_URL, ENCRYPT_KEY_SIZE);
 			} else if (type.equals(PUBLIC_KEY)) {
-				key = downloadKey(GET_BANK_PUBLIC_KEY_URL);
+				key = downloadKey(GET_BANK_PUBLIC_KEY_URL, KEY_SIZE);
 			} else {
 				// wrong
 			}
@@ -437,17 +439,21 @@ public class CommunicationManager {
 	 * @return
 	 * @throws IOException
 	 */
-	private byte[] downloadKey(String url) throws HttpResponseException,
+	private byte[] downloadKey(String url, int size) throws HttpResponseException,
 			IOException {
 		HttpGet get = new HttpGet(url);
-		Log.d(TAG,"**********bank key url: "+url);
+		Log.d(TAG,"********** down load key url: "+url);
 //	get.setHeader(HTTP.CONTENT_TYPE, "application/json");
-		
+//		byte[] key = new byte[size];
 		try {
 			HttpResponse response = httpClient.execute(get);
-			Log.d(TAG,"*******download key"+response.getEntity().toString()+'\n'+"status code:" +response.getStatusLine().getStatusCode());
+			Log.d(TAG,"status code:" +response.getStatusLine().getStatusCode());
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				byte[] key = EntityUtils.toByteArray(response.getEntity());
+//				InputStream inputStream = response.getEntity().getContent();
+//				BufferedInputStream bis=new BufferedInputStream(inputStream);
+//				bis.read(key);
+//				inputStream.close();
 				return key;
 			} else {
 				throw new HttpResponseException(response.getStatusLine()
@@ -715,7 +721,7 @@ public class CommunicationManager {
 			throws ClientProtocolException, IOException {
 		HttpPost request = new HttpPost(url);
 		StringEntity s = new StringEntity(jsonObject.toString());
-		s.setContentType("application/json");
+		s.setContentType("application/json; charset=UTF-8");
 		request.setEntity(s);
 		HttpResponse response;
 		response = httpClient.execute(request);
@@ -765,7 +771,6 @@ public class CommunicationManager {
 		// 第一步：发送订单send order
 		JSONObject result = sendOrder(context);
 		Log.d(TAG,"*******支付结果**********"+result.toString());
-	//	Log.d(TAG,"*******支付source"+result.);
 		
 		//pay
 		if (result != null) {
@@ -774,8 +779,11 @@ public class CommunicationManager {
 				JSONObject source = new JSONObject(result.getString("source"));
 				int tranId = source.getInt("tranId");
 				String cardnum = result.getString("cardnum");
-				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"mid="+marketId);
+				Log.d(TAG,"开始下载market publick key");
+				byte[] marketPublicKey = downloadKey(GET_MARKET_PUBLIC_KEY_URL+"mid="+marketId, KEY_SIZE);
+				Log.d(TAG,"开始获取bank publick key");
 				byte[] bankPublicKey = getBankKey(PUBLIC_KEY, context);
+				Log.d(TAG,"解密私钥....");
 				byte[] bankPrivateKey = KeyManager.decryptPrivatekey(
 						getBankKey(PRIVATE_KEY, context), payPassword, cardnum);
 				
@@ -786,18 +794,23 @@ public class CommunicationManager {
 				JSONObject oi = new JSONObject();
 				oi.put("tranId", tranId);
 				data.put("encryptOI",
-						KeyManager.encryptByRSA(marketPublicKey, oi.toString()));
+						Base64.encodeToString(KeyManager.encryptByRSA(marketPublicKey, oi.toString()),Base64.DEFAULT));
 
 				// pi
 				JSONObject pi = new JSONObject();
 				pi.put("tranId", tranId);
 				pi.put("cardnum", cardnum);
 				data.put("encryptPI",
-						KeyManager.encryptByRSA(bankPublicKey, pi.toString()));
+						Base64.encodeToString(KeyManager.encryptByRSA(bankPublicKey, pi.toString()),Base64.DEFAULT));
 
 				// OIMD PIMD
-				data.put("OIMD", KeyManager.sign(bankPrivateKey, oi.toString()));
-				data.put("PIMD", KeyManager.sign(bankPrivateKey, pi.toString()));
+				data.put("OIMD", Base64.encodeToString(KeyManager.sign(bankPrivateKey, oi.toString()),Base64.DEFAULT));
+				data.put("PIMD", Base64.encodeToString(KeyManager.sign(bankPrivateKey, pi.toString()),Base64.DEFAULT));
+				Log.d(TAG,"*****给银行的OIMD："+ data.getString("OIMD"));
+				Log.d(TAG,"*****给银行的PIMD："+ data.getString("PIMD"));
+				Log.d(TAG,"*****给银行的encryptOI："+ data.getString("encryptOI"));
+				Log.d(TAG,"*****给银行的pi："+ pi.toString());
+				Log.d(TAG,"*****给银行的oi："+ oi.toString());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -805,14 +818,16 @@ public class CommunicationManager {
 			
 			//第二步：支付
 			try{
+				Log.d(TAG,"开始支付。。。。。。");
 				HttpResponse response = doPost(PAY_URL, data);
 				JSONObject result2 = getJsonResult(response);
+				Log.d(TAG,"支付获得的结果:"+result2.toString()+'\n'+"状态码: "+response.getStatusLine().getStatusCode());
 				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-					String bankResult = result2.getString("bankResult");
-					byte[] sign = (byte[]) result2.get("sign");
-					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context), bankResult, sign);
+					String source = result2.getString("source");
+					byte[] sign = Base64.decode(result2.getString("sign"),Base64.DEFAULT);
+					boolean verify = KeyManager.verify(getBankKey(PUBLIC_KEY, context), source, sign);
 					if(verify == true){
-						JSONObject payResult = new JSONObject(bankResult);
+						JSONObject payResult = new JSONObject(source);
 						statusCode = payResult.getInt("statusCode");
 						
 					}
@@ -857,13 +872,17 @@ public class CommunicationManager {
 		Log.d(TAG,"*******源数据"+data.toString());
 		// post
 		try {
-			HttpResponse response = doPost(SEND_ORDER_URT, data);
+			HttpResponse response = doPost(SEND_ORDER_URL, data);
 			JSONObject result = getJsonResult(response);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				String source = result.getString("source");
 				JSONObject jSource = new JSONObject(source);
 				int amount = jSource.getInt("amount");
-				byte[] sign = (byte[]) result.get("sign");
+				byte[] sign = Base64.decode(result.getString("sign"),Base64.DEFAULT);
+				/*for(int i=0;i<sign.length;i++){
+					Log.d(TAG,"-----print sign : "+sign[i]);
+				}*/
+				
 				Log.d(TAG,"*****source: " +source);
 				Log.d(TAG,"*****sign: " +new String(sign));
 				byte[] publicKey = getBankKey(PUBLIC_KEY, context);
