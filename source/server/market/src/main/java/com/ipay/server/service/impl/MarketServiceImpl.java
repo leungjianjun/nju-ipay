@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ipay.server.bankproxy.BankProxyServerException;
 import com.ipay.server.bankproxy.BankServerProxy;
 import com.ipay.server.dao.IDao;
 import com.ipay.server.entity.Market;
@@ -73,7 +74,13 @@ public class MarketServiceImpl<T extends Market> extends ServiceImpl<T> implemen
 	}
 
 	public byte[] prepareEncryptPrivatekey(String cardnum, String paypass) {
-		byte[] encryptPrivatekey = BankServerProxy.getEncryptPrivakeKey(cardnum);
+		byte[] encryptPrivatekey;
+		try {
+			encryptPrivatekey = BankServerProxy.getEncryptPrivakeKey(cardnum);
+		} catch (BankProxyServerException e) {
+			e.printStackTrace();
+			throw new ServiceException(ExceptionMessage.ENCRYPT_PRIVATEKEY_NOT_FOUND);
+		}
 		byte[] privatekey = KeyManager.decryptPrivatekey(encryptPrivatekey, paypass, cardnum);
 		return PrivateKeyEncryptor.encrypt(privatekey);
 	}

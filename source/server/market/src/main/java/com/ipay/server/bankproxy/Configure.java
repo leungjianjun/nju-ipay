@@ -14,6 +14,8 @@ public class Configure {
 	
 	public static final String GETBANKPUBLICKEY = "/bank/getBankPublicKey";
 	
+	public static final String PAYREQUESTSIGN = "/bank/getPayRequestSign";
+	
 	public static String BasicWebsite(){
 		return DOMAIN+":"+PORT;
 	}
@@ -32,6 +34,10 @@ public class Configure {
 	
 	public static String BankPublicKey(){
 		return "http://"+BasicWebsite()+GETBANKPUBLICKEY;
+	}
+	
+	public static String PayRequestSign(){
+		return "http://"+BasicWebsite()+PAYREQUESTSIGN;
 	}
 
 }

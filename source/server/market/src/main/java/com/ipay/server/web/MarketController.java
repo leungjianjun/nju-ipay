@@ -127,6 +127,7 @@ public class MarketController {
 	
 	@RequestMapping(value = "/client/getMarketPublickey", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getEncryptPrivateKey(@RequestParam int mid){
+		logger.info("client get market pulbic key");
 		String cardnum = marketService.find(Market.class, mid).getCardnum();
 		byte[] publicKey = BankServerProxy.getPublcKey(cardnum);
 		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("public.key",publicKey.length);

@@ -42,7 +42,7 @@ public class HttpConnection {
      }
      
 	
-	public static PayResponse doJsonPost(String urlStr,PayRequest payRequest) throws BankProxyServerException{
+	public static PayResponse doPayRequestPost(String urlStr,PayRequest payRequest) throws BankProxyServerException{
 		HttpURLConnection conn = null;
 		try {
 			URL url = new URL(urlStr);
@@ -64,6 +64,31 @@ public class HttpConnection {
 			throw new BankProxyServerException("发送数据错误");
 			
 		}
+	}
+	
+	public static PayResponse doPayRequestSignPost(String urlStr,PayRequestSign payRequestSign) throws BankProxyServerException{
+		HttpURLConnection conn = null;
+		try {
+			URL url = new URL(urlStr);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod(SERVLET_POST);
+			conn.setDoInput(true);
+	        conn.setDoOutput(true);
+	        conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+			OutputStream os = conn.getOutputStream();
+			mapper.writeValue(os, payRequestSign);
+			os.close();
+			
+			InputStream is = conn.getInputStream();
+			PayResponse payResponse = new PayResponse();
+			return mapper.readValue(is, payResponse.getClass());
+		}  catch (MalformedURLException e) {
+			throw new BankProxyServerException(ExceptionMessage.BANK_SERVER_NETWORK_ERROR);
+		} catch (IOException e) {
+			throw new BankProxyServerException("发送数据错误");
+			
+		}
+		
 	}
 	
 	public static void main(String[] args) throws Exception {

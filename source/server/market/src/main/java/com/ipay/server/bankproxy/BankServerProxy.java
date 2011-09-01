@@ -4,27 +4,29 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import com.ipay.server.security.ExceptionMessage;
 import com.ipay.server.security.KeyManager;
 import com.ipay.server.security.PrivateKeyEncryptor;
 
 public class BankServerProxy {
 	
-	public static byte[] getEncryptPrivakeKey(String cardnum){
+	public static byte[] getEncryptPrivakeKey(String cardnum) throws BankProxyServerException{
 		Map<String, Object> paramMap = Maps.newHashMap();
 		paramMap.put("cardnum", cardnum);
 		try {
 			return HttpConnection.doGet(Configure.GetPrivateKey(), paramMap );
 		} catch (IOException e) {
-			return null;
+			e.printStackTrace();
+			throw new BankProxyServerException(ExceptionMessage.ENCRYPT_PRIVATEKEY_NOT_FOUND);
 		}
 	}
 	
-	public static byte[] getBankPublickey(){
+	public static byte[] getBankPublickey() throws BankProxyServerException{
 		try {
 			return HttpConnection.doGet(Configure.BankPublicKey(), null);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			throw new BankProxyServerException(ExceptionMessage.PUBLICKEY_NOT_FOUND);
 		}
 	}
 	
@@ -43,7 +45,11 @@ public class BankServerProxy {
 		PayRequest payRequest = new PayRequest();
 		payRequest.setEncryptData(KeyManager.encryptByRSA(KeyManager.getBankPublickey(), message.getBytes()));
 		payRequest.setSignData(KeyManager.sign(PrivateKeyEncryptor.decrypt(encryptPrivateKeyBytes), payRequest.getEncryptData()));
-		return HttpConnection.doJsonPost(Configure.PayRequest(), payRequest);
+		return HttpConnection.doPayRequestPost(Configure.PayRequest(), payRequest);
+	}
+	
+	public static PayResponse getPayResponseSign(PayRequestSign payRequestSign) throws BankProxyServerException{
+		return HttpConnection.doPayRequestSignPost(Configure.PayRequestSign(), payRequestSign);
 	}
 
 }

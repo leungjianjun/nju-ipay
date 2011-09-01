@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
+import com.ipay.server.bankproxy.BankProxyServerException;
 import com.ipay.server.bankproxy.BankServerProxy;
 import com.ipay.server.entity.Client;
 import com.ipay.server.security.KeyManager;
@@ -89,16 +90,24 @@ public class ClientController {
 	
 	@RequestMapping(value = "/client/getEncryptPrivateKey", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getEncryptPrivateKey(Principal principal){
+		logger.info("client get encrypt privatekey");
 		String cardnum = clientService.getClientByAccount(principal.getName()).getCardnum();
-		byte[] encryptPrivateKey = BankServerProxy.getEncryptPrivakeKey(cardnum);
+		byte[] encryptPrivateKey;
+		try {
+			encryptPrivateKey = BankServerProxy.getEncryptPrivakeKey(cardnum);
+		} catch (BankProxyServerException e) {
+			e.printStackTrace();
+			throw new ControllerException(e.getMessage(),400);
+		}
 		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",encryptPrivateKey.length);
 		return new ResponseEntity<byte[]>(encryptPrivateKey,httpHeaders,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/client/getBankPublickey", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getBankPublickey(Principal principal){
+		logger.info("client bank public key");
 		byte[] bankPublicKey = KeyManager.getBankPublickey();
-		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",bankPublicKey.length);
+		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("public.key",bankPublicKey.length);
 		return new ResponseEntity<byte[]>(bankPublicKey,httpHeaders,HttpStatus.OK);
 	}
 	
@@ -110,6 +119,15 @@ public class ClientController {
 	    responseHeaders.set("Content-Disposition", "attachment");
 	    responseHeaders.add("Content-Disposition", "filename=\"" + encodedFileName + '\"');
 	    return responseHeaders;
+	}
+	
+	@ExceptionHandler(ControllerException.class)
+	public @ResponseBody Map<String, String> handleControllerException(ControllerException exception,HttpServletResponse response){
+		response.setStatus(exception.getHttpStatusCode());
+		Map<String, String> failureMessages = new HashMap<String, String>();
+		failureMessages.put("status", "false");
+		failureMessages.put("error", exception.getMessage());
+		return failureMessages;
 	}
 	
 	/**

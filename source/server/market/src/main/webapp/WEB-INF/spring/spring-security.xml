@@ -31,7 +31,9 @@
 		<s:intercept-url pattern="/client/ProductInfoById" filters="none" />
 		<s:intercept-url pattern="/client/SearchProduct" filters="none" />
 		<s:intercept-url pattern="/client/MarketInfo" filters="none" />
-		
+		<s:intercept-url pattern="/client/getBankPublickey" filters="none" />
+		<s:intercept-url pattern="/client/getMarketPublickey" filters="none" />
+
 		<s:intercept-url pattern="/resources/**" filters="none" />
 		<s:intercept-url pattern="/images/**" filters="none" />
 		<s:logout logout-success-url="/login" />

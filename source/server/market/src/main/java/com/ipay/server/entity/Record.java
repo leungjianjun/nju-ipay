@@ -3,6 +3,7 @@ package com.ipay.server.entity;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -48,7 +49,7 @@ public class Record extends BaseEntity {
 	/**
 	 * 购买的订单
 	 */
-	@OneToMany(mappedBy="record",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="record",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<Order> orders = Sets.newHashSet();
 	
 	/**
