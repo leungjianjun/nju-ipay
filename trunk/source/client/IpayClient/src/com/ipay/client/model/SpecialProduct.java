@@ -1,17 +1,18 @@
 package com.ipay.client.model;
 
+
 public class SpecialProduct extends Product {
-	public static final String New_PRICE="newPrice";
+	
 	public static final String OLD_PRICE="oldPrice";
 	public static final String AD_WORDS = "adWords";
 	
-	private double specialPrice;
+	private double oldPrice;
 	private String adWords;
-	public double getSpecialPrice() {
-		return specialPrice;
+	public double getOldPrice() {
+		return oldPrice;
 	}
-	public void setSpecialPrice(double specialPrice) {
-		this.specialPrice = specialPrice;
+	public void setOldPrice(double specialPrice) {
+		this.oldPrice = specialPrice;
 	}
 	public String getAdWords() {
 		return adWords;

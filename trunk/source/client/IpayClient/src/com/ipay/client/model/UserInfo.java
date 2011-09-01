@@ -1,5 +1,8 @@
 package com.ipay.client.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class UserInfo {
 	public static final String ACCOUNT="account";
 	public static final String REAL_NAME="realname";
@@ -25,5 +28,11 @@ public class UserInfo {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	public static UserInfo parseJSONObject(JSONObject object) throws JSONException {
+		UserInfo info = new UserInfo();
+		info.setAccount(object.getString("account"));
+		info.setRealname(object.getString("realname"));
+		info.setPhone(object.getString("phonenum"));
+		return info;
+	}
 }
