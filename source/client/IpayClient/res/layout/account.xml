@@ -22,7 +22,8 @@
 			<TextView 
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="基本信息"/>
+				android:textSize="24sp"
+				android:text="@string/account_basic_info"/>
 				
 			<TableLayout
 				android:layout_width="fill_parent"
@@ -32,11 +33,12 @@
 				<TableRow>
 					<TextView 
 						android:padding="5dp"
-						android:text="姓名:"/>
+						android:text="@string/account_name"/>
 					
-					<TextView 
+					<TextView
+						android:id="@+id/account_name"
 						android:padding="5dp"
-						android:text="张三"/>
+					/>
 				</TableRow>
 				
 				<View 
@@ -49,22 +51,41 @@
 				<TableRow>
 					<TextView 
 						android:padding="5dp"
-						android:text="卡号:"/>
+						android:text="@string/account_account"/>
 					
+					<TextView
+						android:id="@+id/account_account"
+						android:padding="5dp"
+					/>
+				</TableRow>
+				
+				<View 
+					android:background="#ffcccccc"
+					android:layout_height="1dp"
+					android:layout_marginTop="3dp"
+					android:layout_marginBottom="3dp"
+				/>
+				
+				<TableRow>
 					<TextView 
 						android:padding="5dp"
-						android:text="123456789"/>
+						android:text="@string/account_phone_num"/>
+					
+					<TextView
+						android:id="@+id/account_phone_num"
+						android:padding="5dp"
+					/>
 				</TableRow>
 				
 			</TableLayout>
 			
-			<TextView 
+		<!--	<TextView 
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="10dp"
 				android:text="账户金额"/>
 				
-			<TableLayout
+		 	<TableLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:background="@drawable/bg_panel">
@@ -95,12 +116,23 @@
 						android:text="123456789"/>
 				</TableRow>
 				
-			</TableLayout>
+			</TableLayout> -->
 			
 			<Button 
+				android:id="@+id/account_balance"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="交易历史"/>
+				android:text="@string/account_see_money"/>
+			<Button 
+				android:id="@+id/account_modify"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/account_modify_account"/>
+			<Button 
+				android:id="@+id/account_history"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/account_see_history"/>
 
 		</LinearLayout>	
 	</ScrollView>

@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -35,7 +36,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author tangym
  * 
  */
-public class DiscountGoodsActivity extends BaseListActivity  implements Pageable{
+public class DiscountGoodsActivity extends BaseListActivity implements Pageable {
 
 	private static final String TAG = "DiscountGoodsActivity";
 	// 页码
@@ -43,22 +44,23 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 	private View listHeader;
 	private View listFooter;
 	private ArrayAdapter<SpecialProduct> listItemAdapter;
-	private ArrayList<SpecialProduct> products=new ArrayList<SpecialProduct>();
+	private ArrayList<SpecialProduct> products = new ArrayList<SpecialProduct>();
+	private ProgressBar progressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hot_goods);
-		//各种初始化
+		// 各种初始化
 		listView = (ListView) findViewById(R.id.hot_goods_list);
 		setHeaderAndFooter();
 		bindItemOnClickListener();
-		
+
 		taskListener = new GetDiscountGoodsTaskListener();
-		feedback = new FeedbackFactory().create(FeedbackType.PROGRESSBAR,
-				this);
-		listItemAdapter = new SpecialGoodsArrayAdapter(this, new ArrayList<SpecialProduct>());
+		feedback = new FeedbackFactory().create(FeedbackType.PROGRESSBAR, this);
+		listItemAdapter = new SpecialGoodsArrayAdapter(this,
+				new ArrayList<SpecialProduct>());
 		listView.setAdapter(listItemAdapter);
 		doRetrive();
 
@@ -73,6 +75,8 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 		listFooter = View.inflate(this, R.layout.listview_footer, null);
 		listView.addHeaderView(listHeader, null, true);
 		listView.addFooterView(listFooter, null, true);
+		progressBar = (ProgressBar) listFooter
+				.findViewById(R.id.list_footer_progress_bar);
 	}
 
 	@Override
@@ -90,19 +94,19 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 					Log.d("HotgoodsActivity", "已选择更多");
 					nextPage();
 				} else {
-					Intent intent= new Intent(DiscountGoodsActivity.this,
+					Intent intent = new Intent(DiscountGoodsActivity.this,
 							GoodsInfoActivity.class);
-					Log.d(TAG,"position: "+ position);
-					intent.putExtra("pid",getItem(position).getId() );
+					Log.d(TAG, "position: " + position);
+					intent.putExtra("pid", getItem(position).getId());
 					startActivity(intent);
 				}
 			}
 		});
 
 	}
-	
-	private Product getItem(int position){
-		return listItemAdapter.getItem(position-1);
+
+	private Product getItem(int position) {
+		return listItemAdapter.getItem(position - 1);
 	}
 
 	public void show() {
@@ -127,7 +131,7 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 
 		page++;
 		doRetrive();
-	
+
 	}
 
 	@Override
@@ -139,8 +143,10 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 
 		@Override
 		public void onPreExecute() {
-			
+
 			feedback.start("");
+
+			progressBar.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -150,27 +156,34 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 
 		@Override
 		public void onPostExecute(TaskResult result) {
+			
 			if (result == TaskResult.OK) {
-				int count=0;
-				for (int i=(page-1)*10;i<products.size();i++) {
+				int count = 0;
+				
+				//将打折商品实体装入adapter，如果个数为0（即没有更多了），则隐藏更多按钮
+				for (int i = (page - 1) * 10; i < products.size(); i++) {
 					listItemAdapter.add(products.get(i));
 					count++;
 				}
-				if(count==0)
+				
+				if (count == 0) {
 					page--;
+					listFooter.setVisibility(View.GONE);
+				}
 
 				feedback.succeed("");
 			} else {
 				page--;
 				feedback.fail("失败");
 			}
+			progressBar.setVisibility(View.GONE);
 
 		}
 
 		@Override
 		public void onCancelled() {
-			// TODO Auto-generated method stub
 
+			progressBar.setVisibility(View.VISIBLE);
 		}
 
 	}
@@ -180,14 +193,14 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 		@Override
 		protected TaskResult doInBackground(TaskParams... params) {
 			// CommunicationManager cm = CommunicationManager.instance();
-
+			Log.d(TAG, "获取打折商品，page:" + page);
 			ArrayList<SpecialProduct> list;
-			int process=0;
-			CommunicationManager cm=CommunicationManager.instance();
+			int process = 0;
+			CommunicationManager cm = CommunicationManager.instance();
 			try {
 				publishProgress(40);
-				list=cm.getSpecialProducts(page);
-				
+				list = cm.getSpecialProducts(page);
+
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -199,7 +212,7 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 			}
 
 			publishProgress(80);
-			
+
 			for (SpecialProduct product : list) {
 				products.add(product);
 			}
