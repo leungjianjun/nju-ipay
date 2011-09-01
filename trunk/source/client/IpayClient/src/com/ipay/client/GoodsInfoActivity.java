@@ -278,6 +278,8 @@ public class GoodsInfoActivity extends BaseActivity {
 					return TaskResult.FAILED;
 				}
 
+				publishProgress(80);
+
 				if (product != null) {
 					String imageURL = CommunicationManager.HTTP_BASE
 							+ product.getMidImgUrl();
@@ -291,7 +293,6 @@ public class GoodsInfoActivity extends BaseActivity {
 					}
 				}
 
-				publishProgress(80);
 			} else {
 				return TaskResult.FAILED;
 			}
@@ -338,19 +339,14 @@ public class GoodsInfoActivity extends BaseActivity {
 			if (product != null) {
 				String imageURL = CommunicationManager.HTTP_BASE
 						+ product.getMidImgUrl();
-				Log.d(TAG, "mid image url: " + imageURL);
+				Log.d(TAG, "download mid image: " + imageURL);
 				try {
-					URL url = new URL(imageURL);
-					url.getContent();
-					InputStream is = (InputStream) url.getContent();
-					imageBitmap = BitmapFactory
-							.decodeStream(new BufferedInputStream(is));
+					imageBitmap = CommunicationManager.instance().getBitmap(
+							imageURL);
 				} catch (IOException e) {
-
+					Log.d(TAG, "download mid image failed");
 					e.printStackTrace();
-					Log.d(TAG, "获取图片失败");
 				}
-
 			}
 
 			if (product != null)
