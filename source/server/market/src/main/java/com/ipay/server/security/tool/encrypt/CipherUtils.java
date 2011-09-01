@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.client.security.tool.encrypt;
+package com.ipay.server.security.tool.encrypt;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

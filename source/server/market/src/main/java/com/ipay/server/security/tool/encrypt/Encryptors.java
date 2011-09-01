@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ipay.client.security.tool.encrypt;
+package com.ipay.server.security.tool.encrypt;
 
-import com.ipay.client.security.tool.keygen.KeyGenerators;
+import com.ipay.server.security.tool.keygen.KeyGenerators;
 
 /**
  * Factory for commonly used encryptors.
