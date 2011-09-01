@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipay.server.entity.CreditCard;
+import com.ipay.server.security.ExceptionMessage;
+import com.ipay.server.security.TransactionException;
 import com.ipay.server.service.ICreditCardService;
 import com.ipay.server.service.ServiceException;
 
@@ -33,6 +35,9 @@ public class CreditCardController {
 	@RequestMapping(value = "/bank/getEncryptPrivateKey", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getEncryptPrivateKey(@RequestParam String cardnum){
 		CreditCard creditCard = creditCardService.getCreditCardByNum(cardnum);
+		if(creditCard==null){
+			throw new TransactionException(ExceptionMessage.RESOURCE_NOT_FOUND,400);
+		}
 		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",656);
 		return new ResponseEntity<byte[]>(creditCard.getPrivateKey(),httpHeaders,HttpStatus.OK);
 	}
@@ -40,7 +45,7 @@ public class CreditCardController {
 	@RequestMapping(value = "/bank/getPublicKey", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPublicKey(@RequestParam String cardnum){
 		CreditCard creditCard = creditCardService.getCreditCardByNum(cardnum);
-		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",656);
+		HttpHeaders httpHeaders = httpHeaderPrivateKeyAttachment("private.key",162);
 		return new ResponseEntity<byte[]>(creditCard.getPublicKey(),httpHeaders,HttpStatus.OK);
 	}
 	
@@ -52,6 +57,15 @@ public class CreditCardController {
 	    responseHeaders.set("Content-Disposition", "attachment");
 	    responseHeaders.add("Content-Disposition", "filename=\"" + encodedFileName + '\"');
 	    return responseHeaders;
+	}
+	
+	@ExceptionHandler(TransactionException.class)
+	public @ResponseBody Map<String, String> handleServiceException(TransactionException exception,HttpServletResponse response){
+		response.setStatus(exception.getHttpStatusCode());
+		Map<String, String> failureMessages = new HashMap<String, String>();
+		failureMessages.put("status", "false");
+		failureMessages.put("error", exception.getMessage());
+		return failureMessages;
 	}
 	
 	/**
