@@ -47,7 +47,6 @@ public class ProgressBarFeedback extends Feedback{
 	@Override
 	public void cancel() {
 		reset();
-		//showMessage(msg)
 	}
 	
 	private void reset(){

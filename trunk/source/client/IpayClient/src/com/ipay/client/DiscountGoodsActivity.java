@@ -151,12 +151,17 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 		@Override
 		public void onPostExecute(TaskResult result) {
 			if (result == TaskResult.OK) {
+				int count=0;
 				for (int i=(page-1)*10;i<products.size();i++) {
 					listItemAdapter.add(products.get(i));
+					count++;
 				}
+				if(count==0)
+					page--;
 
 				feedback.succeed("");
 			} else {
+				page--;
 				feedback.fail("失败");
 			}
 
@@ -178,10 +183,7 @@ public class DiscountGoodsActivity extends BaseListActivity  implements Pageable
 
 			ArrayList<SpecialProduct> list;
 			int process=0;
-
-			
 			CommunicationManager cm=CommunicationManager.instance();
-			//cm.initConnection();
 			try {
 				publishProgress(40);
 				list=cm.getSpecialProducts(page);

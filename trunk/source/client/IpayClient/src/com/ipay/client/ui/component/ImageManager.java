@@ -18,6 +18,8 @@ import java.util.Map;
 
 import org.apache.http.HttpException;
 
+import com.ipay.client.communication.CommunicationManager;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -129,19 +131,23 @@ public class ImageManager  implements ImageCache{
     public Bitmap downloadImage(String url) throws IOException  {
             Log.d(TAG, "Fetching image: " + url);
            // Response res = TwitterApplication.mApi.getHttpClient().get(url);
-            URL u=new URL(url);
-            InputStream is=(InputStream)u.getContent();
+            /*URL u=new URL(url);
+            InputStream is=(InputStream)u.getContent();*/
 //            return BitmapFactory.decodeStream(new BufferedInputStream(res
 //                            .asStream()));
-            return BitmapFactory.decodeStream(new BufferedInputStream(is
-                    ));
+            
+            
+//            return BitmapFactory.decodeStream(new BufferedInputStream(is
+//                    ));
+            
+            return CommunicationManager.instance().getBitmap(url);
     }
 
     public Bitmap downloadImage2(String url) throws IOException  {
             Log.d(TAG, "[NEW]Fetching image: " + url);
 //            final Response res = TwitterApplication.mApi.getHttpClient().get(url);
-            URL u=new URL(url);
-            InputStream is=(InputStream)u.getContent();
+            CommunicationManager cm=CommunicationManager.instance();
+            InputStream is=(InputStream)cm.get(url).getEntity().getContent();
 //            String file = writeToFile(res.asStream(), getMd5(url));
             String file = writeToFile(is, getMd5(url));
             return BitmapFactory.decodeFile(file);
