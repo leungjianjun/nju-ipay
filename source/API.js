@@ -430,7 +430,7 @@ var result_send_order = {
 var get_market_publicKey = {}
 
 /**
- * url http://xxx.xxx.xxx.xxx:8080/client//client/getBankPublickey
+ * url http://xxx.xxx.xxx.xxx:8080/client/getBankPublickey
  * 
  * 返回银行公钥
  * 
@@ -445,7 +445,7 @@ var get_bank_publicKey = {}
  * url https://xxx.xxx.xxx.xxx:8443/client/PayRequest
  * 
  * OI:"{\"tranId\":123}"
- * PI:"{\"tranId\":123}"
+ * PI:"{\"tranId\":123,\"cardnum\":\"23434jjhj\"}"
  */
 var pay_request = {
 	mid:12,
@@ -457,14 +457,15 @@ var pay_request = {
 
 /*
  * statusCode为0就是成功，如果是其他的话就是失败，具体代码再定义吧
+ * statusCode 1 余额不足
  */
 var result_pay_request = {
-	bankResult:"{\"tranId\":123,\"statusCode\":0}",
+	source:"{\"tranId\":123,\"statusCode\":0}",
 	sign:"fdsafdsaf8709df0ds98ufudsifuds90fuds"
 }
 
 var error_pay_request = {
-	bankResult:"{\"tranId\":123,\"statusCode\":0}",
+	source:"{\"tranId\":123,\"statusCode\":0}",
 	sign:"fdsafdsaf8709df0ds98ufudsifuds90fuds"
 }
 
@@ -513,13 +514,31 @@ var result_pay_order = {
 //购买记录
 
 /**
+ * url https://xxx.xxx.xxx.xxx:8443/client/getRecords
  * 
+ * 方法：get
  * 
  */
 var get_records = {}
 
 var result_get_records = {
-	records:[{id:134,createDate:"",marketName:"",total:""}]
+	records:[{id:134,createDate:"",marketName:"",total:343.3}]
+}
+
+/**
+ * url https://xxx.xxx.xxx.xxx:8443/client/getRecordDetail?
+ * 
+ * 方法：get
+ * 
+ */
+var get_record_detatil = {
+		createDate:"",
+		marketId:34,
+		marketName:"",//可以增加更多的market信息
+		total:343.5,
+		orders:[{productId:123,productName:"",price:12.3,quantity:1},//quantity是购买的数量
+		        {}//可以增加更多的product信息
+		]
 }
 
 
