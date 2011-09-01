@@ -526,7 +526,7 @@ var result_get_records = {
 }
 
 /**
- * url https://xxx.xxx.xxx.xxx:8443/client/getRecordDetail?
+ * url https://xxx.xxx.xxx.xxx:8443/client/getRecordDetail?rid={record id}
  * 
  * 方法：get
  * 
@@ -536,9 +536,15 @@ var get_record_detatil = {
 		marketId:34,
 		marketName:"",//可以增加更多的market信息
 		total:343.5,
-		orders:[{productId:123,productName:"",price:12.3,quantity:1},//quantity是购买的数量
+		orders:[{productId:123,productName:"",quantity:1,cost:""},//quantity是购买的数量,cost是花费的钱
 		        {}//可以增加更多的product信息
 		]
+}
+
+var get_card_info = {}
+
+var result_get_card_info = {
+	
 }
 
 
