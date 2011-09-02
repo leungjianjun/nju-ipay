@@ -522,7 +522,7 @@ var result_pay_order = {
 var get_records = {}
 
 var result_get_records = {
-	records:[{id:134,createDate:"",marketName:"",total:343.3}]
+	records:[{id:134,createDate:"",mid:123,marketName:"",total:343.3}]
 }
 
 /**
@@ -541,10 +541,17 @@ var get_record_detatil = {
 		]
 }
 
+/**
+ * url https://xxx.xxx.xxx.xxx:8443/client/getCardInfo
+ * 
+ * 这里应该要输入一些密码什么才能查看的，不过算了
+ */
 var get_card_info = {}
 
 var result_get_card_info = {
-	
+	cardnum:"",
+	balance:"",//余额
+	state:"银行卡状态，可用或者禁用"
 }
 
 
