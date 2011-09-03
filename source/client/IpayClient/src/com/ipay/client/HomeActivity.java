@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.ipay.client.ui.base.BaseActivity;
+import com.ipay.client.ui.component.NaviBar;
+import com.ipay.client.ui.component.NaviBarBack;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,6 +33,7 @@ public class HomeActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
+		naviBar=new NaviBar(this);
 
 		list = (ListView) findViewById(R.id.home_listview);
 

@@ -16,6 +16,7 @@ import com.ipay.client.task.TaskResult;
 import com.ipay.client.ui.base.BaseActivity;
 import com.ipay.client.ui.component.Feedback;
 import com.ipay.client.ui.component.FeedbackFactory;
+import com.ipay.client.ui.component.NaviBarBack;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,6 +64,8 @@ public class MarketInfoActivity extends BaseActivity {
 		marketServPhoneTxt = (TextView) findViewById(R.id.market_info_service_phone);
 		marketCompPhoneTxt = (TextView) findViewById(R.id.market_info_complain_phone);
 		marketCreateDateTxt = (TextView) findViewById(R.id.market_info_create_date);
+		naviBar=new NaviBarBack(this);
+		naviBar.setTitle(R.string.market_info_title);
 
 	}
 

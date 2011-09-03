@@ -180,27 +180,29 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
-					android:textColor="#000000"
-					android:text="@string/modify_account_info_different_pass"
+					android:textColor="#CC0000"
 				/>
 		  <RelativeLayout 
 		  	android:layout_width="fill_parent"
-		  	android:layout_height="wrap_content">
+		  	android:layout_height="wrap_content"
+		  	android:gravity="center">
 		  	
-			  	<Button 
+			  	<Button
+			  		android:id="@+id/modify_account_submit" 
 			  		android:layout_width="wrap_content"
 			  		android:layout_height="wrap_content"
-			  		android:layout_alignParentLeft="true"
 			  		android:text="@string/modify_account_info_submit"
-			  		style="@style/blue_button_long"
+			  		style="@style/white_button"
 			  	/>
 			  	
 			  	<Button 
+			  		android:id="@+id/modify_account_cancel" 
 			  		android:layout_width="wrap_content"
 			  		android:layout_height="wrap_content"
-			  		android:layout_alignParentRight="true"
+			  		android:layout_marginLeft="30dp"
+			  		android:layout_toRightOf="@id/modify_account_submit"
 			  		android:text="@string/modify_account_info_cancel"
-			  		style="@style/blue_button_long"
+			  		style="@style/white_button"
 			  	/>
 	  		</RelativeLayout>
 		</LinearLayout>

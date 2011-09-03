@@ -39,6 +39,7 @@ import com.ipay.client.ui.base.BaseActivity;
 import com.ipay.client.ui.component.Feedback;
 import com.ipay.client.ui.component.FeedbackFactory;
 import com.ipay.client.ui.component.ImageCache;
+import com.ipay.client.ui.component.NaviBarBack;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import com.ipay.client.ui.component.LazyImageLoader.ImageLoaderCallback;
 import android.content.Intent;
@@ -117,6 +118,8 @@ public class GoodsInfoActivity extends BaseActivity {
 		productImageView = (ImageView) findViewById(R.id.goods_info_image);
 		addToCartBtn = (Button) findViewById(R.id.goods_info_add_to_cart);
 		addToCartBtn.setOnClickListener(new AddToCartListener());
+		naviBar=new NaviBarBack(this);
+		naviBar.setTitle(R.string.goods_info_title);
 	}
 
 	/**

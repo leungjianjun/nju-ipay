@@ -22,6 +22,8 @@ import com.ipay.client.ui.base.BaseActivity;
 import com.ipay.client.ui.component.DialogFeedback;
 import com.ipay.client.ui.component.Feedback;
 import com.ipay.client.ui.component.FeedbackFactory;
+import com.ipay.client.ui.component.NaviBar;
+import com.ipay.client.ui.component.NaviBarBack;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import com.ipay.client.ui.component.ShoppingCartArrayAdapter;
 
@@ -97,6 +99,8 @@ public class ShoppingCartActivity extends BaseActivity {
 		// 获取购物车实例
 		cart = ShoppingCart.getInstance();
 		feedback = new FeedbackFactory().create(FeedbackType.DIALOG, this);
+		
+		naviBar=new NaviBar(this);
 	}
 
 	@Override

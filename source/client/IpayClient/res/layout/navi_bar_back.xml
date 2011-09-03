@@ -9,17 +9,28 @@
   	>
   	<!-- 返回按钮 -->
   	<Button 
-  		android:id="@+id/navi_bar_back"
+  		android:id="@+id/navi_bar_back_btn"
   		android:layout_width="wrap_content"
   		android:layout_height="fill_parent"
   		android:layout_alignParentLeft="true"
   		style="@style/navi_bar_button"
   		android:text="@string/navi_bar_back"
   	/>
+  	<TextView 
+  		android:id="@+id/navi_bar_title"
+  		android:layout_height="wrap_content"
+  		android:layout_width="wrap_content"
+  		android:gravity="center_vertical"
+  		android:layout_centerInParent="true"
+  		android:textColor="#fff"
+  		android:textSize="24sp"
+  		android:textStyle="bold"
+  		android:shadowDy="0.5"
+  	/>
   	
   	<!-- 搜索按钮 -->
   	<ImageButton
-    	android:id="@+id/navi_bar_search" 
+    	android:id="@+id/navi_bar_scanner_btn" 
   		android:layout_width="wrap_content"
     	android:layout_height="fill_parent"
     	android:layout_alignParentRight="true"
@@ -29,17 +40,17 @@
     	android:src="@drawable/navi_bar_search_selector"
   	/>
   
-   	<!-- 购物车按钮 -->
+   <!-- 	
    	<ImageButton 
-		android:id="@+id/navi_bar_cart"
+		android:id="@+id/navi_bar_scanner_btn"
         android:background="@null"
         android:src="@drawable/navi_bar_cart_selector"
         android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
-		android:layout_toLeftOf="@id/navi_bar_search"
+		android:layout_toLeftOf="@id/navi_bar_search_btn"
 		android:paddingRight="10dip"
 		android:paddingLeft="10dip"
-   	/>
+   	/> -->
    	    
         
 	<!-- 长条进度条，导航栏底部 -->

@@ -28,6 +28,7 @@ import com.ipay.client.task.TaskResult;
 import com.ipay.client.ui.base.BaseListActivity;
 import com.ipay.client.ui.base.Pageable;
 import com.ipay.client.ui.component.FeedbackFactory;
+import com.ipay.client.ui.component.NaviBarBack;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import com.ipay.client.ui.component.SpecialGoodsArrayAdapter;
 
@@ -54,8 +55,11 @@ public class DiscountGoodsActivity extends BaseListActivity implements Pageable 
 		// 各种初始化
 		listView = (ListView) findViewById(R.id.hot_goods_list);
 		setHeaderAndFooter();
+		
 		bindItemOnClickListener();
-
+		naviBar=new NaviBarBack(this);
+		naviBar.setTitle(R.string.discount_goods_title);
+		
 		taskListener = new GetDiscountGoodsTaskListener();
 		feedback = new FeedbackFactory().create(FeedbackType.PROGRESSBAR, this);
 		listItemAdapter = new SpecialGoodsArrayAdapter(this,
