@@ -55,8 +55,8 @@ public class DiscountGoodsActivity extends BaseListActivity implements Pageable 
 		// 各种初始化
 		listView = (ListView) findViewById(R.id.hot_goods_list);
 		setHeaderAndFooter();
-		
 		bindItemOnClickListener();
+		
 		naviBar=new NaviBarBack(this);
 		naviBar.setTitle(R.string.discount_goods_title);
 		
@@ -110,11 +110,6 @@ public class DiscountGoodsActivity extends BaseListActivity implements Pageable 
 
 	private Product getItem(int position) {
 		return listItemAdapter.getItem(position - 1);
-	}
-
-	public void show() {
-		Log.d(TAG, "已经按下移除按钮");
-
 	}
 
 	@Override
@@ -185,8 +180,9 @@ public class DiscountGoodsActivity extends BaseListActivity implements Pageable 
 
 		@Override
 		public void onCancelled() {
-
+			feedback.cancel();
 			progressBar.setVisibility(View.VISIBLE);
+			
 		}
 
 	}

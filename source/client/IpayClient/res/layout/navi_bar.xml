@@ -24,14 +24,14 @@
   />
   	<!-- 搜索按钮 -->
   	<ImageButton
-    android:id="@+id/navi_bar_scanner_btn" 
-  	android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:layout_alignParentRight="true"
-    android:paddingRight="10dip"
-    android:paddingLeft="10dip"
-  	android:background="@null"
-    android:src="@drawable/navi_bar_search_selector"
+	    android:id="@+id/navi_bar_scanner_btn" 
+	  	android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_alignParentRight="true"
+	    android:paddingRight="10dip"
+	    android:paddingLeft="10dip"
+	  	android:background="@null"
+	    android:src="@drawable/navi_bar_search_selector"
   	/>
   
    	
