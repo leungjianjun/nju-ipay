@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	  	
+	  	<include layout="@layout/navi_bar_back"/>
+	  	
+	  	<ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="#FFEFF0F4">
+			
+			<LinearLayout
+				android:orientation="vertical" 
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:padding="15dp">
+			
+	  		<!-- 基本资料修改 -->
+		  	<TextView 
+		  		android:layout_height="wrap_content"
+		  		android:layout_width="fill_parent"
+		  		android:gravity="center_vertical"
+		  		android:layout_marginTop="5dp"
+		  		android:padding="5dp"
+		  		android:textSize="20sp"
+		  		android:textColor="#ffffff"
+		  		android:text="@string/modify_account_info_basic"
+		  		android:background="@drawable/bg_panel_top"
+		  	/>
+		  	
+		  	<TableLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/bg_panel2">
+					
+				<TableRow
+					android:gravity="center_vertical"
+					android:padding="8dp"
+				>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="right"
+						android:textColor="#000000"
+						android:textSize="14sp"
+						android:text="@string/modify_account_info_account"/>
+															
+					<EditText 
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:singleLine="true"
+						android:layout_weight="1.0"
+						android:layout_marginLeft="10dp"
+					/>
+				</TableRow>
+				
+				<View 
+					android:background="#ffcccccc"
+					android:layout_height="1dp"
+				/>
+				
+						
+				<TableRow
+					android:gravity="center_vertical"
+					android:padding="8dp"
+				>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="right"
+						android:textColor="#000000" 
+						android:text="@string/modify_account_info_phone_num"/>
+							
+					<EditText
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:layout_marginLeft="10dp"
+						android:layout_weight="1.0"
+						android:singleLine="true"
+					/>
+				</TableRow>
+						
+			</TableLayout>
+			
+			<!-- 密码修改 -->
+			<TextView 
+		  		android:layout_height="wrap_content"
+		  		android:layout_width="fill_parent"
+		  		android:layout_marginTop="15dp"
+		  		android:gravity="center_vertical"
+		  		android:textSize="20sp"
+		  		android:padding="5dp"
+		  		android:textColor="#FFFFFF"
+		  		android:background="@drawable/bg_panel_top"
+		  		android:text="@string/modify_account_info_pass"
+		  	/>
+			
+			<TableLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/bg_panel2">
+					
+				<TableRow
+					android:gravity="center_vertical"
+					android:padding="8dp"
+				>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="right"
+						android:textColor="#000000"
+						android:text="@string/modify_account_info_old_pass"/>
+							
+					<EditText 
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="10dp"
+						android:layout_weight="1.0"
+						android:singleLine="true"
+					/>
+				</TableRow>
+						
+				<View 
+					android:background="#ffcccccc"
+					android:layout_height="1dp"
+				/>
+						
+				<TableRow
+					android:gravity="center_vertical"
+					android:padding="8dp"
+				>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:gravity="right"
+						android:textColor="#000000"
+						android:text="@string/modify_account_info_new_pass"/>
+							
+					<EditText
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:layout_marginLeft="10dp"
+						android:layout_weight="1.0"
+						android:singleLine="true"
+					/>
+				</TableRow>
+				
+				<View 
+					android:background="#ffcccccc"
+					android:layout_height="1dp"
+				/>
+				
+				<TableRow
+					android:gravity="center_vertical"
+					android:padding="8dp"
+				>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:gravity="right"
+						android:textColor="#000000"
+						android:text="@string/modify_account_info_new_pass_again"/>
+							
+					<EditText
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content" 
+						android:layout_weight="1.0"
+						android:layout_marginLeft="10dp"
+						android:singleLine="true"
+					/>
+				</TableRow>
+				
+				
+						
+			</TableLayout>
+			<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:textColor="#000000"
+					android:text="@string/modify_account_info_different_pass"
+				/>
+		  <RelativeLayout 
+		  	android:layout_width="fill_parent"
+		  	android:layout_height="wrap_content">
+		  	
+			  	<Button 
+			  		android:layout_width="wrap_content"
+			  		android:layout_height="wrap_content"
+			  		android:layout_alignParentLeft="true"
+			  		android:text="@string/modify_account_info_submit"
+			  		style="@style/blue_button_long"
+			  	/>
+			  	
+			  	<Button 
+			  		android:layout_width="wrap_content"
+			  		android:layout_height="wrap_content"
+			  		android:layout_alignParentRight="true"
+			  		android:text="@string/modify_account_info_cancel"
+			  		style="@style/blue_button_long"
+			  	/>
+	  		</RelativeLayout>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>
+
+

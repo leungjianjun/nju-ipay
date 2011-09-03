@@ -4,30 +4,21 @@
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:background="@android:color/white"
+  android:background="#EEE"
   >
   
   	<include layout="@layout/navi_bar"/>
-	  
-  	<TextView 
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="26sp"
-		android:textStyle="bold"
-		android:text="欢迎，Popcorn"
-		android:layout_marginBottom="10dp"
-		android:layout_marginTop="10dp"
-		android:layout_marginLeft="5dp"
-		android:layout_marginRight="5dp"
-  	/>
   
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:background="@drawable/listview_item_view_bg"
-		android:padding="10dp"
-		android:layout_margin="2dp"
+		android:background="@drawable/bg_panel"
+		android:padding="5dp"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+		android:layout_marginTop="3dp"
+		android:gravity="center"
   	>
   	
   		<EditText
@@ -35,16 +26,43 @@
   			android:layout_width="wrap_content"
   			android:layout_weight="1.0"
   			android:singleLine="true"
-  			android:hint="你在找什么？"
+  			android:hint="@string/home_search_hint"
   		/>
   		
   		<Button 
   			android:layout_width="wrap_content"
   			android:layout_height="wrap_content"
   			android:layout_alignParentRight="true"
-  			android:text="搜索"
+  			android:layout_marginLeft="8dp"
+  			android:background="@drawable/ic_search_btn_selector"
   		/>
   	</LinearLayout>
+  	
+  		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_marginTop="3dp"
+			android:layout_height="wrap_content"
+			android:src="@drawable/bg_thick_divider_3d"
+		/>
+  	
+	<TextView 
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:gravity="center"
+  		android:padding="8dp"
+  		android:layout_marginTop="3dp"
+  		android:textColor="#666"
+  		android:textSize="18sp"
+  		android:text="@string/home_guide"
+  	
+  	/> 
+  	
+  	<ImageView
+			android:layout_width="fill_parent"
+			android:layout_marginTop="3dp"
+			android:layout_height="wrap_content"
+			android:src="@drawable/bg_thick_divider_3d"
+	/>
   	
   	<!-- 商场主页功能列表 -->
   	<ListView 
@@ -52,7 +70,6 @@
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
   	android:layout_weight="1.0"
-  	android:layout_marginTop="5dp"
   	android:cacheColorHint="#00000000"
    	android:divider="@drawable/divider_horizonal"
   	android:dividerHeight="1.0dp"

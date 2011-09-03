@@ -10,34 +10,53 @@
 	<include layout="@layout/navi_bar"/>
 	
 	<ScrollView 
-		android:background="#FFEFF0F4"
+		android:background="#FFF0F0F0"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 		<LinearLayout 
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:orientation="vertical"
-			android:padding="15dp"
 			>
 			<TextView 
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:layout_marginTop="10dp"
 				android:textSize="24sp"
+				android:textColor="#666"
 				android:text="@string/account_basic_info"/>
+				
+			<ImageView
+				android:layout_width="fill_parent"
+				android:layout_marginTop="3dp"
+				android:layout_height="wrap_content"
+				android:src="@drawable/bg_thick_divider_3d"
+			/>
 				
 			<TableLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:layout_marginTop="5dp"
 				android:background="@drawable/bg_panel">
 			
 				<TableRow>
-					<TextView 
+					<TextView
+						android:layout_marginLeft="8dp" 
 						android:padding="5dp"
+						android:gravity="right"
+						android:textColor="#000"
+						android:textSize="16sp"
 						android:text="@string/account_name"/>
 					
 					<TextView
 						android:id="@+id/account_name"
 						android:padding="5dp"
+						android:textColor="#000"
+						android:textSize="16sp"
 					/>
 				</TableRow>
 				
@@ -50,12 +69,18 @@
 				
 				<TableRow>
 					<TextView 
+						android:layout_marginLeft="8dp" 
 						android:padding="5dp"
+						android:gravity="right"
+						android:textColor="#000"
+						android:textSize="16sp"
 						android:text="@string/account_account"/>
 					
 					<TextView
 						android:id="@+id/account_account"
 						android:padding="5dp"
+						android:textColor="#000"
+						android:textSize="16sp"
 					/>
 				</TableRow>
 				
@@ -68,12 +93,18 @@
 				
 				<TableRow>
 					<TextView 
+						android:layout_marginLeft="8dp" 
 						android:padding="5dp"
+						android:gravity="right"
+						android:textColor="#000"
+						android:textSize="16sp"
 						android:text="@string/account_phone_num"/>
 					
 					<TextView
 						android:id="@+id/account_phone_num"
 						android:padding="5dp"
+						android:textColor="#000"
+						android:textSize="16sp"
 					/>
 				</TableRow>
 				
@@ -118,21 +149,41 @@
 				
 			</TableLayout> -->
 			
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_marginTop="5dp"
+			android:layout_height="wrap_content"
+			android:src="@drawable/bg_thick_divider_3d"
+		/>
+			
 			<Button 
 				android:id="@+id/account_balance"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:layout_marginTop="10dp"
+				style="@style/blue_button_long2"
 				android:text="@string/account_see_money"/>
 			<Button 
 				android:id="@+id/account_modify"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:layout_marginTop="15dp"
+				style="@style/blue_button_long2"
 				android:text="@string/account_modify_account"/>
 			<Button 
 				android:id="@+id/account_history"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="@string/account_see_history"/>
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:layout_marginTop="15dp"
+				android:text="@string/account_see_history"
+				style="@style/blue_button_long2"
+				/>
 
 		</LinearLayout>	
 	</ScrollView>

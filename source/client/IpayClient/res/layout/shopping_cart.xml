@@ -3,16 +3,20 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/body_background"
+    android:background="#EEE"
 >
     
     <!-- 顶部栏 -->
     <include layout="@layout/navi_bar"/>
     
     <!-- 购物车信息汇总 -->
-    <RelativeLayout 
+    <!-- <RelativeLayout 
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
+    	android:layout_marginLeft="15dp"
+    	android:layout_marginRight="15dp"
+    	android:layout_marginTop="15dp"
+    	android:background="@drawable/bg_panel"
     >
     	<LinearLayout
     		android:id="@+id/cart_quantity_div"
@@ -20,7 +24,6 @@
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
     		android:layout_marginLeft="10dip"
-    		android:layout_marginTop="10dip"
     	>
     		<TextView 
     			android:layout_width="wrap_content"
@@ -34,12 +37,12 @@
     			android:layout_height="wrap_content"
     			android:layout_marginLeft="5dp"
     			android:layout_marginRight="5dp"
-    			style="@style/LinkText.Bold.Huge"
     		/>
     	
     	</LinearLayout>
     	
     	<LinearLayout
+    		android:id="@+id/cart_total_div"
     		android:orientation="horizontal"
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content" 
@@ -69,19 +72,85 @@
     		/>
     	</LinearLayout>
     	
-    	 <Button
-			android:id="@+id/cart_pay_btn"
-			android:layout_width="wrap_content"
+    	
+    	
+    	
+    </RelativeLayout> -->
+    
+    	<TableLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:background="@drawable/bg_panel">
+			
+				<TableRow>
+					<TextView
+						android:layout_marginLeft="8dp" 
+						android:padding="5dp"
+						android:gravity="right"
+						android:textColor="#000"
+						android:textSize="16sp"
+						android:text="@string/shopping_cart_quantity"/>
+					
+					<TextView
+						android:id="@+id/cart_quantity"
+						android:padding="5dp"
+						android:textColor="#000"
+						android:textSize="16sp"
+					/>
+				</TableRow>
+				
+				<View 
+					android:background="#ffcccccc"
+					android:layout_height="1dp"
+					android:layout_marginTop="3dp"
+					android:layout_marginBottom="3dp"
+				/>
+				
+				<TableRow>
+					<TextView 
+						android:layout_marginLeft="8dp" 
+						android:padding="5dp"
+						android:gravity="right"
+						android:textColor="#000"
+						android:textSize="16sp"
+						android:text="@string/shopping_cart_money"/>
+					
+					<TextView
+						android:id="@+id/cart_total"
+						android:padding="5dp"
+						android:textColor="#000"
+						android:textSize="16sp"
+					/>
+				</TableRow>
+				
+			</TableLayout>
+   		 <ImageView
+			android:layout_width="fill_parent"
+			android:layout_marginTop="3dp"
 			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-			android:layout_margin="10.0dip"
-			android:textSize="20sp"
-			android:text="@string/shopping_cart_pay"
-			style="@style/blue_button"
+			android:src="@drawable/bg_thick_divider_3d"
 		/>
-    	
-    	
-    </RelativeLayout>
+     	<Button
+			android:id="@+id/cart_pay_btn"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="3dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp"
+			android:text="@string/shopping_cart_pay"
+			style="@style/blue_button_long2"
+		/>
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_marginTop="3dp"
+			android:layout_height="wrap_content"
+			android:src="@drawable/bg_thick_divider_3d"
+		/>
+		
+		
     
     
     <!-- 购物车中的商品列表 -->

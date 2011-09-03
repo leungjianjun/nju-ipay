@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+  <!-- 导航烂 -->
+  <include layout="@layout/navi_bar_back"/>
+  
+  <!-- 记录列表 -->
+  <ListView
+		android:id="@+id/brief_record_list"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1.0"
+    	android:cacheColorHint="#00000000"
+    	android:fadeScrollbars="true"
+   	 	android:divider="@drawable/divider_horizonal"
+  		android:dividerHeight="1.0dp"
+    	android:fastScrollEnabled="true"
+   />  
+    
+</LinearLayout>
