@@ -75,6 +75,10 @@ public class ShoppingCartActivity extends BaseActivity {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		initViews();
+//		Product p=new Product(111, "dddd", "dd", "dd", "d");
+//		p.setQuantity(1);
+//		p.setId(8);
+//		ShoppingCart.getInstance().add(p);
 		update();
 	}
 

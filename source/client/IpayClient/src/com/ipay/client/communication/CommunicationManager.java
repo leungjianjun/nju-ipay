@@ -62,7 +62,7 @@ import com.ipay.client.security.KeyManager;
  */
 
 public class CommunicationManager {
-	private int marketId = 2;
+	private int marketId = 31;
 	private DefaultHttpClient httpClient;
 	private Session session;
 
@@ -86,8 +86,8 @@ public class CommunicationManager {
 
 	public static final String TAG = "CommunicationManager";
 
-	public static final String HTTP_BASE = "http://192.168.1.101:8080/";
-	public static final String HTTPS_BASE = "https://192.168.1.101:8443/";
+	public static final String HTTP_BASE = "http://192.168.1.100:8080/";
+	public static final String HTTPS_BASE = "https://192.168.1.100:8443/";
 
 	// 用户相关
 	public static final String LOGIN_URL = HTTPS_BASE
@@ -536,7 +536,7 @@ public class CommunicationManager {
 					JSONObject jProduct = jProducts.getJSONObject(i);
 					product.setId(jProduct.getInt(Product.ID));
 					product.setName(jProduct.getString(Product.NAME));
-					product.setPrice(jProduct.getDouble(SpecialProduct.PRICE));
+					product.setPrice(jProduct.getDouble(SpecialProduct.NEW_PRICE));
 					product.setOldPrice(jProduct
 							.getDouble(SpecialProduct.OLD_PRICE));
 					product.setMinImgUrl(jProduct
@@ -576,6 +576,7 @@ public class CommunicationManager {
 		try {
 			HttpResponse response = httpClient.execute(get);
 			JSONObject result = getJsonResult(response);
+			Log.d(TAG,"热门商品:"+result.toString());
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 
 				JSONArray jProducts = result.getJSONArray("hotProducts");

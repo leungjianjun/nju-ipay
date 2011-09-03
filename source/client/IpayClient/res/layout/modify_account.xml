@@ -54,6 +54,7 @@
 						android:singleLine="true"
 						android:layout_weight="1.0"
 						android:layout_marginLeft="10dp"
+						android:text="梁建军"
 					/>
 				</TableRow>
 				
@@ -80,6 +81,7 @@
 						android:layout_marginLeft="10dp"
 						android:layout_weight="1.0"
 						android:singleLine="true"
+						android:text="15298386189"
 					/>
 				</TableRow>
 						
