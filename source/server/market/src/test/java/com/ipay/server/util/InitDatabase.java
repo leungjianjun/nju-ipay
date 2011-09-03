@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Date;
 
 import org.jsoup.Jsoup;
@@ -490,7 +491,10 @@ public class InitDatabase {
 	 * @throws IOException 
 	 */
 	private void initClient() throws IOException{
-		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream("O:\\Workspace\\Eclipse\\iPay_Download\\name.txt")));
+		URL url=InitDatabase.class.getClassLoader().getResource(""); 
+		String path=url.getPath();
+		System.out.println(path);
+		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream("./src/test/resources/name.txt")));
 		String [] nameset=new String[120];String str="";String data=null;
 		while((data=br.readLine())!=null)
 		{
@@ -518,7 +522,7 @@ public class InitDatabase {
 			client.setPassword(sha.encodePassword("Client"+i, "Client"+i));
 			client.setCardnum("622848 208149873"+(4000+i));
 			client.setPaypass(sha.encodePassword("paypass"+i, client.getAccount()));
-			client.setPaypass("paypass"+i);
+			
 			
 			client.getAuthorityList().add(auth);			
 			
