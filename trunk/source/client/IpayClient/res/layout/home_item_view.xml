@@ -4,6 +4,7 @@
   android:orientation="horizontal"
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
+  android:padding="10dp"
   android:background="@drawable/listview_item_selector"
   >
   
@@ -11,7 +12,6 @@
   	android:id="@+id/home_item_image"
   	android:layout_width="48dp"
   	android:layout_height="48dp"
-  	android:layout_margin="10dp"
   />
   
   <TextView 
@@ -19,7 +19,15 @@
   	android:layout_width="wrap_content"
   	android:layout_height="wrap_content"
   	android:layout_weight="1.0"
+  	android:layout_marginLeft="8dp"
   	android:layout_gravity="center_vertical"
-  	android:textSize="24sp"
+  	android:textSize="20sp"
+  />
+  
+  <ImageView 
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_gravity="center_vertical"
+  	android:src="@drawable/listview_item_arrow_selector"
   />
 </LinearLayout>

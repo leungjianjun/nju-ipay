@@ -22,8 +22,8 @@
 	android:textColor="@color/simple_button_color"
 	android:textSize="24sp"
   />
-  <!-- 搜索按钮 -->
-  <ImageButton
+  	<!-- 搜索按钮 -->
+  	<ImageButton
     android:id="@+id/navi_bar_search" 
   	android:layout_width="wrap_content"
     android:layout_height="fill_parent"
@@ -32,7 +32,7 @@
     android:paddingLeft="10dip"
   	android:background="@null"
     android:src="@drawable/navi_bar_search_selector"
-  />
+  	/>
   
    	<!-- 购物车按钮 -->
    	<ImageButton 
@@ -46,19 +46,8 @@
 		android:paddingLeft="10dip"
    	/>
    	
-   	 <!-- 刷新按钮 -->
-	<ImageButton android:id="@+id/navi_bar_refresh"
-		android:background="@null"
-		android:src="@drawable/navi_bar_refresh_selector"
-		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
-		android:layout_toLeftOf="@id/navi_bar_cart"
-		android:paddingRight="10dip"
-		android:paddingLeft="10dip"
-     />
    
-   
-   	<!-- 环形进度条  android:visibility="gone" -->
+   <!--
 	<ProgressBar 
 		android:id="@+id/top_refresh_progressBar"
 		android:layout_width="wrap_content"
@@ -68,7 +57,7 @@
 		android:layout_centerHorizontal="true"
 		style="@android:style/Widget.ProgressBar.Small"
 		android:visibility="gone"
-     />
+     /> -->
         
         
 	<!-- 长条进度条，导航栏底部 -->

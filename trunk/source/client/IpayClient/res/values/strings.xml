@@ -167,8 +167,12 @@
 	<string-array name="home_menu_array">
 		<item>商场介绍</item>
 		<item>热卖商品</item>
-		<item>打折商品</item>
+		<item>特价商品</item>
+		<item>快速扫描</item>
+		<item>消费历史</item>
 	</string-array>
+	<string name="home_guide">享受精彩购物生活，从这里开始!</string>
+	<string name="home_search_hint">你在找什么</string>
 
 	<!-- 购物车（shopping cart）部分 -->
 	<string name="shopping_cart_pay">支付</string>
@@ -216,13 +220,31 @@
 	<string name="account_name">姓名：</string>
 	<string name="account_account">帐号：</string>
 	<string name="account_phone_num">电话：</string>
-	
+
 	<string name="account_see_history">查看交易历史</string>
 	<string name="account_modify_account">修改账户资料</string>
 	<string name="account_see_money">查看账户余额</string>
-	
 	<string name="account_get_fail">获取账户信息失败</string>
-	
+
+	<!-- 账户余额查询页面 -->
+	<string name="balance_title">账户金额信息</string>
+	<string name="balance_left">账户余额</string>
+	<string name="balance_consumption">已消费金额</string>
+	<string name="balance_notice">如果您对上述信息有任何疑问，欢迎拨打1234567890,iPay客服热线或者前往我们的客服中心咨询
+	</string>
+
+
+	<!-- 修改账户信息页面 -->
+	<string name="modify_account_info_basic">修改基本信息</string>
+	<string name="modify_account_info_account">帐号：</string>
+	<string name="modify_account_info_phone_num">电话：</string>
+	<string name="modify_account_info_pass">修改密码</string>
+	<string name="modify_account_info_old_pass">旧密码：</string>
+	<string name="modify_account_info_new_pass">新密码：</string>
+	<string name="modify_account_info_new_pass_again">确认：</string>
+	<string name="modify_account_info_submit">提交</string>
+	<string name="modify_account_info_cancel">取消</string>
+	<string name="modify_account_info_different_pass">新密码不统一，请重新输入</string>
 	<!-- 设置（preferences）部分 -->
 
 	<!-- 关于（about） 部分 -->
@@ -234,6 +256,8 @@
 	<string name="notice_cancel">取消</string>
 
 
+	<!-- navi bar -->
+	<string name="navi_bar_back">返回</string>
 
 	<!-- context menu -->
 	<string name="cmenu_add_to_cart">加入购物车</string>

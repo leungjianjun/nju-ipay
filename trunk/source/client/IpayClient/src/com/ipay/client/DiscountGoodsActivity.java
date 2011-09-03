@@ -5,7 +5,19 @@ package com.ipay.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.apache.http.client.ClientProtocolException;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.ipay.client.communication.CommunicationManager;
 import com.ipay.client.model.Product;
 import com.ipay.client.model.SpecialProduct;
@@ -16,21 +28,8 @@ import com.ipay.client.task.TaskResult;
 import com.ipay.client.ui.base.BaseListActivity;
 import com.ipay.client.ui.base.Pageable;
 import com.ipay.client.ui.component.FeedbackFactory;
-import com.ipay.client.ui.component.GoodsArrayAdapter;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import com.ipay.client.ui.component.SpecialGoodsArrayAdapter;
-
-import android.content.Intent;
-import android.graphics.Picture;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * @author tangym

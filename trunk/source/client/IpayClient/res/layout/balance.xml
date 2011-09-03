@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  	xmlns:android="http://schemas.android.com/apk/res/android"
+ 	 android:orientation="vertical"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:background="#FFEFF0F4">
+  
+  	<include layout="@layout/navi_bar_back"/>
+  
+ 	<TextView 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:textSize="24sp"
+		android:text="@string/balance_title"/>
+				
+	<TableLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dip"
+		android:background="@drawable/bg_panel">
+			
+		<TableRow>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="5dp"
+				android:text="@string/balance_consumption"/>
+					
+			<TextView 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="5dp"
+			/>
+		</TableRow>
+				
+		<View 
+			android:background="#ffcccccc"
+			android:layout_height="1dp"
+			android:layout_marginTop="3dp"
+			android:layout_marginBottom="3dp"/>
+				
+		<TableRow>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" 
+				android:padding="5dp"
+				android:text="@string/balance_left"/>
+					
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" 
+				android:padding="5dp"
+			/>
+		</TableRow>
+				
+	</TableLayout>
+	
+	<TextView 
+		android:layout_marginTop="20dip"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/balance_notice"
+	/>
+  
+      
+</LinearLayout>

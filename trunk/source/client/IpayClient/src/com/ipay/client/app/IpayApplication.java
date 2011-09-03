@@ -28,14 +28,6 @@ public class IpayApplication extends Application {
 		communicationManager = CommunicationManager.instance();
 		ShoppingCart shoppingCart = ShoppingCart.getInstance();
 
-//		for (int i = 0; i < 20; i++) {
-//			Product p = new Product(i, "描述 " + i, "101010110", "名称: " + i,
-//					"dddd");
-//			p.setQuantity(i);
-//			shoppingCart.add(p);
-//			Log.d("IpayApp", "购物车大小" + shoppingCart.getSize());
-//		}
-
 	}
 
 }

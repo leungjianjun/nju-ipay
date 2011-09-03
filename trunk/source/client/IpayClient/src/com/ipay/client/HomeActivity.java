@@ -80,7 +80,7 @@ public class HomeActivity extends BaseActivity {
 	private void createListData() {
 		String[] menu = getResources().getStringArray(R.array.home_menu_array);
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 5; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", R.drawable.goods_image_example);// 图像资源的ID
 			map.put("ItemTitle", menu[i]);
