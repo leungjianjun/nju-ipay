@@ -6,6 +6,7 @@ package com.ipay.client;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.ipay.client.barcode.CaptureActivity;
 import com.ipay.client.ui.base.BaseActivity;
 import com.ipay.client.ui.component.NaviBar;
 import com.ipay.client.ui.component.NaviBarBack;
@@ -40,12 +41,11 @@ public class HomeActivity extends BaseActivity {
 		data = new ArrayList<HashMap<String, Object>>();
 		createListData();
 
-		// 生成适配器的Item和动态数组对应的元素
-		SimpleAdapter listItemAdapter = new SimpleAdapter(this, data,// 数据源
-				R.layout.home_item_view,// ListItem的XML实现
-				// 动态数组与ImageItem对应的子项
+		SimpleAdapter listItemAdapter = new SimpleAdapter(this, data,
+				R.layout.home_item_view,
+				
 				new String[] { "ItemImage", "ItemTitle" },
-				// ImageItem的XML文件里面的一个ImageView,两个TextView ID
+
 				new int[] { R.id.home_item_image, R.id.home_item_text });
 
 		// 添加并且显示
@@ -56,7 +56,7 @@ public class HomeActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
+				
 				switch (position) {
 				case 0:
 					Intent marketInfo = new Intent(HomeActivity.this,
@@ -73,6 +73,15 @@ public class HomeActivity extends BaseActivity {
 							DiscountGoodsActivity.class);
 					startActivity(discntGoods);
 					break;
+					
+				case 3:
+					Intent scan=new Intent(HomeActivity.this,CaptureActivity.class);
+					startActivity(scan);
+					break;
+				case 4:
+					Intent history=new Intent(HomeActivity.this,BriefHistoryActivity.class);
+					startActivity(history);
+					break;
 				}
 
 			}
@@ -85,7 +94,7 @@ public class HomeActivity extends BaseActivity {
 
 		for (int i = 0; i < 5; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("ItemImage", R.drawable.goods_image_example);// 图像资源的ID
+			map.put("ItemImage", R.drawable.goods_image_example);
 			map.put("ItemTitle", menu[i]);
 			data.add(map);
 		}

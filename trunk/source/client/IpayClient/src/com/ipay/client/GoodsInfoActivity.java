@@ -205,14 +205,17 @@ public class GoodsInfoActivity extends BaseActivity {
 
 		productImageView.setImageBitmap(imageBitmap);
 		productTitleTxt.setText(product.getName());
-		productNameTxt.setText("品名：" + product.getName());
-		productPriceTxt.setText("价格：" + product.getPrice());
-		productBrandTxt.setText("厂商：" + product.getBanner());
-		productAttrsTxt.setText("简介：" + '\n');
+		productNameTxt.setText(R.string.goods_info_name);
+		productNameTxt.append(product.getName());
+		productPriceTxt.setText(R.string.goods_info_price);
+		productPriceTxt.append(""+product.getPrice());
+		productBrandTxt.setText(R.string.goods_info_producer);
+		productBrandTxt.append(product.getBanner());
+		productAttrsTxt.setText(R.string.goods_info_intro );
 		HashMap<String, String> attrs = product.getAttributes();
 		Set<String> keySet = attrs.keySet();
 		for (String key : keySet) {
-			productAttrsTxt.append(key + ": " + attrs.get(key));
+			productAttrsTxt.append('\n'+key + ": " + attrs.get(key));
 		}
 
 	}

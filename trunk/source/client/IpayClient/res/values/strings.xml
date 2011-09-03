@@ -214,7 +214,7 @@
 	<!-- 商品信息（goods info）部分 -->
 	<string name="goods_info_title">商品详情</string>
 	<string name="goods_info_name">名称：</string>
-	<string name="goods_info_price">单价: </string>
+	<string name="goods_info_price">单价: ￥</string>
 	<string name="goods_info_quantity">数量: </string>
 	<string name="goods_info_producer">生产商: </string>
 	<string name="goods_info_intro">简介: </string>

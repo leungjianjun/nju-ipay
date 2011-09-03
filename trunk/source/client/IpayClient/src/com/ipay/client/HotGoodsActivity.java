@@ -4,11 +4,13 @@
 package com.ipay.client;
 
 import java.io.IOException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.jar.Pack200.Packer;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpResponseException;
 
 import com.ipay.client.communication.CommunicationManager;
 import com.ipay.client.model.Product;
@@ -32,6 +34,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -48,7 +51,7 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 	private View listFooter;
 	private ArrayAdapter<Product> listItemAdapter;
 	private ArrayList<Product> products=new ArrayList<Product>();
-
+	private ProgressBar progressBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -81,6 +84,8 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 		listFooter = View.inflate(this, R.layout.listview_footer, null);
 		listView.addHeaderView(listHeader, null, true);
 		listView.addFooterView(listFooter, null, true);
+		progressBar = (ProgressBar) listFooter
+		.findViewById(R.id.list_footer_progress_bar);
 	}
 
 	@Override
@@ -100,18 +105,18 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 				} else {
 					Intent i = new Intent(HotGoodsActivity.this,
 							GoodsInfoActivity.class);
+					i.putExtra("pid", getItem(position).getId());
 					startActivity(i);
 				}
 			}
 		});
 
 	}
-
-	public void show() {
-		Log.d(TAG, "已经按下移除按钮");
-		listItemAdapter.add(new Product(111, "介绍: ", "1111", "名称: ", "111111"));
-
+	
+	private Product getItem(int position) {
+		return listItemAdapter.getItem(position - 1);
 	}
+
 
 	@Override
 	protected void update() {
@@ -144,6 +149,7 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 		public void onPreExecute() {
 			
 			feedback.start("");
+			progressBar.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -154,20 +160,28 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 		@Override
 		public void onPostExecute(TaskResult result) {
 			if (result == TaskResult.OK) {
+				int count=0;
+				
 				for (int i=(page-1)*10;i<page*10;i++) {
 					listItemAdapter.add(products.get(i));
+					count++;
+				}
+				if (count == 0) {
+					page--;
+					listFooter.setVisibility(View.GONE);
 				}
 
 				feedback.succeed("");
 			} else {
 				feedback.fail("失败");
 			}
-
+			progressBar.setVisibility(View.GONE);
 		}
 
 		@Override
 		public void onCancelled() {
-			// TODO Auto-generated method stub
+			feedback.cancel();
+			progressBar.setVisibility(View.VISIBLE);
 
 		}
 
@@ -177,25 +191,36 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 
 		@Override
 		protected TaskResult doInBackground(TaskParams... params) {
-			// CommunicationManager cm = CommunicationManager.instance();
+			 CommunicationManager cm = CommunicationManager.instance();
 
 			ArrayList<Product> list;
-			int process=0;
 
-			list = new ArrayList<Product>();
-			for (int i = (page-1)*10; i < page*10; i++) {
-				list.add(new Product(111, "介绍: " + i, "1111", "名称: " + i,
-						"111111"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			//list = new ArrayList<Product>();
+//			for (int i = (page-1)*10; i < page*10; i++) {
+//				list.add(new Product(111, "介绍: " + i, "1111", "名称: " + i,
+//						"111111"));
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//				publishProgress(process);
+//				process+=10;
+//			}
+			try {
+				publishProgress(40);
+				list=cm.getHotProducts(page);
+			} catch (HttpResponseException e) {
+				e.printStackTrace();
+				return TaskResult.FAILED;
+			} catch (IOException e) {
 				
-				publishProgress(process);
-				process+=10;
+				e.printStackTrace();
+				return TaskResult.FAILED;
 			}
+			publishProgress(80);
 
 			for (Product product : list) {
 				products.add(product);
