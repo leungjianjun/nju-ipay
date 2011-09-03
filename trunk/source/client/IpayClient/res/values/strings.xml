@@ -210,6 +210,10 @@
 	<!-- 热门商品 -->
 	
 	<string name="hot_goods_title">热门商品</string>
+	
+	<!-- list footer & header -->
+	<string name="list_header_refresh">刷新</string>
+	<string name="list_footer_more">更多</string>
 
 	<!-- 商品信息（goods info）部分 -->
 	<string name="goods_info_title">商品详情</string>
