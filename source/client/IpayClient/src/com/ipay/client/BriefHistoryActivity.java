@@ -3,6 +3,8 @@
  */
 package com.ipay.client;
 
+import android.os.Bundle;
+
 import com.ipay.client.ui.base.BaseListActivity;
 
 /**
@@ -10,6 +12,12 @@ import com.ipay.client.ui.base.BaseListActivity;
  *
  */
 public class BriefHistoryActivity extends BaseListActivity {
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.brief_record);
+	}
 
 	
 	@Override

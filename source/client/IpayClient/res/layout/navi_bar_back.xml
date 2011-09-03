@@ -40,31 +40,7 @@
 		android:paddingRight="10dip"
 		android:paddingLeft="10dip"
    	/>
-   	
-   	 <!-- 刷新按钮 -->
-	<ImageButton android:id="@+id/navi_bar_refresh"
-		android:background="@null"
-		android:src="@drawable/navi_bar_refresh_selector"
-		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
-		android:layout_toLeftOf="@id/navi_bar_cart"
-		android:paddingRight="10dip"
-		android:paddingLeft="10dip"
-     />
-   
-   
-   	<!-- 环形进度条  android:visibility="gone" -->
-	<ProgressBar 
-		android:id="@+id/top_refresh_progressBar"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toLeftOf="@id/navi_bar_refresh"
-		android:layout_centerVertical="true"
-		android:layout_centerHorizontal="true"
-		style="?android:progressBarStyleSmall"
-		android:visibility="gone"
-     />
-        
+   	    
         
 	<!-- 长条进度条，导航栏底部 -->
 	<ProgressBar 

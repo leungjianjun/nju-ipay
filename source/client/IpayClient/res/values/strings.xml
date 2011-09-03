@@ -248,6 +248,12 @@
 	<!-- 设置（preferences）部分 -->
 
 	<!-- 关于（about） 部分 -->
+	
+	<!-- 更多页面 -->
+	<string name="more_page_clear_cache">清除缓存</string>
+	<string name="more_page_about">关于我们</string>
+	<string name="more_page_set">设置</string>
+	<string name="more_page_logout">注销</string>
 
 	<!-- 提示部分 -->
 	<string name="notice_title">提示</string>
