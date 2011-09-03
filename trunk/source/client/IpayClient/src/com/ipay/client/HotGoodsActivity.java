@@ -191,7 +191,7 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 
 		@Override
 		protected TaskResult doInBackground(TaskParams... params) {
-			 CommunicationManager cm = CommunicationManager.instance();
+			CommunicationManager cm = CommunicationManager.instance();
 
 			ArrayList<Product> list;
 

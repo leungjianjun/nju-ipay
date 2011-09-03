@@ -43,6 +43,7 @@
 				android:textColor="#000"
 				android:padding="5dp"
 				android:textSize="16sp"
+				android:text="1283.4"
 			/>
 		</TableRow>
 				
@@ -68,6 +69,7 @@
 				android:layout_height="wrap_content" 
 				android:padding="5dp"
 				android:textSize="16sp"
+				android:text="3415.3"
 			/>
 		</TableRow>
 				

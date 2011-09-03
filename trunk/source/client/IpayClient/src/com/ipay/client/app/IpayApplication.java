@@ -26,8 +26,6 @@ public class IpayApplication extends Application {
 		context = this.getApplicationContext();
 		imageLoader = new LazyImageLoader();
 		communicationManager = CommunicationManager.instance();
-		ShoppingCart shoppingCart = ShoppingCart.getInstance();
-
 	}
 
 }

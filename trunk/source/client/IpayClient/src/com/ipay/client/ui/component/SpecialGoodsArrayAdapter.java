@@ -53,7 +53,7 @@ public class SpecialGoodsArrayAdapter extends ArrayAdapter<SpecialProduct> {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		} else {
-			view = inflater.inflate(R.layout.goods_item, parent, false);
+			view = inflater.inflate(R.layout.common_goods_item, parent, false);
 			holder = new ViewHolder();
 			holder.goodsImage = (ImageView) view.findViewById(R.id.goods_image);
 			holder.goodsName = (TextView) view
@@ -63,10 +63,9 @@ public class SpecialGoodsArrayAdapter extends ArrayAdapter<SpecialProduct> {
 			view.setTag(holder);
 		}
 
-		final SpecialProduct product = getItem(position);
+		SpecialProduct product = getItem(position);
 
 		String imageUrl=product.getMinImgUrl();
-		//Log.d(TAG,"image url"+imageUrl);
 		if(!TextUtils.isEmpty(imageUrl)){
 			holder.goodsImage.setImageBitmap(IpayApplication.imageLoader.get(CommunicationManager.HTTP_BASE+imageUrl, callback));
 		}

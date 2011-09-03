@@ -5,6 +5,7 @@ public class SpecialProduct extends Product {
 	
 	public static final String OLD_PRICE="oldPrice";
 	public static final String AD_WORDS = "adWords";
+	public static final String NEW_PRICE="newPrice";
 	
 	private double oldPrice;
 	private String adWords;
