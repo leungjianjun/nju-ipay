@@ -9,6 +9,8 @@ import com.ipay.client.barcode.CaptureActivity;
 import com.ipay.client.task.GenericTask;
 import com.ipay.client.task.TaskListener;
 import com.ipay.client.ui.component.Feedback;
+import com.ipay.client.ui.component.NaviBar;
+import com.ipay.client.ui.component.NaviBarBack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,6 +36,8 @@ public abstract class BaseActivity extends Activity {
 	private static final String TAG = "BaseActivity";
 
 	protected SharedPreferences preferences;
+	
+	protected NaviBar naviBar;
 
 
 	@Override

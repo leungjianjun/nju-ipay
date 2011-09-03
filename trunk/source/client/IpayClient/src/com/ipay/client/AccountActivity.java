@@ -17,6 +17,7 @@ import com.ipay.client.ui.base.BaseActivity;
 import com.ipay.client.ui.component.Feedback;
 import com.ipay.client.ui.component.FeedbackFactory;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
+import com.ipay.client.ui.component.NaviBar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class AccountActivity extends BaseActivity {
 	private GenericTask task;
 	private Feedback feedback;
 	private UserInfo userInfo;
+	
 
 	private static final int REQUEST_MODIFY = 1;
 
@@ -81,6 +83,7 @@ public class AccountActivity extends BaseActivity {
 		historyBtn.setOnClickListener(new HistoryListener());
 		balanceBtn.setOnClickListener(new BalanceListener());
 		modifyBtn.setOnClickListener(new ModifyListener());
+		naviBar=new NaviBar(this);
 
 	}
 

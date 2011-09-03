@@ -195,14 +195,24 @@
 
 
 	<!-- 商场信息 -->
+	<string name="market_info_title">商场详情</string>
 	<string name="market_info_name">名称</string>
 	<string name="market_info_location">地址</string>
 	<string name="market_info_intro">简介</string>
 	<string name="market_info_service_phone">服务电话</string>
 	<string name="market_info_complain_phone">投诉电话</string>
 	<string name="market_info_create_date">注册时间</string>
+	
+	
+	<!-- 特价商品 -->
+	<string name="discount_goods_title">特价商品</string>
+	
+	<!-- 热门商品 -->
+	
+	<string name="hot_goods_title">热门商品</string>
 
 	<!-- 商品信息（goods info）部分 -->
+	<string name="goods_info_title">商品详情</string>
 	<string name="goods_info_name">名称：</string>
 	<string name="goods_info_price">单价: </string>
 	<string name="goods_info_quantity">数量: </string>
@@ -227,6 +237,7 @@
 	<string name="account_get_fail">获取账户信息失败</string>
 
 	<!-- 账户余额查询页面 -->
+	<string name="balance_navi_title">余额查询</string>
 	<string name="balance_title">账户金额信息</string>
 	<string name="balance_left">账户余额</string>
 	<string name="balance_consumption">已消费金额</string>
@@ -235,7 +246,8 @@
 
 
 	<!-- 修改账户信息页面 -->
-	<string name="modify_account_info_basic">修改基本信息</string>
+	<string name="modify_account_info_title">修改基本信息</string>
+	<string name="modify_account_info_basic">账户资料修改</string>
 	<string name="modify_account_info_account">帐号：</string>
 	<string name="modify_account_info_phone_num">电话：</string>
 	<string name="modify_account_info_pass">修改密码</string>
@@ -245,6 +257,9 @@
 	<string name="modify_account_info_submit">提交</string>
 	<string name="modify_account_info_cancel">取消</string>
 	<string name="modify_account_info_different_pass">新密码不统一，请重新输入</string>
+	
+	<!-- 购物历史 -->
+	<string name="brief_history_title">购物历史</string>
 	<!-- 设置（preferences）部分 -->
 
 	<!-- 关于（about） 部分 -->

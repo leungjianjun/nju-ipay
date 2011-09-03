@@ -20,6 +20,7 @@ import com.ipay.client.ui.base.BaseListActivity;
 import com.ipay.client.ui.base.Pageable;
 import com.ipay.client.ui.component.Feedback;
 import com.ipay.client.ui.component.FeedbackFactory;
+import com.ipay.client.ui.component.NaviBarBack;
 import com.ipay.client.ui.component.FeedbackFactory.FeedbackType;
 import com.ipay.client.ui.component.GoodsArrayAdapter;
 
@@ -57,6 +58,10 @@ public class HotGoodsActivity extends BaseListActivity implements Pageable {
 		listView = (ListView) findViewById(R.id.hot_goods_list);
 		setHeaderAndFooter();
 		bindItemOnClickListener();
+		
+		
+		naviBar=new NaviBarBack(this);
+		naviBar.setTitle(R.string.hot_goods_title);
 		
 		taskListener = new GetHotGoodsTaskListener();
 		feedback = new FeedbackFactory().create(FeedbackType.PROGRESSBAR,

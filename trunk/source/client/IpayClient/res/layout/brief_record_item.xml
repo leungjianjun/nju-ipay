@@ -21,14 +21,14 @@
 		android:id="@+id/brief_record_maket_name"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/brief_record_date"
+		android:layout_below="@id/brief_record_date"
 	/>
 	
 	<TextView 
 		android:id="@+id/brief_record_total"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_toRightOf="@+id/brief_record_date"
+		android:layout_toRightOf="@id/brief_record_date"
 	/>
 	
 	<ImageView 

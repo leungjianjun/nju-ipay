@@ -24,7 +24,7 @@
   />
   	<!-- 搜索按钮 -->
   	<ImageButton
-    android:id="@+id/navi_bar_search" 
+    android:id="@+id/navi_bar_scanner_btn" 
   	android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:layout_alignParentRight="true"
@@ -34,31 +34,18 @@
     android:src="@drawable/navi_bar_search_selector"
   	/>
   
-   	<!-- 购物车按钮 -->
-   	<ImageButton 
-		android:id="@+id/navi_bar_cart"
+   	
+  <!--  	<ImageButton 
+		android:id="@+id/navi_bar_scanner_btn"
         android:background="@null"
         android:src="@drawable/navi_bar_cart_selector"
         android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
-		android:layout_toLeftOf="@id/navi_bar_search"
+		android:layout_toLeftOf="@id/navi_bar_search_btn"
 		android:paddingRight="10dip"
 		android:paddingLeft="10dip"
-   	/>
-   	
-   
-   <!--
-	<ProgressBar 
-		android:id="@+id/top_refresh_progressBar"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toLeftOf="@id/navi_bar_refresh"
-		android:layout_centerVertical="true"
-		android:layout_centerHorizontal="true"
-		style="@android:style/Widget.ProgressBar.Small"
-		android:visibility="gone"
-     /> -->
-        
+   	/> -->
+   	        
         
 	<!-- 长条进度条，导航栏底部 -->
 	<ProgressBar 
