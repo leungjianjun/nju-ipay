@@ -9,6 +9,7 @@ package com.ipay.client.ui.base;
  */
 public interface Pageable {
 	
+	
 	/**
 	 * 获取下一页内容
 	 */
