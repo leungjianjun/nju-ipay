@@ -60,7 +60,7 @@ public class InitDatabase {
 	 */
 	private void initUser() throws IOException {
 		
-		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream("O:\\Workspace\\Eclipse\\iPay_Download\\name.txt")));
+		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream("./src/test/resources/name.txt")));
 		String [] nameset=new String[120];String str="";String data=null;
 		while((data=br.readLine())!=null)
 		{
