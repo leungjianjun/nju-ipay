@@ -1,11 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="#EEE"
->
+  	xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:orientation="vertical"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:background="#EEE">
+  	
+  	<include layout="@layout/navi_bar"/>
+  	
+  	<Button
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:layout_marginLeft="15dp"
+  		android:layout_marginRight="15dp"
+  		android:layout_marginTop="15dp"
+  		android:text="@string/more_page_clear_cache"  		
+  		style="@style/white_button"
+  		android:textSize="20sp"
+  	/>
+  	
+  	
+  	<Button
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:layout_marginTop="15dp"
+		android:layout_marginLeft="15dp"
+  		android:layout_marginRight="15dp"
+  		android:text="@string/more_page_set"  		
+  		style="@style/white_button"
+  		android:textSize="20sp"
+  	/>
+  	<Button
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:layout_marginTop="15dp"
+		android:layout_marginLeft="15dp"
+  		android:layout_marginRight="15dp"
+  		android:text="@string/more_page_about"  		
+  		style="@style/white_button"
+  		android:textSize="20sp"
+  	/>
+  	<Button
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:layout_marginTop="15dp"
+		android:layout_marginLeft="15dp"
+  		android:layout_marginRight="15dp"
+  		android:text="@string/more_page_logout"  		
+  		style="@style/white_button"
+  		android:textSize="20sp"
+  	/>
+  	
+  	
   
   
   

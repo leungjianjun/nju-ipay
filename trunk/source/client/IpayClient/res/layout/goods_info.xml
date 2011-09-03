@@ -11,7 +11,7 @@
 	<include layout="@layout/navi_bar_back"/>
 	  
 	<ScrollView 
-		android:background="#FFEFF0F4"
+		android:background="#EEE"
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent">
 		<LinearLayout 

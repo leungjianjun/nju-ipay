@@ -4,7 +4,7 @@
  	 android:orientation="vertical"
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
-  	android:background="#FFEFF0F4">
+  	android:background="#EEE">
   
   	<include layout="@layout/navi_bar_back"/>
   
@@ -12,12 +12,17 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="10dp"
+		android:layout_marginLeft="15dp"
+		android:layout_marginRight="15dp"
 		android:textSize="24sp"
+		android:textColor="#666"
 		android:text="@string/balance_title"/>
 				
 	<TableLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginLeft="15dp"
+		android:layout_marginRight="15dp"
 		android:layout_marginTop="10dip"
 		android:background="@drawable/bg_panel">
 			
@@ -25,13 +30,19 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginLeft="8dp"
 				android:padding="5dp"
+				android:gravity="right"
+				android:textColor="#000"
+				android:textSize="16sp"
 				android:text="@string/balance_consumption"/>
 					
 			<TextView 
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:textColor="#000"
 				android:padding="5dp"
+				android:textSize="16sp"
 			/>
 		</TableRow>
 				
@@ -45,13 +56,18 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
+				android:layout_marginLeft="8dp"
 				android:padding="5dp"
+				android:gravity="right"
+				android:textColor="#000"
+				android:textSize="16sp"
 				android:text="@string/balance_left"/>
 					
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
 				android:padding="5dp"
+				android:textSize="16sp"
 			/>
 		</TableRow>
 				
@@ -59,6 +75,8 @@
 	
 	<TextView 
 		android:layout_marginTop="20dip"
+		android:layout_marginLeft="15dp"
+		android:layout_marginRight="15dp"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/balance_notice"

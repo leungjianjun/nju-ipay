@@ -6,7 +6,7 @@
 	<include layout="@layout/navi_bar_back" />
 
 	<ScrollView 
-		android:background="#FFEFF0F4"
+		android:background="#EEE"
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"
 	>
@@ -19,30 +19,13 @@
 		>
 
 
-			<!-- <RelativeLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				
-			>
-				商场图片
-				<ImageView 
-					android:id="@+id/market_info_image"
-					android:layout_width="48dp" 
-					android:layout_height="48dp"
-					android:layout_alignParentLeft="true"
-					android:layout_marginRight="10dp"
-					android:src="@drawable/goods_image_example"
-				/> -->
 
-				<TextView
-					android:id="@+id/market_info_name"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-				
-					style="@style/LinkText.Bold.Huge" 
-				/>
-			<!-- 	android:layout_toRightOf="@id/market_info_image"  -->
-			<!-- </RelativeLayout> -->
+		<TextView
+			android:id="@+id/market_info_name"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"	
+			style="@style/LinkText.Bold.Huge" 
+		/>
 			
 			<!-- 商场信息 1 -->
 			<TextView
