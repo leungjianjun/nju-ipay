@@ -1,0 +1,108 @@
+.block {
+    background: url("../images/sidebar-div.gif") repeat-x scroll center bottom transparent;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.aside{
+    margin-right: 40px;
+    padding: 20px;
+}
+
+.drop a {
+    border-bottom: 1px solid #D9D9D9;
+    border-radius: 3px 3px 3px 3px;
+    font-size: 100%;
+    font-weight: normal;
+    margin-left: 30px;
+    padding: 12px 10px;
+}
+
+#sidebar-nav li ul {
+    display: none;
+}
+
+#sidebar-nav li a {
+    border-bottom: 1px solid #CCCCCC;
+    color: #262626;
+    display: block;
+    font-size: 108%;
+    font-weight: bold;
+    outline: medium none;
+    padding: 12px 5px;
+    text-decoration: none;
+}
+
+#sidebar-nav .drop a:hover {
+    background: url("../images/sidebar-nav-h.gif") repeat-x scroll center bottom transparent;
+}
+
+footer {
+    background: none repeat scroll 0 0 #343434;
+    border-top: 1px solid #4D4D4D;
+    color: #FFFFFF;
+    padding: 13px 25px;
+    text-shadow: 0 -1px 0 #000000;
+}
+
+.header-bottom {
+    background: none repeat scroll 0 0 #343434;
+    border-bottom: 1px solid #4D4D4D;
+    border-top: 1px solid #4D4D4D;
+    padding: 2px 25px;
+    text-shadow: 0 -1px 0 #000000;
+}
+
+#breadcrumbs {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+#breadcrumbs li {
+    display: inline;
+    float: none;
+    font-size: 108%;
+    line-height: normal;
+}
+
+#breadcrumbs li a {
+    color: #F2F2F2;
+    display: inline;
+    float: none;
+    font-size: 85%;
+    padding: 0;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 #000000;
+}
+
+#user{
+    background: url("../images/users.png") no-repeat scroll 0 6px transparent;
+    padding-left: 30px;
+}
+
+#close_sidebar {
+    background: url("../images/sidebar-toggle-off-l.gif") no-repeat scroll center center transparent;
+    display: block;
+    height: 24px;
+    left: 280px;
+    position: absolute;
+    text-indent: -9999px;
+    top: 63px;
+    width: 32px;
+}
+
+#open_sidebar {
+    background: url("../images/sidebar-toggle-on-l.gif") no-repeat scroll center center transparent;
+    display: none;
+    height: 24px;
+    left: 20px;
+    position: absolute;
+    text-indent: -9999px;
+    top: 63px;
+    width: 31px;
+}
+
+.container_ext{
+    padding: 30px 20px 20px;
+}
