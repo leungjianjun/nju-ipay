@@ -185,6 +185,8 @@ public class AccountActivity extends BaseActivity {
 		public void onClick(View v) {
 			Intent intent = new Intent(AccountActivity.this,
 					ModifyAccountInfoActivity.class);
+			intent.putExtra("account",userInfo.getAccount() );
+			intent.putExtra("phone_num",userInfo.getPhone() );
 			startActivityForResult(intent, REQUEST_MODIFY);
 		}
 	}

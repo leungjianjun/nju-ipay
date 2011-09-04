@@ -169,7 +169,6 @@
 		<item>热卖商品</item>
 		<item>特价商品</item>
 		<item>快速扫描</item>
-		<item>消费历史</item>
 	</string-array>
 	<string name="home_guide">享受精彩购物生活，从这里开始!</string>
 	<string name="home_search_hint">你在找什么</string>

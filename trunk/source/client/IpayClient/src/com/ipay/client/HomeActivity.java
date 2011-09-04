@@ -78,10 +78,6 @@ public class HomeActivity extends BaseActivity {
 					Intent scan=new Intent(HomeActivity.this,CaptureActivity.class);
 					startActivity(scan);
 					break;
-				case 4:
-					Intent history=new Intent(HomeActivity.this,BriefHistoryActivity.class);
-					startActivity(history);
-					break;
 				}
 
 			}
@@ -91,10 +87,10 @@ public class HomeActivity extends BaseActivity {
 
 	private void createListData() {
 		String[] menu = getResources().getStringArray(R.array.home_menu_array);
-
-		for (int i = 0; i < 5; i++) {
+		int[] icons={R.drawable.ic_market_info,R.drawable.ic_hot_item,R.drawable.ic_buy_now,R.drawable.ic_quick_scan};
+		for (int i = 0; i < 4; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("ItemImage", R.drawable.goods_image_example);
+			map.put("ItemImage", icons[i]);
 			map.put("ItemTitle", menu[i]);
 			data.add(map);
 		}

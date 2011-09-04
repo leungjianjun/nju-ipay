@@ -37,7 +37,7 @@
     	android:paddingRight="10dip"
     	android:paddingLeft="10dip"
   		android:background="@null"
-    	android:src="@drawable/navi_bar_search_selector"
+    	android:src="@drawable/navi_bar_barcode_selector"
   	/>
   
    <!-- 	

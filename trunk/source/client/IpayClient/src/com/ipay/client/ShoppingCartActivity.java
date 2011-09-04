@@ -112,6 +112,7 @@ public class ShoppingCartActivity extends BaseActivity {
 		super.onResume();
 		update();
 	}
+	
 
 	public void update() {
 		totalTxt.setText("" + cart.getTotalPrice());
