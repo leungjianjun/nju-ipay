@@ -24,8 +24,6 @@
 		</activity>
 		<activity android:name=".MarketInfoActivity">
 		</activity>
-	<!--  <activity android:name=".TestActivity2">
-		</activity>-->	
 		<activity android:name=".TestActivity3">
 		</activity>
 		<activity android:name=".HomeActivity">
@@ -42,6 +40,16 @@
 		</activity>
 		<activity android:name=".MoreActivity">
 		</activity>
+		<activity android:name=".ModifyAccountInfoActivity">
+		</activity>
+		<activity android:name=".BalanceActivity">
+		</activity>
+		<activity android:name=".BriefHistoryActivity">
+		</activity>
+		<activity android:name=".DetailedHistoryActivity">
+		</activity>
+		
+		
 	</application>
 	
 	<uses-permission android:name="android.permission.CAMERA"/>
