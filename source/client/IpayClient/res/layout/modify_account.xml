@@ -48,13 +48,13 @@
 						android:textSize="14sp"
 						android:text="@string/modify_account_info_account"/>
 															
-					<EditText 
+					<EditText
+						android:id="@+id/modify_account_account_edit"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:singleLine="true"
 						android:layout_weight="1.0"
 						android:layout_marginLeft="10dp"
-						android:text="梁建军"
 					/>
 				</TableRow>
 				
@@ -76,12 +76,12 @@
 						android:text="@string/modify_account_info_phone_num"/>
 							
 					<EditText
+						android:id="@+id/modify_account_phone_edit"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content" 
 						android:layout_marginLeft="10dp"
 						android:layout_weight="1.0"
 						android:singleLine="true"
-						android:text="15298386189"
 					/>
 				</TableRow>
 						
@@ -116,7 +116,8 @@
 						android:textColor="#000000"
 						android:text="@string/modify_account_info_old_pass"/>
 							
-					<EditText 
+					<EditText
+						android:id="@+id/modify_account_old_pass_edit" 
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="10dp"
@@ -142,6 +143,7 @@
 						android:text="@string/modify_account_info_new_pass"/>
 							
 					<EditText
+						android:id="@+id/modify_account_new_pass_edit"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content" 
 						android:layout_marginLeft="10dp"
@@ -167,6 +169,7 @@
 						android:text="@string/modify_account_info_new_pass_again"/>
 							
 					<EditText
+						android:id="@+id/modify_account_new_pass_edit2"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content" 
 						android:layout_weight="1.0"

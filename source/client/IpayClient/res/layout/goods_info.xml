@@ -25,8 +25,16 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_horizontal"
 				android:layout_margin="5dip"
+				android:textStyle="bold"
 				android:textSize="20sp"
 			/>
+					
+			<ImageView
+				android:layout_width="fill_parent"
+				android:layout_marginBottom="5dp"
+				android:layout_height="wrap_content"
+				android:src="@drawable/bg_thick_divider_3d"
+			/>	
 			<!-- 商品图片 -->
 			<ImageView 
 				android:id="@+id/goods_info_image"
@@ -83,14 +91,24 @@
 				android:layout_marginTop="5dip"
 				android:textSize="16sp"
 				android:textColor="@android:color/black"
-				android:text="@string/goods_info_intro"/>			
+				android:text="@string/goods_info_intro"/>
+					
+			<ImageView
+				android:layout_width="fill_parent"
+				android:layout_marginTop="4dp"
+				android:layout_height="wrap_content"
+				android:src="@drawable/bg_thick_divider_3d"
+			/>				
 			<Button
 				android:id="@+id/goods_info_add_to_cart"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="5dip"
-				android:textSize="20sp"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:layout_marginBottom="15dp"
+				android:layout_marginTop="4dip"
 				android:text="@string/goods_info_add_to_cart"
+				style="@style/blue_button_long2"
 				android:visibility="gone"
 			/>
 
